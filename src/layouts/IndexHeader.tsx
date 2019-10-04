@@ -1,5 +1,6 @@
 import { Breadcrumb } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const HeaderStyle = {
   marginTop: 40
@@ -11,13 +12,13 @@ class IndexHeader extends React.Component {
       <div>
         <Breadcrumb>
           <Breadcrumb.Item>
-            <a href="/">Home</a>
+            <Link to="/">Home</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            <a href="/register">注册</a>
+            <Link to="/register">注册</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            <a href="">登录</a>
+            <Link to="/login">登录</Link>
           </Breadcrumb.Item>
         </Breadcrumb>
         <div style={HeaderStyle}></div>

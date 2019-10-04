@@ -66,7 +66,7 @@ class RegisterForm extends React.Component<FormComponentProps, any> {
           offset: 0
         },
         sm: {
-          span: 5,
+          span: 3,
           offset: 8
         }
       }
