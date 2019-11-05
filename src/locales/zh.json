@@ -1,5 +1,14 @@
 {
-  "user":{
-    "register": "注册"
+  "user": {
+    "username": "用户名",
+    "email": "邮箱",
+    "password": "密码",
+    "register": "注册",
+    "tooltip": {
+      "email_tip": "将发送激活邮件到您的邮箱",
+      "email": "请输入电子邮箱",
+      "password": "请输入8-32位密码（字母，数字，符号）",
+      "username": "请输入4-40位用户名（字符，数字，下划线）"
+    }
   }
 }

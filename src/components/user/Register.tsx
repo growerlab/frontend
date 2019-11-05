@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Input, Tooltip, Icon, AutoComplete, Button, Select } from "antd";
 import { FormComponentProps } from "antd/lib/form/Form";
 import { withTranslation, WithTranslation } from "react-i18next";
+import { validPassword, validUsername } from "./validate";
 
 class RegisterForm extends React.Component<
   FormComponentProps & WithTranslation,
@@ -21,14 +22,17 @@ class RegisterForm extends React.Component<
     });
   };
 
-  compareToFirstPassword = (
-    rule: any,
-    value: any,
-    callback: { (arg0: string): void; (): void }
-  ) => {
-    const { form } = this.props;
-    if (value && value !== form.getFieldValue("password")) {
-      callback("Two passwords that you enter is inconsistent!");
+  validPassword = (rule: any, value: String, callback: any) => {
+    if (!validPassword(value)) {
+      callback(this.props.t("user.tooltip.password"));
+    } else {
+      callback();
+    }
+  };
+
+  validUsername = (rule: any, value: String, callback: any) => {
+    if (!validUsername(value)) {
+      callback(this.props.t("user.tooltip.username"));
     } else {
       callback();
     }
@@ -37,6 +41,7 @@ class RegisterForm extends React.Component<
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
+    const { t } = this.props;
 
     const formItemLayout = {
       labelCol: {
@@ -64,54 +69,51 @@ class RegisterForm extends React.Component<
     return (
       <div>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-          <h3>{this.props.t("user.register")}</h3>
+          <h3>{t("user.register")}</h3>
           <Form.Item
             label={
               <span>
-                用户名&nbsp;
-                <Tooltip title="What do you want others to call you?">
+                {t("user.email")}{" "}
+                <Tooltip title={t("user.tooltip.email_tip")}>
                   <Icon type="question-circle-o" />
                 </Tooltip>
               </span>
             }
           >
-            {getFieldDecorator("username", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please input your username!",
-                  whitespace: true
-                }
-              ]
-            })(<Input />)}
-          </Form.Item>
-          <Form.Item label="E-mail">
             {getFieldDecorator("email", {
               rules: [
                 {
                   type: "email",
-                  message: "The input is not valid E-mail!"
+                  message: t("user.tooltip.email")
                 },
                 {
                   required: true,
-                  message: "Please input your E-mail!"
+                  message: t("user.tooltip.email")
                 }
               ]
-            })(<Input />)}
+            })(<Input placeholder={t("user.tooltip.email")} />)}
           </Form.Item>
-          <Form.Item label="密码" hasFeedback>
+          <Form.Item label={t("user.password")} hasFeedback>
             {getFieldDecorator("password", {
               rules: [
                 {
-                  required: true,
-                  message: "Please input your password!"
+                  validator: this.validPassword
                 }
               ]
-            })(<Input.Password />)}
+            })(<Input.Password placeholder={t("user.tooltip.password")} />)}
+          </Form.Item>
+          <Form.Item label={t("user.username")}>
+            {getFieldDecorator("username", {
+              rules: [
+                {
+                  validator: this.validUsername
+                }
+              ]
+            })(<Input placeholder={t("user.tooltip.username")} />)}
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
-              Register
+              {t("user.register")}
             </Button>
           </Form.Item>
         </Form>
