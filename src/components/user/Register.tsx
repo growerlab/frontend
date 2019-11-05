@@ -1,11 +1,13 @@
 import React from "react";
 import { Form, Input, Tooltip, Icon, AutoComplete, Button, Select } from "antd";
-
 import { FormComponentProps } from "antd/lib/form/Form";
+import { withTranslation, WithTranslation } from "react-i18next";
 
-class RegisterForm extends React.Component<FormComponentProps, any> {
+class RegisterForm extends React.Component<
+  FormComponentProps & WithTranslation,
+  any
+> {
   state = {
-    confirmDirty: false,
     autoCompleteResult: []
   };
 
@@ -19,11 +21,6 @@ class RegisterForm extends React.Component<FormComponentProps, any> {
     });
   };
 
-  handleConfirmBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  };
-
   compareToFirstPassword = (
     rule: any,
     value: any,
@@ -35,14 +32,6 @@ class RegisterForm extends React.Component<FormComponentProps, any> {
     } else {
       callback();
     }
-  };
-
-  validateToNextPassword = (rule: any, value: any, callback: any) => {
-    const { form } = this.props;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(["confirm"], { force: true });
-    }
-    callback();
   };
 
   render() {
@@ -75,6 +64,27 @@ class RegisterForm extends React.Component<FormComponentProps, any> {
     return (
       <div>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+          <h3>{this.props.t("user.register")}</h3>
+          <Form.Item
+            label={
+              <span>
+                用户名&nbsp;
+                <Tooltip title="What do you want others to call you?">
+                  <Icon type="question-circle-o" />
+                </Tooltip>
+              </span>
+            }
+          >
+            {getFieldDecorator("username", {
+              rules: [
+                {
+                  required: true,
+                  message: "Please input your username!",
+                  whitespace: true
+                }
+              ]
+            })(<Input />)}
+          </Form.Item>
           <Form.Item label="E-mail">
             {getFieldDecorator("email", {
               rules: [
@@ -89,51 +99,15 @@ class RegisterForm extends React.Component<FormComponentProps, any> {
               ]
             })(<Input />)}
           </Form.Item>
-          <Form.Item label="Password" hasFeedback>
+          <Form.Item label="密码" hasFeedback>
             {getFieldDecorator("password", {
               rules: [
                 {
                   required: true,
                   message: "Please input your password!"
-                },
-                {
-                  validator: this.validateToNextPassword
                 }
               ]
             })(<Input.Password />)}
-          </Form.Item>
-          <Form.Item label="Confirm Password" hasFeedback>
-            {getFieldDecorator("confirm", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please confirm your password!"
-                },
-                {
-                  validator: this.compareToFirstPassword
-                }
-              ]
-            })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-          </Form.Item>
-          <Form.Item
-            label={
-              <span>
-                Nickname&nbsp;
-                <Tooltip title="What do you want others to call you?">
-                  <Icon type="question-circle-o" />
-                </Tooltip>
-              </span>
-            }
-          >
-            {getFieldDecorator("nickname", {
-              rules: [
-                {
-                  required: true,
-                  message: "Please input your nickname!",
-                  whitespace: true
-                }
-              ]
-            })(<Input />)}
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
@@ -146,4 +120,7 @@ class RegisterForm extends React.Component<FormComponentProps, any> {
   }
 }
 
-export default Form.create({ name: "register" })(RegisterForm);
+const defaultForm = Form.create({ name: "register" })(
+  withTranslation()(RegisterForm)
+);
+export default defaultForm;
