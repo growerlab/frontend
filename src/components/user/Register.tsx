@@ -8,10 +8,6 @@ class RegisterForm extends React.Component<
   FormComponentProps & WithTranslation,
   any
 > {
-  state = {
-    autoCompleteResult: []
-  };
-
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -40,7 +36,6 @@ class RegisterForm extends React.Component<
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
     const { t } = this.props;
 
     const formItemLayout = {
