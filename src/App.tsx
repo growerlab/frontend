@@ -1,14 +1,11 @@
-import React from "react";
+import React from 'react';
+import './i18n';
 
-import "./App.css";
-import AppRouter from "./AppRouter";
-
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <AppRouter />
-    </div>
-  );
+export const dva = {
+  config: {
+    onError(err: ErrorEvent) {
+      err.preventDefault();
+      console.error(err.message);
+    },
+  },
 };
-
-export default App;

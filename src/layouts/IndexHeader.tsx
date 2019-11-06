@@ -1,9 +1,9 @@
-import { Breadcrumb } from "antd";
-import React from "react";
-import { Link } from "react-router-dom";
+import { Breadcrumb } from 'antd';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HeaderStyle = {
-  marginTop: 40
+  marginTop: 40,
 };
 
 class IndexHeader extends React.Component {
