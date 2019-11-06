@@ -1,6 +1,6 @@
 import { Breadcrumb } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'umi/link';
 
 const HeaderStyle = {
   marginTop: 40,

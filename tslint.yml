@@ -2,6 +2,7 @@ defaultSeverity: error
 extends:
   - tslint-react
   - tslint-eslint-rules
+  - tslint-react-hooks
 rules:
   eofline: true
   no-console: true

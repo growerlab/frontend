@@ -16,8 +16,15 @@ const routes = [
         path: '/',
         component: require('../index').default,
         exact: true,
-        _title: 'umi',
-        _title_default: 'umi',
+        _title: 'Rethinking Git',
+        _title_default: 'Rethinking Git',
+      },
+      {
+        path: '/register',
+        component: require('../register').default,
+        exact: true,
+        _title: 'Rethinking Git',
+        _title_default: 'Rethinking Git',
       },
       {
         component: () =>
@@ -26,12 +33,12 @@ const routes = [
               .default,
             { pagesPath: 'src/pages', hasRoutesInConfig: true },
           ),
-        _title: 'umi',
-        _title_default: 'umi',
+        _title: 'Rethinking Git',
+        _title_default: 'Rethinking Git',
       },
     ],
-    _title: 'umi',
-    _title_default: 'umi',
+    _title: 'Rethinking Git',
+    _title_default: 'Rethinking Git',
   },
   {
     component: () =>
@@ -40,8 +47,8 @@ const routes = [
           .default,
         { pagesPath: 'src/pages', hasRoutesInConfig: true },
       ),
-    _title: 'umi',
-    _title_default: 'umi',
+    _title: 'Rethinking Git',
+    _title_default: 'Rethinking Git',
   },
 ];
 window.g_routes = routes;

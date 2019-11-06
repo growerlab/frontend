@@ -1,5 +1,5 @@
-import IndexHeader from './IndexHeader';
 import React from 'react';
+import IndexHeader from './IndexHeader';
 
 const BasicLayout: React.FC = props => {
   return (
