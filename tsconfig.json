@@ -20,7 +20,7 @@
     "jsx": "preserve"
   },
   "include": [
-    "src", "router.tsx"
+    "src"
   ],
   "exclude": [
     "node_modules"

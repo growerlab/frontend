@@ -33,6 +33,13 @@ const config: IConfig = {
       },
     ],
   ],
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8080',
+      pathRewrite: { '^/api': '' },
+      changeOrigin: true,
+    },
+  },
 };
 
 export default config;

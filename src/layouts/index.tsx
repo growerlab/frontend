@@ -1,12 +1,13 @@
 import React from 'react';
 import IndexHeader from './IndexHeader';
+import GQLProvider from '../api/graphql/provider';
 
 const BasicLayout: React.FC = props => {
   return (
-    <div>
+    <GQLProvider>
       <IndexHeader />
       {props.children}
-    </div>
+    </GQLProvider>
   );
 };
 
