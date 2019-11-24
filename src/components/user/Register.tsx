@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Tooltip, Icon, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form/Form';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import Register from '../../api/user/register';
 
 function RegisterForm(props: FormComponentProps & WithTranslation) {
-  const { getFieldDecorator } = props.form;
+  const {
+    getFieldDecorator,
+    getFieldsError,
+    isFieldTouched,
+    getFieldError,
+    validateFields,
+  } = props.form;
+
   const { t } = props;
 
   const formItemLayout = {
@@ -15,7 +22,7 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 16 },
+      sm: { span: 12 },
     },
   };
   const tailFormItemLayout = {
@@ -31,12 +38,16 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
     },
   };
 
+  useEffect(() => {
+    validateFields();
+  }, [validateFields]);
+
   let handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // console.log('Received values of form: ', values);
+        console.log('Received values of form: ', values);
 
         let reg = new Register({
           email: '',
@@ -52,31 +63,45 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
   };
 
   let evalValidPassword = function(rule: any, value: String, callback: any) {
+    if (!value) {
+      return;
+    }
     if (!Register.validPassword(value)) {
-      callback(props.t('user.tooltip.password'));
+      callback(t('user.tooltip.password'));
     } else {
       callback();
     }
   };
 
   let evalValidUsername = function(rule: any, value: String, callback: any) {
+    if (!value) {
+      return;
+    }
     if (!Register.validUsername(value)) {
-      callback(props.t('user.tooltip.username'));
+      callback(t('user.tooltip.username'));
     } else {
       callback();
     }
   };
 
+  let hasErrors = function(fieldsError: Record<string, string[] | undefined>) {
+    return Object.keys(fieldsError).some(field => fieldsError[field]);
+  };
+
+  const usernameError = isFieldTouched('username') && getFieldError('username');
+  const emailError = isFieldTouched('email') && getFieldError('email');
+  const passwordError = isFieldTouched('password') && getFieldError('password');
+
   return (
     <div>
       <Form {...formItemLayout} onSubmit={handleSubmit}>
-        <h3>{t('user.register')}</h3>
-        <Form.Item label={t('user.username')}>
+        <h2>{t('user.register')}</h2>
+        <Form.Item label={t('user.username')} validateStatus={usernameError ? 'error' : ''}>
           {getFieldDecorator('username', {
             rules: [
               {
                 required: true,
-                message: t('user.tooltip.username'),
+                message: t('notice.required'),
               },
               {
                 validator: evalValidUsername,
@@ -93,26 +118,27 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
               </Tooltip>
             </span>
           }
+          validateStatus={emailError ? 'error' : ''}
         >
           {getFieldDecorator('email', {
             rules: [
               {
-                type: 'email',
-                message: t('user.tooltip.email'),
+                required: true,
+                message: t('notice.required'),
               },
               {
-                required: true,
+                type: 'email',
                 message: t('user.tooltip.email'),
               },
             ],
           })(<Input placeholder={t('user.tooltip.email')} />)}
         </Form.Item>
-        <Form.Item label={t('user.password')}>
+        <Form.Item label={t('user.password')} validateStatus={passwordError ? 'error' : ''}>
           {getFieldDecorator('password', {
             rules: [
               {
                 required: true,
-                message: t('user.tooltip.password'),
+                message: t('notice.required'),
               },
               {
                 validator: evalValidPassword,
@@ -121,7 +147,7 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
           })(<Input.Password placeholder={t('user.tooltip.password')} />)}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
             {t('user.register')}
           </Button>
         </Form.Item>
