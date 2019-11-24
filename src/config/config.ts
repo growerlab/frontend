@@ -1,4 +1,4 @@
 const config = {
-  backendUrl: 'http://localhost:8080',
+  backendUrl: 'http://git.com/api/graphql',
 };
 export default config;

@@ -2,7 +2,63 @@ import React, { useEffect } from 'react';
 import { Form, Input, Tooltip, Icon, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form/Form';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import Register from '../../api/user/register';
+import { ApolloError, gql } from 'apollo-boost';
+import { useMutation } from '@apollo/react-hooks';
+
+const passwordRegex = /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~.-]+$/s;
+const usernameRegex = /^[a-zA-Z0-9_-]+$/s;
+
+const rule = {
+  pwdMinLength: 8,
+  pwdMaxLength: 32,
+  usernameMinLength: 4,
+  usernameMaxLength: 40,
+};
+
+const GQL_REGISTER = gql`
+  mutation registerUser($input: NewUserPayload!) {
+    registerUser(input: $input) {
+      OK
+    }
+  }
+`;
+
+// interface SaveUser {
+//   name: string;
+//   email: string;
+//   username: string;
+//   verified_at: Date;
+// }
+
+interface NewUserPayload {
+  email: string;
+  username: string;
+  password: string;
+}
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 12 },
+  },
+};
+
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 3,
+      offset: 8,
+    },
+  },
+};
 
 function RegisterForm(props: FormComponentProps & WithTranslation) {
   const {
@@ -15,73 +71,41 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
 
   const { t } = props;
 
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 8 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 12 },
-    },
-  };
-  const tailFormItemLayout = {
-    wrapperCol: {
-      xs: {
-        span: 24,
-        offset: 0,
-      },
-      sm: {
-        span: 3,
-        offset: 8,
-      },
-    },
-  };
-
   useEffect(() => {
     validateFields();
   }, [validateFields]);
 
+  const [registerUser, { loading: mutationLoading, error: mutationError }] = useMutation<{
+    input: NewUserPayload;
+  }>(GQL_REGISTER, {
+    onCompleted: (data: any) => {
+      console.log('onCompleted -- ', data);
+    },
+    onError: (error: ApolloError) => {
+      console.log('onCompletonErrored -- ', error);
+    },
+  });
+
   let handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    props.form.validateFieldsAndScroll((err, values) => {
+    props.form.validateFieldsAndScroll((err, payload: NewUserPayload) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        console.log('Received values of form: ', payload);
 
-        let reg = new Register({
-          email: '',
-          password: '',
-          username: '',
-        });
-        if (!reg.validate()) {
-        }
-      } else {
-        // TODO notice
+        registerUser({
+          variables: {
+            input: payload,
+          },
+        })
+          .catch((reason: any) => {
+            console.log('catch -- ', reason);
+          })
+          .then(value => {
+            console.log('then -- ', value);
+          });
       }
     });
-  };
-
-  let evalValidPassword = function(rule: any, value: String, callback: any) {
-    if (!value) {
-      return;
-    }
-    if (!Register.validPassword(value)) {
-      callback(t('user.tooltip.password'));
-    } else {
-      callback();
-    }
-  };
-
-  let evalValidUsername = function(rule: any, value: String, callback: any) {
-    if (!value) {
-      return;
-    }
-    if (!Register.validUsername(value)) {
-      callback(t('user.tooltip.username'));
-    } else {
-      callback();
-    }
   };
 
   let hasErrors = function(fieldsError: Record<string, string[] | undefined>) {
@@ -104,7 +128,16 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
                 message: t('notice.required'),
               },
               {
-                validator: evalValidUsername,
+                min: rule.usernameMinLength,
+                message: t('user.tooltip.username'),
+              },
+              {
+                max: rule.usernameMaxLength,
+                message: t('user.tooltip.username'),
+              },
+              {
+                pattern: usernameRegex,
+                message: t('user.tooltip.username'),
               },
             ],
           })(<Input placeholder={t('user.tooltip.username')} />)}
@@ -141,7 +174,16 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
                 message: t('notice.required'),
               },
               {
-                validator: evalValidPassword,
+                min: rule.pwdMinLength,
+                message: t('user.tooltip.password'),
+              },
+              {
+                max: rule.pwdMaxLength,
+                message: t('user.tooltip.password'),
+              },
+              {
+                pattern: passwordRegex,
+                message: t('user.tooltip.password'),
               },
             ],
           })(<Input.Password placeholder={t('user.tooltip.password')} />)}
