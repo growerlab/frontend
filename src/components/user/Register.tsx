@@ -4,6 +4,7 @@ import { FormComponentProps } from 'antd/lib/form/Form';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { ApolloError, gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
+import { Message } from '../../api/common/notice';
 
 const passwordRegex = /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~.-]+$/s;
 const usernameRegex = /^[a-zA-Z0-9_-]+$/s;
@@ -82,7 +83,7 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
       console.log('onCompleted -- ', data);
     },
     onError: (error: ApolloError) => {
-      console.log('onCompletonErrored -- ', error);
+      Message.Error(error.graphQLErrors[0].message);
     },
   });
 

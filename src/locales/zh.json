@@ -13,5 +13,34 @@
       "password": "请输入8-32位密码（字母，数字，符号）",
       "username": "请输入4-40位用户名（字母，数字，下划线）"
     }
+  },
+  "message": {
+    "error": {
+      "ERROR": "服务器接口错误,请于管理员联系",
+      "GraphQLError": "服务器接口错误,请于管理员联系",
+      "SQLError": "服务器接口错误,请于管理员联系",
+      "InvalidParameter": "参数错误,{model}.{field} {reason}",
+      "NotFound": "未找到{model}",
+      "AlreadyExists": "{model}{field}已存在",
+      "AccessDenied": "无权限访问{model}, 因为{reason}"
+    },
+    "model": {
+      "User": "用户",
+      "ActivateCode": "激活码"
+    },
+    "field": {
+      "Name": "名称",
+      "Username": "用户名",
+      "Email": "邮箱",
+      "Password": "密码",
+      "ConfirmPassword": "确认密码",
+      "Code": "激活码"
+    },
+    "reason": {
+      "NotFoundField": "未找到字段",
+      "InvalidLength": "错误的长度",
+      "Expired": "已过期",
+      "Used": "已被使用"
+    }
   }
 }
