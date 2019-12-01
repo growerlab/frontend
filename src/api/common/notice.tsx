@@ -2,6 +2,8 @@ import { message } from 'antd';
 import { ArgsProps, MessageType } from 'antd/lib/message';
 import i18n from '../../i18n';
 
+const regex = /<[^>]+>/s;
+
 const Sep = '.';
 const ModelKey = '{model}';
 const FieldKey = '{field}';
@@ -24,12 +26,23 @@ export const Message = {
 
 interface Error {
   Error: string;
-  Model?: string;
-  Field?: string;
-  Reason?: string;
+  Model: string;
+  Field: string;
+  Reason: string;
 }
 
 function parseTemplate(context: string): string {
+  if (!regex.test(context)) {
+    return context;
+  } else {
+    let m = regex.exec(context);
+
+    if ((m = regex.exec(context)) !== null) {
+      context = m[0];
+      context = context.substr(1, context.length - 2);
+    }
+  }
+
   let seps = context.split(Sep);
   if (seps.length == 0) {
     return context;
@@ -45,9 +58,14 @@ function parseTemplate(context: string): string {
 
   let err: Error = {
     Error: msgTemplate,
+    Model: '',
+    Field: '',
+    Reason: '',
   };
 
   for (let i = 1; i < seps.length; i++) {
+    if (seps[i].length == 0) continue;
+
     let modelPath = 'message.model.' + seps[i];
     let fieldPath = 'message.field.' + seps[i];
     let reasonPath = 'message.reason.' + seps[i];
@@ -66,13 +84,13 @@ function parseTemplate(context: string): string {
 
 function format(temp: string, err: Error): string {
   if (temp.includes(ModelKey)) {
-    temp.replace(ModelKey, err.Model!);
+    temp = temp.replace(ModelKey, err.Model!);
   }
   if (temp.includes(FieldKey)) {
-    temp.replace(FieldKey, err.Field!);
+    temp = temp.replace(FieldKey, err.Field!);
   }
   if (temp.includes(ReasonKey)) {
-    temp.replace(FieldKey, err.Reason!);
+    temp = temp.replace(ReasonKey, err.Reason!);
   }
   return temp;
 }

@@ -7,7 +7,12 @@ const config: IConfig = {
     {
       path: '/',
       component: '../layouts/index',
-      routes: [{ path: '/', component: './index' }, { path: '/register', component: './register' }],
+      routes: [
+        { path: '/', component: './index' },
+        { path: '/register', component: './register' },
+        { path: '/activate_user/:code', component: './activate_user' },
+        { path: '/login', component: './login' },
+      ],
     },
   ],
   plugins: [
@@ -33,13 +38,13 @@ const config: IConfig = {
       },
     ],
   ],
-  proxy: {
-    '/api': {
-      target: 'http://localhost:8080',
-      pathRewrite: { '^/api': '' },
-      changeOrigin: true,
-    },
-  },
+  // proxy: {
+  //   '/api': {
+  //     target: 'http://localhost:8080',
+  //     pathRewrite: { '^/api': '' },
+  //     changeOrigin: true,
+  //   },
+  // },
 };
 
 export default config;
