@@ -8,11 +8,11 @@ export default function ActivateUser(props: FormComponentProps) {
   return (
     <div>
       <Row>
-        <Col span={8}></Col>
-        <Col span={8}>
+        <Col span={6}></Col>
+        <Col span={12}>
           <Activate></Activate>
         </Col>
-        <Col span={8}></Col>
+        <Col span={6}></Col>
       </Row>
     </div>
   );

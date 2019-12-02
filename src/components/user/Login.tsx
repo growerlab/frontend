@@ -36,7 +36,7 @@ const tailFormItemLayout = {
 const GQL_REGISTER = gql`
   mutation loginUser($input: LoginUserPayload!) {
     loginUser(input: $input) {
-      OK
+      token
     }
   }
 `;
@@ -65,11 +65,11 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
     input: LoginUserPayload;
   }>(GQL_REGISTER, {
     onCompleted: (data: any) => {
-      Message.Success(t('user.tooltip.register_success'));
+      Message.Success(t('user.tooltip.login_success'));
       router.push('/login');
     },
     onError: (error: ApolloError) => {
-      Message.Error(error.graphQLErrors[0].message);
+      // Message.Error(error.graphQLErrors[0].message);
     },
   });
 
@@ -88,7 +88,6 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
     });
   };
 
-  const usernameError = isFieldTouched('username') && getFieldError('username');
   const emailError = isFieldTouched('email') && getFieldError('email');
   const passwordError = isFieldTouched('password') && getFieldError('password');
   let hasErrors = function(fieldsError: Record<string, string[] | undefined>) {
@@ -144,7 +143,7 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
-              {t('user.register')}
+              {t('user.login')}
             </Button>
           </Form.Item>
         </Form>
