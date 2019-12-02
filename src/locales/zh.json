@@ -55,7 +55,8 @@
       "NotFoundField": "未找到字段",
       "InvalidLength": "错误的长度",
       "Expired": "已过期",
-      "Used": "已被使用"
+      "Used": "已被使用",
+      "NotEqual": "不匹配"
     }
   }
 }
