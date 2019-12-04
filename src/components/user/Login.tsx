@@ -8,6 +8,7 @@ import router from 'umi/router';
 import { Message } from '../../api/common/notice';
 import UserRules from '../../api/user/rule';
 import Link from 'umi/link';
+import { Login } from '../../api/user/session';
 
 const formItemLayout = {
   labelCol: {
@@ -65,8 +66,11 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
     input: LoginUserPayload;
   }>(GQL_REGISTER, {
     onCompleted: (data: any) => {
+      if (data.loginUser.token) {
+        Login(data.loginUser.token);
+      }
       Message.Success(t('user.tooltip.login_success'));
-      router.push('/login');
+      router.push('/user');
     },
     onError: (error: ApolloError) => {
       // Message.Error(error.graphQLErrors[0].message);
