@@ -36,7 +36,9 @@
       "InvalidParameter": "参数错误,{model}{field}{reason}",
       "NotFound": "未找到{model}",
       "AlreadyExists": "{model}{field}已存在",
-      "AccessDenied": "无权限访问{model}, 因为{reason}"
+      "AccessDenied": "禁止访问{model}, 因为{reason}",
+      "Unauthorize": "无权限，请登录后重试",
+      "PermisstionErrror": "权限错误, 因为{reason}"
     },
     "model": {
       "User": "用户",
