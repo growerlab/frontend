@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-
 import { FormComponentProps } from 'antd/lib/form/Form';
 import Activate from '../components/user/Activate';
 

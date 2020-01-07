@@ -10,6 +10,8 @@ import UserRules from '../../api/user/rule';
 import Link from 'umi/link';
 import { Login } from '../../api/user/session';
 
+// TODO 没有标题
+
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -70,7 +72,7 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
         Login(data.loginUser.token);
       }
       Message.Success(t('user.tooltip.login_success'));
-      router.push('/user');
+      router.push('/user/');
     },
     onError: (error: ApolloError) => {
       // Message.Error(error.graphQLErrors[0].message);

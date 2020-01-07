@@ -6,13 +6,17 @@ const config: IConfig = {
   routes: [
     {
       path: '/',
-      component: '../layouts/index',
+      component: '../layouts/base',
       routes: [
         { path: '/', component: './index' },
         { path: '/register', component: './register' },
         { path: '/activate_user/:code', component: './activate_user' },
         { path: '/login', component: './login' },
       ],
+    },
+    {
+      path: '/user/',
+      routes: [{ path: '/user/', component: './user/index' }],
     },
   ],
   plugins: [

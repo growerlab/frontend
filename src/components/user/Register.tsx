@@ -8,6 +8,8 @@ import router from 'umi/router';
 import { Message } from '../../api/common/notice';
 import UserRules from '../../api/user/rule';
 
+// TODO 没有标题
+
 const GQL_REGISTER = gql`
   mutation registerUser($input: NewUserPayload!) {
     registerUser(input: $input) {

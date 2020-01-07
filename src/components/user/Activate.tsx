@@ -6,7 +6,8 @@ import { useMutation } from '@apollo/react-hooks';
 import router from 'umi/router';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import Login from '../../pages/login';
+
+// TODO 没有标题
 
 const GQL_REGISTER = gql`
   mutation activateUser($input: ActivateCodePayload!) {
