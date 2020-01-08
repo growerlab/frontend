@@ -1,10 +1,10 @@
-import React from "react";
-import { Breadcrumb } from "antd";
-import Link from "umi/link";
-import GQLProvider from "../api/graphql/provider";
+import React from 'react';
+import { Breadcrumb } from 'antd';
+import Link from 'umi/link';
+import GQLProvider from '../api/graphql/provider';
 
 const HeaderStyle = {
-  marginTop: 20
+  marginTop: 20,
 };
 
 export default function IndexLayout(props: any) {

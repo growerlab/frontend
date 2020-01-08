@@ -1,6 +1,6 @@
-import React from "react";
-import UserLayout from "./user";
-import IndexLayout from "./index";
+import React from 'react';
+import UserLayout from './user';
+import IndexLayout from './index';
 
 export default function(props: any) {
   let path = props.location.pathname;
