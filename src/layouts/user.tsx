@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import GQLProvider from '../api/graphql/provider';
-import { Layout, Menu, Icon } from 'antd';
+import React, { useState } from "react";
+import GQLProvider from "../api/graphql/provider";
+import { Layout, Menu, Icon } from "antd";
 
 const { Header, Sider, Content } = Layout;
 
@@ -15,7 +15,7 @@ export default function UserLayout(props: any) {
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
             <Menu.Item key="1">
               <Icon type="user" />
               <span>nav 1</span>
@@ -31,19 +31,19 @@ export default function UserLayout(props: any) {
           </Menu>
         </Sider>
         <Layout>
-          <Header style={{ background: '#fff', padding: 0 }}>
+          <Header style={{ background: "#fff", padding: 0 }}>
             <Icon
               className="trigger"
-              type={collapsed ? 'menu-unfold' : 'menu-fold'}
+              type={collapsed ? "menu-unfold" : "menu-fold"}
               onClick={() => setCollapsed(!collapsed)}
             />
           </Header>
           <Content
             style={{
-              margin: '24px 16px',
+              margin: "24px 16px",
               padding: 24,
-              background: '#fff',
-              minHeight: 280,
+              background: "#fff",
+              minHeight: 280
             }}
           >
             {props.children}

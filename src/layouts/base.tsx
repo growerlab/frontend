@@ -1,17 +1,14 @@
-import React from 'react';
-import IndexLayout from '.';
-import UserLayout from '.';
+import React from "react";
+import UserLayout from "./user";
+import IndexLayout from "./index";
 
 export default function(props: any) {
   let path = props.location.pathname;
-  var subLayout;
   switch (true) {
     case /^\/user\//.test(path):
-      subLayout = <UserLayout>{props.children}</UserLayout>;
-      break;
+      return <UserLayout>{props.children}</UserLayout>;
     case /^\//.test(path):
-      subLayout = <IndexLayout>{props.children}</IndexLayout>;
-      break;
+      return <IndexLayout>{props.children}</IndexLayout>;
   }
-  return subLayout;
+  return;
 }
