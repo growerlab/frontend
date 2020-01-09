@@ -13,7 +13,7 @@ export default function UserLayout(props: any) {
 
   return (
     <GQLProvider>
-      <Layout>
+      <Layout style={{ minHeight: '100vh' }}>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <div style={{ padding: 20, margin: 20, background: '#eeeeee' }} />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}>
