@@ -12,11 +12,9 @@ const config: IConfig = {
         { path: '/register', component: './register' },
         { path: '/activate_user/:code', component: './activate_user' },
         { path: '/login', component: './login' },
+        // user
+        { path: '/user/', component: './user/index' },
       ],
-    },
-    {
-      path: '/user/',
-      routes: [{ path: '/user/', component: './user/index' }],
     },
   ],
   plugins: [
