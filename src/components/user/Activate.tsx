@@ -10,14 +10,14 @@ import { useParams } from 'react-router';
 // TODO 没有标题
 
 const GQL_REGISTER = gql`
-  mutation activateUser($input: ActivateCodePayload!) {
+  mutation activateUser($input: ActivationCodePayload!) {
     activateUser(input: $input) {
       OK
     }
   }
 `;
 
-interface ActivateCodePayload {
+interface ActivationCodePayload {
   code: string;
 }
 
@@ -75,7 +75,7 @@ function Activate(props: FormComponentProps & WithTranslation) {
   const [curStatus, setStatus] = useState(status['Pending']);
 
   const [activateUser, { loading: mutationLoading, error: mutationError }] = useMutation<{
-    input: ActivateCodePayload;
+    input: ActivationCodePayload;
   }>(GQL_REGISTER, {
     onCompleted: (data: any) => {
       if (data.activateUser.OK !== null) {

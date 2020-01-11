@@ -42,7 +42,7 @@
     },
     "model": {
       "User": "用户",
-      "ActivateCode": "激活码"
+      "ActivationCode": "激活码"
     },
     "field": {
       "Name": "名称",
