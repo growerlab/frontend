@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import GQLProvider from '../api/graphql/provider';
-import { Layout, Menu, Icon, Avatar } from 'antd';
+import { Layout, Menu, Icon, Avatar, Dropdown } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
+import Link from 'umi/link';
+import { withTranslation } from 'react-i18next';
 
 const { Header, Sider, Content } = Layout;
 
 // TODO 应验证用户是否登录
 // TODO 未登录用应该重定向到登录页面
 
-export default function UserLayout(props: any) {
+function UserLayout(props: any) {
+  const { t } = props;
   const [collapsed, setCollapsed] = useState(false);
+  const plusMenu = (
+    <Menu>
+      <Menu.Item key="add-repo">
+        <Link to="/user/repositorys/new">{t('repository.new')}</Link>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <GQLProvider>
@@ -59,7 +69,15 @@ export default function UserLayout(props: any) {
                 <Icon type="search" />
               </span>
               <span>
-                <Avatar size={32} icon="user" />
+                <Dropdown overlay={plusMenu}>
+                  <a className="ant-dropdown-link" href="#">
+                    <Icon type="plus" />
+                    <Icon type="down" />
+                  </a>
+                </Dropdown>
+              </span>
+              <span>
+                <Avatar size={30} icon="user" />
               </span>
             </div>
           </Header>
@@ -78,3 +96,5 @@ export default function UserLayout(props: any) {
     </GQLProvider>
   );
 }
+
+export default withTranslation()(UserLayout);

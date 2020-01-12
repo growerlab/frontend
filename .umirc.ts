@@ -14,6 +14,7 @@ const config: IConfig = {
         { path: '/login', component: './login' },
         // user
         { path: '/user/', component: './user/index' },
+        { path: '/user/repositorys/new', component: './user/repository/new' },
       ],
     },
   ],

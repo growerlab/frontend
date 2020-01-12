@@ -28,6 +28,9 @@
       "success_sub": "赶紧登录账号使用吧！"
     }
   },
+  "repository": {
+    "new": "创建仓库"
+  },
   "message": {
     "error": {
       "ERROR": "服务器接口错误,请于管理员联系",
