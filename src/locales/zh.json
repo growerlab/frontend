@@ -35,7 +35,10 @@
     "description": "仓库描述",
     "public": "公开仓库",
     "private": "私有仓库",
-    "create_repository": "创建仓库"
+    "create_repository": "创建仓库",
+    "tooltip": {
+      "name": "请填写2-50位字符的仓库名称"
+    }
   },
   "message": {
     "error": {

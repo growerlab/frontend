@@ -6,7 +6,7 @@ import { ApolloError, gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import router from 'umi/router';
 import { Message } from '../../api/common/notice';
-import UserRules from '../../api/user/rule';
+import { UserRules } from '../../api/rule';
 import Link from 'umi/link';
 import { Login } from '../../api/user/session';
 

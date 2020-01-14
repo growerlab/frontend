@@ -10,11 +10,12 @@ import {
   Icon,
   Rate,
   Checkbox,
-  Input
+  Input,
 } from 'antd';
 
 import { FormComponentProps } from 'antd/lib/form';
 import { WithTranslation, withTranslation } from 'react-i18next';
+import { RepositoryRules } from '../../api/rule';
 
 function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
   const { t } = props;
@@ -31,7 +32,7 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
 
   const formItemLayout = {
     labelCol: { span: 4 },
-    wrapperCol: { span: 14 }
+    wrapperCol: { span: 14 },
   };
 
   return (
@@ -40,22 +41,26 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
         <span className="ant-form-text">moli</span>
       </Form.Item>
       <Form.Item label={t('repository.name')}>
-        {getFieldDecorator('username', {
+        {getFieldDecorator('name', {
           rules: [
             {
               required: true,
-              message: t('notice.required')
-            }
-          ]
+              message: t('notice.required'),
+            },
+            {
+              min: RepositoryRules.repositoryNameMinLength,
+              message: t('repository.tooltip.name'),
+            },
+          ],
         })(<Input placeholder={t('repository.name')} />)}
       </Form.Item>
       <Form.Item label={t('repository.description')}>
-        {getFieldDecorator('username', {
+        {getFieldDecorator('description', {
           rules: [
             {
-              required: false
-            }
-          ]
+              required: false,
+            },
+          ],
         })(<Input />)}
       </Form.Item>
       <Form.Item label={t('repository.public')}>
@@ -71,6 +76,6 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
 }
 
 const newRepositoryForm = Form.create({ name: 'newRepository' })(
-  withTranslation()(NewRepositoryFrom)
+  withTranslation()(NewRepositoryFrom),
 );
 export default newRepositoryForm;

@@ -6,7 +6,7 @@ import { ApolloError, gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import router from 'umi/router';
 import { Message } from '../../api/common/notice';
-import UserRules from '../../api/user/rule';
+import { UserRules } from '../../api/rule';
 
 // TODO 没有标题
 
