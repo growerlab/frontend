@@ -59,6 +59,14 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
           ],
         })(<Input placeholder="Please input your name" />)}
       </Form.Item>
+      <Form.Item label="Public">
+        {getFieldDecorator('switch', { valuePropName: 'checked' })(<Switch />)}
+      </Form.Item>
+      <Form.Item wrapperCol={{ span: 6, offset: 4 }}>
+        <Button type="primary" htmlType="submit">
+          Create repository
+        </Button>
+      </Form.Item>
     </Form>
   );
 }
