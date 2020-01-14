@@ -10,7 +10,7 @@ import {
   Icon,
   Rate,
   Checkbox,
-  Input,
+  Input
 } from 'antd';
 
 import { FormComponentProps } from 'antd/lib/form';
@@ -18,6 +18,7 @@ import { WithTranslation, withTranslation } from 'react-i18next';
 
 function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
   const { t } = props;
+  const { getFieldDecorator } = props.form;
 
   const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,43 +29,41 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
     });
   };
 
-  const { getFieldDecorator } = props.form;
   const formItemLayout = {
     labelCol: { span: 4 },
-    wrapperCol: { span: 14 },
+    wrapperCol: { span: 14 }
   };
 
   return (
     <Form {...formItemLayout} onSubmit={handleSubmit}>
-      <Form.Item label="Owner">
+      <Form.Item label={t('repository.owner')}>
         <span className="ant-form-text">moli</span>
       </Form.Item>
-      <Form.Item label="Name">
+      <Form.Item label={t('repository.name')}>
         {getFieldDecorator('username', {
           rules: [
             {
               required: true,
-              message: 'Please input your name',
-            },
-          ],
-        })(<Input placeholder="Please input your name" />)}
+              message: t('notice.required')
+            }
+          ]
+        })(<Input placeholder={t('repository.name')} />)}
       </Form.Item>
-      <Form.Item label="Description">
+      <Form.Item label={t('repository.description')}>
         {getFieldDecorator('username', {
           rules: [
             {
-              required: true,
-              message: 'Please input your name',
-            },
-          ],
-        })(<Input placeholder="Please input your name" />)}
+              required: false
+            }
+          ]
+        })(<Input />)}
       </Form.Item>
-      <Form.Item label="Public">
+      <Form.Item label={t('repository.public')}>
         {getFieldDecorator('switch', { valuePropName: 'checked' })(<Switch />)}
       </Form.Item>
       <Form.Item wrapperCol={{ span: 6, offset: 4 }}>
         <Button type="primary" htmlType="submit">
-          Create repository
+          {t('repository.create_repository')}
         </Button>
       </Form.Item>
     </Form>
@@ -72,6 +71,6 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
 }
 
 const newRepositoryForm = Form.create({ name: 'newRepository' })(
-  withTranslation()(NewRepositoryFrom),
+  withTranslation()(NewRepositoryFrom)
 );
 export default newRepositoryForm;

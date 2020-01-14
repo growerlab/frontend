@@ -29,7 +29,13 @@
     }
   },
   "repository": {
-    "new": "创建仓库"
+    "owner": "所有者",
+    "new": "创建仓库",
+    "name": "仓库名",
+    "description": "仓库描述",
+    "public": "公开仓库",
+    "private": "私有仓库",
+    "create_repository": "创建仓库"
   },
   "message": {
     "error": {
