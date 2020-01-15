@@ -1,31 +1,51 @@
-import {
-  Form,
-  Select,
-  InputNumber,
-  Switch,
-  Radio,
-  Slider,
-  Button,
-  Upload,
-  Icon,
-  Rate,
-  Checkbox,
-  Input,
-} from 'antd';
+import { Form, Switch, Button, Input } from 'antd';
 
 import { FormComponentProps } from 'antd/lib/form';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RepositoryRules } from '../../api/rule';
+import { gql, ApolloError } from 'apollo-boost';
+import { useMutation } from '@apollo/react-hooks';
+import { Message } from '../../api/common/notice';
+import router from 'umi/router';
+
+const GQL_REGISTER = gql`
+  mutation createRepository($input: NewRepositoryPayload!) {
+    createRepository(input: $input) {
+      OK
+    }
+  }
+`;
+
+interface NewRepositoryPayload {
+  namespacePath: string;
+  name: string;
+  public: boolean;
+}
 
 function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
   const { t } = props;
   const { getFieldDecorator } = props.form;
 
+  document.title = t('repository.create_repository');
+
+  const [createRepository, { loading: mutationLoading, error: mutationError }] = useMutation<{
+    input: NewRepositoryPayload;
+  }>(GQL_REGISTER, {
+    onCompleted: (data: any) => {
+      Message.Success(t('user.tooltip.login_success'));
+      router.push('/user/');
+    },
+  });
+
   const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    props.form.validateFields((err, values) => {
+    props.form.validateFields((err, payload: NewRepositoryPayload) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        createRepository({
+          variables: {
+            input: payload,
+          },
+        });
       }
     });
   };
@@ -51,6 +71,10 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
               min: RepositoryRules.repositoryNameMinLength,
               message: t('repository.tooltip.name'),
             },
+            {
+              pattern: RepositoryRules.repositoryNameRegex,
+              message: t('repository.tooltip.name'),
+            },
           ],
         })(<Input placeholder={t('repository.name')} />)}
       </Form.Item>
@@ -64,7 +88,7 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
         })(<Input />)}
       </Form.Item>
       <Form.Item label={t('repository.public')}>
-        {getFieldDecorator('switch', { valuePropName: 'checked' })(<Switch />)}
+        {getFieldDecorator('public', { valuePropName: 'checked' })(<Switch />)}
       </Form.Item>
       <Form.Item wrapperCol={{ span: 6, offset: 4 }}>
         <Button type="primary" htmlType="submit">
