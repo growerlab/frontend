@@ -8,7 +8,5 @@ export const UserRules = {
 };
 
 export const RepositoryRules = {
-  repositoryNameMinLength: 2,
-  repositoryNameMaxLength: 50,
-  repositoryNameRegex: /[a-zA-Z0-9_\-\.]{2,50}/s,
+  repositoryNameRegex: /^[a-zA-Z0-9_\-\.]{2,50}$/,
 };

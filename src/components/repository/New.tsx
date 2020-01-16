@@ -68,10 +68,6 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
               message: t('notice.required'),
             },
             {
-              min: RepositoryRules.repositoryNameMinLength,
-              message: t('repository.tooltip.name'),
-            },
-            {
               pattern: RepositoryRules.repositoryNameRegex,
               message: t('repository.tooltip.name'),
             },

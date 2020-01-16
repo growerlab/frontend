@@ -37,7 +37,7 @@
     "private": "私有仓库",
     "create_repository": "创建仓库",
     "tooltip": {
-      "name": "请填写2-50位字符的仓库名称"
+      "name": "请填写2-50位字符的仓库名(字母，数字，下划线)"
     }
   },
   "message": {
