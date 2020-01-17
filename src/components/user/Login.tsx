@@ -8,38 +8,42 @@ import router from 'umi/router';
 import { Message } from '../../api/common/notice';
 import { UserRules } from '../../api/rule';
 import Link from 'umi/link';
-import { Login } from '../../api/user/session';
+import { Login, LoginInfo } from '../../api/user/session';
 
 // TODO 没有标题
 
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 8 },
+    sm: { span: 8 }
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 10 },
-  },
+    sm: { span: 10 }
+  }
 };
 
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
       span: 24,
-      offset: 0,
+      offset: 0
     },
     sm: {
       span: 3,
-      offset: 8,
-    },
-  },
+      offset: 8
+    }
+  }
 };
 
 const GQL_REGISTER = gql`
   mutation loginUser($input: LoginUserPayload!) {
     loginUser(input: $input) {
       token
+      namespacePath
+      email
+      name
+      publicEmail
     }
   }
 `;
@@ -57,26 +61,26 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
     getFieldsError,
     isFieldTouched,
     getFieldError,
-    validateFields,
+    validateFields
   } = props.form;
 
   useEffect(() => {
     validateFields();
   }, [validateFields]);
 
-  const [loginUser, { loading: mutationLoading, error: mutationError }] = useMutation<{
+  const [
+    loginUser,
+    { loading: mutationLoading, error: mutationError }
+  ] = useMutation<{
     input: LoginUserPayload;
   }>(GQL_REGISTER, {
     onCompleted: (data: any) => {
-      if (data.loginUser.token) {
-        Login(data.loginUser.token);
+      if (data.loginUser) {
+        Login(data.loginUser as LoginInfo);
       }
       Message.Success(t('user.tooltip.login_success'));
       router.push('/user/');
-    },
-    onError: (error: ApolloError) => {
-      // Message.Error(error.graphQLErrors[0].message);
-    },
+    }
   });
 
   let handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
@@ -87,8 +91,8 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
         // console.log('Received values of form: ', payload);
         loginUser({
           variables: {
-            input: payload,
-          },
+            input: payload
+          }
         });
       }
     });
@@ -116,39 +120,46 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
               rules: [
                 {
                   required: true,
-                  message: t('notice.required'),
+                  message: t('notice.required')
                 },
                 {
                   type: 'email',
-                  message: t('user.tooltip.email'),
-                },
-              ],
+                  message: t('user.tooltip.email')
+                }
+              ]
             })(<Input placeholder={t('user.tooltip.email')} />)}
           </Form.Item>
-          <Form.Item label={t('user.password')} validateStatus={passwordError ? 'error' : ''}>
+          <Form.Item
+            label={t('user.password')}
+            validateStatus={passwordError ? 'error' : ''}
+          >
             {getFieldDecorator('password', {
               rules: [
                 {
                   required: true,
-                  message: t('notice.required'),
+                  message: t('notice.required')
                 },
                 {
                   min: UserRules.pwdMinLength,
-                  message: t('user.tooltip.password'),
+                  message: t('user.tooltip.password')
                 },
                 {
                   max: UserRules.pwdMaxLength,
-                  message: t('user.tooltip.password'),
+                  message: t('user.tooltip.password')
                 },
                 {
                   pattern: UserRules.passwordRegex,
-                  message: t('user.tooltip.password'),
-                },
-              ],
+                  message: t('user.tooltip.password')
+                }
+              ]
             })(<Input.Password placeholder={t('user.tooltip.password')} />)}
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={hasErrors(getFieldsError())}
+            >
               {t('user.login')}
             </Button>
           </Form.Item>

@@ -15,8 +15,9 @@ const config: IConfig = {
         // user
         { path: '/user/', component: './user/index' },
         { path: '/user/repositorys/new', component: './user/repository/new' },
-      ],
-    },
+        { path: '/user/repositorys', component: './user/repository/index' }
+      ]
+    }
   ],
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
@@ -35,12 +36,12 @@ const config: IConfig = {
             /services\//,
             /model\.(t|j)sx?$/,
             /service\.(t|j)sx?$/,
-            /components\//,
-          ],
-        },
-      },
-    ],
-  ],
+            /components\//
+          ]
+        }
+      }
+    ]
+  ]
   // proxy: {
   //   '/api': {
   //     target: 'http://localhost:8080',

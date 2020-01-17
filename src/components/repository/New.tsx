@@ -7,6 +7,7 @@ import { gql, ApolloError } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import { Message } from '../../api/common/notice';
 import router from 'umi/router';
+import { CurrentUser } from '../../api/user/session';
 
 const GQL_REGISTER = gql`
   mutation createRepository($input: NewRepositoryPayload!) {
@@ -28,13 +29,16 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
 
   document.title = t('repository.create_repository');
 
-  const [createRepository, { loading: mutationLoading, error: mutationError }] = useMutation<{
+  const [
+    createRepository,
+    { loading: mutationLoading, error: mutationError }
+  ] = useMutation<{
     input: NewRepositoryPayload;
   }>(GQL_REGISTER, {
     onCompleted: (data: any) => {
       Message.Success(t('user.tooltip.login_success'));
-      router.push('/user/');
-    },
+      router.push('/user/repositorys');
+    }
   });
 
   const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
@@ -43,8 +47,8 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
       if (!err) {
         createRepository({
           variables: {
-            input: payload,
-          },
+            input: payload
+          }
         });
       }
     });
@@ -52,35 +56,36 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
 
   const formItemLayout = {
     labelCol: { span: 4 },
-    wrapperCol: { span: 14 },
+    wrapperCol: { span: 14 }
   };
 
   return (
     <Form {...formItemLayout} onSubmit={handleSubmit}>
       <Form.Item label={t('repository.owner')}>
-        <span className="ant-form-text">moli</span>
+        <Input hidden={true} value={CurrentUser!.namespacePath}></Input>
+        <span className="ant-form-text">{CurrentUser!.name}</span>
       </Form.Item>
       <Form.Item label={t('repository.name')}>
         {getFieldDecorator('name', {
           rules: [
             {
               required: true,
-              message: t('notice.required'),
+              message: t('notice.required')
             },
             {
               pattern: RepositoryRules.repositoryNameRegex,
-              message: t('repository.tooltip.name'),
-            },
-          ],
+              message: t('repository.tooltip.name')
+            }
+          ]
         })(<Input placeholder={t('repository.name')} />)}
       </Form.Item>
       <Form.Item label={t('repository.description')}>
         {getFieldDecorator('description', {
           rules: [
             {
-              required: false,
-            },
-          ],
+              required: false
+            }
+          ]
         })(<Input />)}
       </Form.Item>
       <Form.Item label={t('repository.public')}>
@@ -96,6 +101,6 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
 }
 
 const newRepositoryForm = Form.create({ name: 'newRepository' })(
-  withTranslation()(NewRepositoryFrom),
+  withTranslation()(NewRepositoryFrom)
 );
 export default newRepositoryForm;
