@@ -4,7 +4,7 @@ import { Layout, Menu, Icon, Avatar, Dropdown } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import Link from 'umi/link';
 import { withTranslation } from 'react-i18next';
-import { CurrentUser } from '../api/user/session';
+import { GetUserInfo } from '../api/user/session';
 import router from 'umi/router';
 import { Message } from '../api/common/notice';
 
@@ -14,7 +14,7 @@ function UserLayout(props: any) {
   const { t } = props;
 
   // 验证用户是否登录
-  if (CurrentUser === null) {
+  if (GetUserInfo() === null) {
     Message.Warning(t('user.tooltip.not_login'));
     router.push('/login');
     return null;
@@ -38,17 +38,12 @@ function UserLayout(props: any) {
               padding: 10,
               margin: 20,
               background: '#333333',
-              color: '#ffffff'
+              color: '#ffffff',
             }}
           >
             GrowerLab
           </div>
-          <Menu
-            theme="dark"
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-          >
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}>
             <SubMenu
               key="sub1"
               title={
@@ -84,10 +79,7 @@ function UserLayout(props: any) {
               type={collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={() => setCollapsed(!collapsed)}
             />
-            <div
-              className="header_quick"
-              style={{ float: 'right', marginRight: '1vw' }}
-            >
+            <div className="header_quick" style={{ float: 'right', marginRight: '1vw' }}>
               <span>
                 <Icon type="search" />
               </span>
@@ -109,7 +101,7 @@ function UserLayout(props: any) {
               margin: '24px 16px',
               padding: 24,
               background: '#fff',
-              minHeight: 280
+              minHeight: 280,
             }}
           >
             {props.children}

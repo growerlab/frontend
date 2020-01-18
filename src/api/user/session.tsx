@@ -1,6 +1,6 @@
 const AuthUserToken = 'auth-user-token';
 
-export let currentUser: LoginInfo | null;
+export let currentUser: LoginInfo | null = null;
 
 export interface LoginInfo {
   token: string;
@@ -12,8 +12,8 @@ export interface LoginInfo {
 
 // 登录方法
 //  将保存token并可以设置过期时间，默认不过期
-export function Login(token: LoginInfo) {
-  localStorage.setItem(AuthUserToken, JSON.stringify(token));
+export function Login(info: LoginInfo) {
+  localStorage.setItem(AuthUserToken, JSON.stringify(info));
   GetUserInfo();
 }
 
@@ -32,6 +32,10 @@ export function GetUserInfo(): LoginInfo | null {
     return currentUser;
   }
 
-  currentUser = JSON.parse(info) as LoginInfo;
-  return currentUser;
+  try {
+    currentUser = JSON.parse(info) as LoginInfo;
+    return currentUser;
+  } catch (error) {
+    return null;
+  }
 }
