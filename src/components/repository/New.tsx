@@ -33,7 +33,7 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
     input: NewRepositoryPayload;
   }>(GQL_REGISTER, {
     onCompleted: (data: any) => {
-      Message.Success(t('user.tooltip.login_success'));
+      Message.Success(t('repository.tooltip.success'));
       router.push('/user/repositorys');
     },
   });

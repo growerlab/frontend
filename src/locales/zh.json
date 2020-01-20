@@ -38,6 +38,7 @@
     "private": "私有仓库",
     "create_repository": "创建仓库",
     "tooltip": {
+      "success": "仓库创建成功",
       "name": "请填写2-50位字符的仓库名(字母，数字，下划线)"
     }
   },
@@ -47,11 +48,12 @@
       "GraphQLError": "服务器接口错误,请于管理员联系",
       "SQLError": "服务器接口错误,请于管理员联系",
       "InvalidParameter": "参数错误,{model}{field}{reason}",
-      "NotFound": "未找到{model}",
+      "NotFoundError": "未找到{model}",
       "AlreadyExists": "{model}{field}已存在",
-      "AccessDenied": "禁止访问{model}, 因为{reason}",
+      "AccessDeniedError": "禁止访问{model}, 因为{reason}",
       "Unauthorize": "无权限，请登录后重试",
-      "PermisstionErrror": "权限错误, 因为{reason}"
+      "PermisstionErrror": "权限错误, 因为{reason}",
+      "RepositoryError": "创建仓库失败, 因为{reason}"
     },
     "model": {
       "User": "用户",
@@ -71,7 +73,10 @@
       "InvalidLength": "错误的长度",
       "Expired": "已过期",
       "Used": "已被使用",
-      "NotEqual": "不匹配"
+      "NotEqual": "不匹配",
+      "AlreadyExists": "已存在",
+      "NotActivated": "未激活",
+      "SvcServerNotready": "服务错误"
     }
   }
 }

@@ -8,7 +8,7 @@ import { GetUserInfo } from '../user/session';
 const client = new ApolloClient({
   uri: config.backendUrl,
   headers: {
-    'auth-user-token': currentUserToken()
+    'auth-user-token': currentUserToken(),
   },
   onError: (error: ErrorResponse) => {
     console.error('apollo onError: ', error);
@@ -21,13 +21,13 @@ const client = new ApolloClient({
         Message.Error(error.graphQLErrors[0].message);
       }
     }
-  }
+  },
 });
 
 function currentUserToken(): string | null {
   let info = GetUserInfo();
   if (info !== null) {
-    return info.namespacePath;
+    return info.token;
   }
   return null;
 }
