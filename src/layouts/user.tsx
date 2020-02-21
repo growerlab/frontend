@@ -32,7 +32,7 @@ function UserLayout(props: any) {
   return (
     <GQLProvider>
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
+        <Sider trigger={null} collapsible collapsed={collapsed} style={{ background: '#fff' }}>
           <div
             style={{
               padding: 10,
@@ -43,7 +43,7 @@ function UserLayout(props: any) {
           >
             GrowerLab
           </div>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}>
+          <Menu theme="light" mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}>
             <SubMenu
               key="sub1"
               title={
@@ -53,14 +53,16 @@ function UserLayout(props: any) {
                 </span>
               }
             >
-              <Menu.Item key="1">仓库列表</Menu.Item>
+              <Menu.Item key="1">
+                <Link to="/user/repositorys">仓库列表</Link>
+              </Menu.Item>
             </SubMenu>
             <SubMenu
               key="sub_menu_user"
               title={
                 <span>
                   <Icon type="user" />
-                  用户管理
+                  <span>用户管理</span>
                 </span>
               }
             >
