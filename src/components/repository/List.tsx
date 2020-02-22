@@ -1,6 +1,6 @@
 import { FormComponentProps } from 'antd/lib/form';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import { List, Button, Skeleton, Avatar } from 'antd';
+import { List, Button, Skeleton, Avatar, Icon } from 'antd';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
@@ -81,24 +81,35 @@ function RepositoryList(props: WithTranslation & RepositoryArgs) {
       </div>
     ) : null;
 
+  const IconText = ({ type, text }) => (
+    <span>
+      <Icon type={type} style={{ marginRight: 8 }} />
+      {text}
+    </span>
+  );
+
   return (
     <div>
       <List
         className="demo-loadmore-list"
         loading={initLoading}
-        itemLayout="horizontal"
+        itemLayout="vertical"
         loadMore={loadMoreBtn}
         dataSource={list}
         renderItem={(item: RepoData) => (
           <List.Item
-            actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
+            key={item.uuid}
+            actions={[
+              <IconText type="star-o" text="0" key="list-vertical-star-o" />,
+              <IconText type="like-o" text="0" key="list-vertical-like-o" />,
+              <IconText type="message" text="0" key="list-vertical-message" />,
+            ]}
           >
-            <Skeleton avatar title={false} loading={false /*item.loading*/} active>
+            <Skeleton avatar={false} title={false} loading={false /*item.loading*/} active>
               <List.Item.Meta
                 title={<a href="https://ant.design">{item.name}</a>}
                 description={item.description}
               />
-              <div>content</div>
             </Skeleton>
           </List.Item>
         )}
