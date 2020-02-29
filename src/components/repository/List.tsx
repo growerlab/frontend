@@ -1,9 +1,12 @@
 import { FormComponentProps } from 'antd/lib/form';
+import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { List, Button, Skeleton, Avatar, Icon } from 'antd';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import Link from 'umi/link';
+import Item from './Item';
 
 const GQL_LIST_REPOSITORY = gql`
   query repositories($ownerPath: String!) {
@@ -105,12 +108,12 @@ function RepositoryList(props: WithTranslation & RepositoryArgs) {
               <IconText type="message" text="0" key="list-vertical-message" />,
             ]}
           >
-            <Skeleton avatar={false} title={false} loading={false /*item.loading*/} active>
-              <List.Item.Meta
-                title={<a href="https://ant.design">{item.name}</a>}
-                description={item.description}
-              />
-            </Skeleton>
+            <Item
+              ownerPath={ownerPath}
+              path={item.path}
+              name={item.name}
+              description={item.description}
+            />
           </List.Item>
         )}
       />

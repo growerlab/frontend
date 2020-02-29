@@ -1,5 +1,14 @@
 import React from 'react';
 
 export default function() {
-  return <div>Rethinking Git</div>;
+  const titleStyle = {
+    fontSize: '24vm',
+    textAlign: 'center',
+  };
+
+  return (
+    <div>
+      <h2 style={titleStyle}>Rethinking Git</h2>
+    </div>
+  );
 }

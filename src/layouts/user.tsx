@@ -24,7 +24,7 @@ function UserLayout(props: any) {
   const plusMenu = (
     <Menu>
       <Menu.Item key="add-repo">
-        <Link to="/user/repositorys/new">{t('repository.new')}</Link>
+        <Link to="/user/repositories/new">{t('repository.new')}</Link>
       </Menu.Item>
     </Menu>
   );
@@ -32,7 +32,12 @@ function UserLayout(props: any) {
   return (
     <GQLProvider>
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider trigger={null} collapsible collapsed={collapsed} style={{ background: '#fff' }}>
+        <Sider
+          trigger={null}
+          collapsible={true}
+          collapsed={collapsed}
+          style={{ background: '#fff' }}
+        >
           <div
             style={{
               padding: 10,
@@ -54,7 +59,7 @@ function UserLayout(props: any) {
               }
             >
               <Menu.Item key="1">
-                <Link to="/user/repositorys">仓库列表</Link>
+                <Link to="/user/repositories">仓库列表</Link>
               </Menu.Item>
             </SubMenu>
             <SubMenu

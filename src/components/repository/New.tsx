@@ -34,7 +34,7 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
   }>(GQL_REGISTER, {
     onCompleted: (data: any) => {
       Message.Success(t('repository.tooltip.success'));
-      router.push('/user/repositorys');
+      router.push('/user/repositories');
     },
   });
 
