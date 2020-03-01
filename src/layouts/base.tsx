@@ -10,7 +10,7 @@ export default function(props: React.PropsWithChildren<any>) {
     case /^\/user\//.test(path):
       return <UserLayout>{props.children}</UserLayout>;
     case /^\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_\-\.]{2,50}/.test(path):
-      return <NamespaceLayout>{props.childrend}</NamespaceLayout>;
+      return <NamespaceLayout>{props.children}</NamespaceLayout>;
     case /^\//.test(path):
       return <IndexLayout>{props.children}</IndexLayout>;
   }

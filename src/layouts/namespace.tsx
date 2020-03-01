@@ -11,7 +11,7 @@ export default function NamespaceLayout(props: any) {
     <GQLProvider>
       <Layout className="layout">
         <BaseHeader />
-        <Content style={{ padding: '0 50px' }}>
+        <Content style={{ padding: '30px 50px' }}>
           <div className="site-layout-content">{props.children}</div>
         </Content>
         <BaseFooter />

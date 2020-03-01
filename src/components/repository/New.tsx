@@ -1,5 +1,5 @@
 import { Form, Switch, Button, Input } from 'antd';
-
+import React from 'react';
 import { FormComponentProps } from 'antd/lib/form';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RepositoryRules } from '../../api/rule';

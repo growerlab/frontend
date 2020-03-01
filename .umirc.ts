@@ -17,7 +17,7 @@ const config: IConfig = {
         { path: '/user/repositories/new', component: './user/repository/new' },
         { path: '/user/repositories', component: './user/repository/index' },
         // namespace => repository
-        { path: '/:namespacePath/:repoPath', component: './namespace/repository/show'}
+        { path: '/:namespacePath/:repoPath', component: './namespace/repository/show' },
       ],
     },
   ],
