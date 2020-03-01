@@ -1,12 +1,12 @@
 import { Form, Switch, Button, Input } from 'antd';
 import React from 'react';
-import { FormComponentProps } from 'antd/lib/form';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import { RepositoryRules } from '../../api/rule';
 import { gql, ApolloError } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
-import { Message } from '../../api/common/notice';
 import router from 'umi/router';
+
+import { RepositoryRules } from '../../api/rule';
+import { Message } from '../../api/common/notice';
 import { GetUserInfo } from '../../api/user/session';
 
 const GQL_REGISTER = gql`
@@ -23,7 +23,7 @@ interface NewRepositoryPayload {
   public: boolean;
 }
 
-function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
+function NewRepositoryFrom(props: WithTranslation) {
   const { t } = props;
   const { getFieldDecorator } = props.form;
 
@@ -99,7 +99,4 @@ function NewRepositoryFrom(props: FormComponentProps & WithTranslation) {
   );
 }
 
-const newRepositoryForm = Form.create({ name: 'newRepository' })(
-  withTranslation()(NewRepositoryFrom),
-);
-export default newRepositoryForm;
+export default withTranslation()(NewRepositoryFrom);

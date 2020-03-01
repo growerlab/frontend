@@ -1,19 +1,26 @@
-import React from 'react';
-import { FormComponentProps } from 'antd/lib/form';
+import React, { useState } from 'react';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
-import { Menu, SubMenu } from 'antd';
+import { Menu, ClickParam } from 'antd';
 
-export default function(props: FormComponentProps) {
+export default function(props: any) {
+  const [current, setCurrent] = useState('code');
+  const { SubMenu } = Menu;
+
+  const handleClick = function(e: ClickParam) {
+    console.log('click ', e);
+    setCurrent(e.key);
+  };
+
   return (
     <div>
-      <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-        <Menu.Item key="mail">
+      <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+        <Menu.Item key="code">
           <MailOutlined />
-          Navigation One
+          Code
         </Menu.Item>
-        <Menu.Item key="app" disabled={true}>
+        <Menu.Item key="issue">
           <AppstoreOutlined />
-          Navigation Two
+          Issue
         </Menu.Item>
         <SubMenu
           title={

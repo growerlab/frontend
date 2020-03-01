@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import GQLProvider from '../api/graphql/provider';
-import { Layout, Menu, Icon, Avatar, Dropdown } from 'antd';
+
+import {
+  CodeOutlined,
+  DownOutlined,
+  PlusOutlined,
+  SearchOutlined,
+  UploadOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+
+import { Layout, Menu, Avatar, Dropdown } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import Link from 'umi/link';
 import { withTranslation } from 'react-i18next';
@@ -53,7 +63,7 @@ function UserLayout(props: any) {
               key="sub1"
               title={
                 <span>
-                  <Icon type="code" />
+                  <CodeOutlined />
                   <span>仓库</span>
                 </span>
               }
@@ -66,7 +76,7 @@ function UserLayout(props: any) {
               key="sub_menu_user"
               title={
                 <span>
-                  <Icon type="user" />
+                  <UserOutlined />
                   <span>用户管理</span>
                 </span>
               }
@@ -74,32 +84,32 @@ function UserLayout(props: any) {
               <Menu.Item key="2_1">修改密码</Menu.Item>
             </SubMenu>
             <Menu.Item key="3">
-              <Icon type="upload" />
+              <UploadOutlined />
               <span>设置</span>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }}>
-            <Icon
-              style={{ paddingLeft: 20 }}
-              type={collapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={() => setCollapsed(!collapsed)}
-            />
+            {/*<LegacyIcon*/}
+            {/*  style={{ paddingLeft: 20 }}*/}
+            {/*  type={collapsed ? 'menu-unfold' : 'menu-fold'}*/}
+            {/*  onClick={() => setCollapsed(!collapsed)}*/}
+            {/*/>*/}
             <div className="header_quick" style={{ float: 'right', marginRight: '1vw' }}>
               <span>
-                <Icon type="search" />
+                <SearchOutlined />
               </span>
               <span>
                 <Dropdown overlay={plusMenu}>
                   <a className="ant-dropdown-link" href="#">
-                    <Icon type="plus" />
-                    <Icon type="down" />
+                    <PlusOutlined />
+                    <DownOutlined />
                   </a>
                 </Dropdown>
               </span>
               <span>
-                <Avatar size={30} icon="user" />
+                <Avatar size={30} icon={<UserOutlined />} />
               </span>
             </div>
           </Header>

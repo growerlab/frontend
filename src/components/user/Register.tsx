@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Tooltip, Icon, Button, Card, message } from 'antd';
-import { FormComponentProps } from 'antd/lib/form/Form';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Input, Tooltip, Button, Card, Form } from 'antd';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { ApolloError, gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import router from 'umi/router';
+
 import { Message } from '../../api/common/notice';
 import { UserRules } from '../../api/rule';
 
@@ -48,20 +49,8 @@ const tailFormItemLayout = {
   },
 };
 
-function RegisterForm(props: FormComponentProps & WithTranslation) {
-  const {
-    getFieldDecorator,
-    getFieldsError,
-    isFieldTouched,
-    getFieldError,
-    validateFields,
-  } = props.form;
-
+function RegisterForm(props: WithTranslation) {
   const { t } = props;
-
-  useEffect(() => {
-    validateFields();
-  }, [validateFields]);
 
   const [registerUser, { loading: mutationLoading, error: mutationError }] = useMutation<{
     input: NewUserPayload;
@@ -72,31 +61,14 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
     },
   });
 
-  let handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    props.form.validateFieldsAndScroll((err, payload: NewUserPayload) => {
-      if (!err) {
-        // console.log('Received values of form: ', payload);
-        registerUser({
-          variables: {
-            input: payload,
-          },
-        });
-        // .then(value => {
-        //   console.log('then -- ', value);
-        // });
-      }
+  const onFinish = function(values: {}) {
+    console.info('on finish', values);
+    registerUser({
+      variables: {
+        input: values,
+      },
     });
   };
-
-  let hasErrors = function(fieldsError: Record<string, string[] | undefined>) {
-    return Object.keys(fieldsError).some(field => fieldsError[field]);
-  };
-
-  const usernameError = isFieldTouched('username') && getFieldError('username');
-  const emailError = isFieldTouched('email') && getFieldError('email');
-  const passwordError = isFieldTouched('password') && getFieldError('password');
 
   return (
     <div>
@@ -105,77 +77,77 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
         extra={<span>{t('user.tooltip.register_notice')}</span>}
         style={{ width: 'auto' }}
       >
-        <Form {...formItemLayout} onSubmit={handleSubmit}>
-          <Form.Item label={t('user.username')} validateStatus={usernameError ? 'error' : ''}>
-            {getFieldDecorator('username', {
-              rules: [
-                {
-                  required: true,
-                  message: t('notice.required'),
-                },
-                {
-                  min: UserRules.usernameMinLength,
-                  message: t('user.tooltip.username'),
-                },
-                {
-                  max: UserRules.usernameMaxLength,
-                  message: t('user.tooltip.username'),
-                },
-                {
-                  pattern: UserRules.usernameRegex,
-                  message: t('user.tooltip.username'),
-                },
-              ],
-            })(<Input placeholder={t('user.tooltip.username')} />)}
+        <Form {...formItemLayout} onFinish={onFinish}>
+          <Form.Item
+            label={t('user.username')}
+            rules={[
+              {
+                required: true,
+                message: t('notice.required'),
+              },
+              {
+                min: UserRules.usernameMinLength,
+                message: t('user.tooltip.username'),
+              },
+              {
+                max: UserRules.usernameMaxLength,
+                message: t('user.tooltip.username'),
+              },
+              {
+                pattern: UserRules.usernameRegex,
+                message: t('user.tooltip.username'),
+              },
+            ]}
+          >
+            <Input placeholder={t('user.tooltip.username')} />
           </Form.Item>
           <Form.Item
             label={
               <span>
                 {t('user.email')}{' '}
                 <Tooltip title={t('user.tooltip.email_tip')}>
-                  <Icon type="question-circle-o" />
+                  <QuestionCircleOutlined />
                 </Tooltip>
               </span>
             }
-            validateStatus={emailError ? 'error' : ''}
+            rules={[
+              {
+                required: true,
+                message: t('notice.required'),
+              },
+              {
+                type: 'email',
+                message: t('user.tooltip.email'),
+              },
+            ]}
           >
-            {getFieldDecorator('email', {
-              rules: [
-                {
-                  required: true,
-                  message: t('notice.required'),
-                },
-                {
-                  type: 'email',
-                  message: t('user.tooltip.email'),
-                },
-              ],
-            })(<Input placeholder={t('user.tooltip.email')} />)}
+            <Input placeholder={t('user.tooltip.email')} />
           </Form.Item>
-          <Form.Item label={t('user.password')} validateStatus={passwordError ? 'error' : ''}>
-            {getFieldDecorator('password', {
-              rules: [
-                {
-                  required: true,
-                  message: t('notice.required'),
-                },
-                {
-                  min: UserRules.pwdMinLength,
-                  message: t('user.tooltip.password'),
-                },
-                {
-                  max: UserRules.pwdMaxLength,
-                  message: t('user.tooltip.password'),
-                },
-                {
-                  pattern: UserRules.passwordRegex,
-                  message: t('user.tooltip.password'),
-                },
-              ],
-            })(<Input.Password placeholder={t('user.tooltip.password')} />)}
+          <Form.Item
+            label={t('user.password')}
+            rules={[
+              {
+                required: true,
+                message: t('notice.required'),
+              },
+              {
+                min: UserRules.pwdMinLength,
+                message: t('user.tooltip.password'),
+              },
+              {
+                max: UserRules.pwdMaxLength,
+                message: t('user.tooltip.password'),
+              },
+              {
+                pattern: UserRules.passwordRegex,
+                message: t('user.tooltip.password'),
+              },
+            ]}
+          >
+            <Input.Password placeholder={t('user.tooltip.password')} />
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
+            <Button type="primary" htmlType="submit">
               {t('user.register')}
             </Button>
           </Form.Item>
@@ -185,5 +157,4 @@ function RegisterForm(props: FormComponentProps & WithTranslation) {
   );
 }
 
-const registerForm = Form.create({ name: 'register' })(withTranslation()(RegisterForm));
-export default registerForm;
+export default withTranslation()(RegisterForm);

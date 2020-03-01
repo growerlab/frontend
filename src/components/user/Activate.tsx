@@ -1,6 +1,11 @@
-import { FormComponentProps } from 'antd/lib/form';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import { Result, Button, Spin, Icon } from 'antd';
+import {
+  FrownTwoTone,
+  QuestionCircleTwoTone,
+  SmileTwoTone,
+  LoadingOutlined,
+} from '@ant-design/icons';
+import { Result, Button } from 'antd';
 import { ApolloError, gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import router from 'umi/router';
@@ -32,7 +37,7 @@ interface Status {
 // 状态
 //  1. 请求参数中未包含code 2. 请求接口中 3|4. 接口返回正常|错误  5. 激活码已被使用过(服务器端返回)
 //
-function Activate(props: FormComponentProps & WithTranslation) {
+function Activate(props: WithTranslation) {
   const { t } = props;
 
   let { code } = useParams();
@@ -52,22 +57,22 @@ function Activate(props: FormComponentProps & WithTranslation) {
     NotFound: {
       Title: t('user.activate.not_found.code'),
       SubTitle: t('user.activate.invalid'),
-      Icon: <Icon type="question-circle" theme="twoTone" />,
+      Icon: <QuestionCircleTwoTone />,
     },
     Pending: {
       Title: t('user.activate.pending'),
       SubTitle: t('user.activate.pending_sub'),
-      Icon: <Spin size="large" />,
+      Icon: <LoadingOutlined />,
     },
     Faild: {
       Title: t('user.activate.invalid'),
-      Icon: <Icon type="frown" theme="twoTone" />,
+      Icon: <FrownTwoTone />,
       Extra: loginBtn,
     },
     Success: {
       Title: t('user.activate.success'),
       SubTitle: t('user.activate.success_sub'),
-      Icon: <Icon type="smile" theme="twoTone" />,
+      Icon: <SmileTwoTone />,
       Extra: loginBtn,
     },
   };

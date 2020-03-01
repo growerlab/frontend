@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import RepositoryList from '../../../components/repository/List';
 import { GetUserInfo } from '../../../api/user/session';
 

@@ -1,12 +1,11 @@
-import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import { List, Button, Skeleton, Avatar, Icon } from 'antd';
+import { List, Button, Skeleton, Avatar } from 'antd';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import Link from 'umi/link';
 import Item from './Item';
+import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons/lib';
 
 const GQL_LIST_REPOSITORY = gql`
   query repositories($ownerPath: String!) {
@@ -84,13 +83,6 @@ function RepositoryList(props: WithTranslation & RepositoryArgs) {
       </div>
     ) : null;
 
-  const IconText = ({ type, text }) => (
-    <span>
-      <Icon type={type} style={{ marginRight: 8 }} />
-      {text}
-    </span>
-  );
-
   return (
     <div>
       <List
@@ -102,11 +94,7 @@ function RepositoryList(props: WithTranslation & RepositoryArgs) {
         renderItem={(item: RepoData) => (
           <List.Item
             key={item.uuid}
-            actions={[
-              <IconText type="star-o" text="0" key="list-vertical-star-o" />,
-              <IconText type="like-o" text="0" key="list-vertical-like-o" />,
-              <IconText type="message" text="0" key="list-vertical-message" />,
-            ]}
+            actions={[<StarOutlined />, <LikeOutlined />, <MessageOutlined />]}
           >
             <Item
               ownerPath={ownerPath}

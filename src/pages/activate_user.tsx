@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import { FormComponentProps } from 'antd/lib/form/Form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 import Activate from '../components/user/Activate';
 
 export default function ActivateUser(props: FormComponentProps) {

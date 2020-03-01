@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Tooltip, Icon, Button, Card } from 'antd';
-import { FormComponentProps } from 'antd/lib/form/Form';
+import { Input, Button, Card, Form } from 'antd';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { ApolloError, gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import router from 'umi/router';
+import Link from 'umi/link';
+
 import { Message } from '../../api/common/notice';
 import { UserRules } from '../../api/rule';
-import Link from 'umi/link';
 import { Login, LoginInfo } from '../../api/user/session';
 
 // TODO 没有标题
@@ -15,25 +15,25 @@ import { Login, LoginInfo } from '../../api/user/session';
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 8 }
+    sm: { span: 8 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 10 }
-  }
+    sm: { span: 10 },
+  },
 };
 
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
       span: 24,
-      offset: 0
+      offset: 0,
     },
     sm: {
       span: 3,
-      offset: 8
-    }
-  }
+      offset: 8,
+    },
+  },
 };
 
 const GQL_REGISTER = gql`
@@ -53,25 +53,10 @@ interface LoginUserPayload {
   password: string;
 }
 
-function LoginForm(props: FormComponentProps & WithTranslation) {
+function LoginForm(props: WithTranslation) {
   const { t } = props;
 
-  const {
-    getFieldDecorator,
-    getFieldsError,
-    isFieldTouched,
-    getFieldError,
-    validateFields
-  } = props.form;
-
-  useEffect(() => {
-    validateFields();
-  }, [validateFields]);
-
-  const [
-    loginUser,
-    { loading: mutationLoading, error: mutationError }
-  ] = useMutation<{
+  const [loginUser, { loading: mutationLoading, error: mutationError }] = useMutation<{
     input: LoginUserPayload;
   }>(GQL_REGISTER, {
     onCompleted: (data: any) => {
@@ -80,28 +65,15 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
       }
       Message.Success(t('user.tooltip.login_success'));
       router.push('/user/');
-    }
+    },
   });
 
-  let handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    props.form.validateFieldsAndScroll((err, payload: LoginUserPayload) => {
-      if (!err) {
-        // console.log('Received values of form: ', payload);
-        loginUser({
-          variables: {
-            input: payload
-          }
-        });
-      }
+  const onFinish = function(values: {}) {
+    loginUser({
+      variables: {
+        input: values,
+      },
     });
-  };
-
-  const emailError = isFieldTouched('email') && getFieldError('email');
-  const passwordError = isFieldTouched('password') && getFieldError('password');
-  let hasErrors = function(fieldsError: Record<string, string[] | undefined>) {
-    return Object.keys(fieldsError).some(field => fieldsError[field]);
   };
 
   return (
@@ -111,55 +83,47 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
         extra={<Link to="/register">{t('user.register')}</Link>}
         style={{ width: 'auto' }}
       >
-        <Form {...formItemLayout} onSubmit={handleSubmit}>
+        <Form {...formItemLayout} onFinish={onFinish}>
           <Form.Item
             label={<span>{t('user.email')} </span>}
-            validateStatus={emailError ? 'error' : ''}
+            rules={[
+              {
+                required: true,
+                message: t('notice.required'),
+              },
+              {
+                type: 'email',
+                message: t('user.tooltip.email'),
+              },
+            ]}
           >
-            {getFieldDecorator('email', {
-              rules: [
-                {
-                  required: true,
-                  message: t('notice.required')
-                },
-                {
-                  type: 'email',
-                  message: t('user.tooltip.email')
-                }
-              ]
-            })(<Input placeholder={t('user.tooltip.email')} />)}
+            <Input placeholder={t('user.tooltip.email')} />
           </Form.Item>
           <Form.Item
             label={t('user.password')}
-            validateStatus={passwordError ? 'error' : ''}
+            rules={[
+              {
+                required: true,
+                message: t('notice.required'),
+              },
+              {
+                min: UserRules.pwdMinLength,
+                message: t('user.tooltip.password'),
+              },
+              {
+                max: UserRules.pwdMaxLength,
+                message: t('user.tooltip.password'),
+              },
+              {
+                pattern: UserRules.passwordRegex,
+                message: t('user.tooltip.password'),
+              },
+            ]}
           >
-            {getFieldDecorator('password', {
-              rules: [
-                {
-                  required: true,
-                  message: t('notice.required')
-                },
-                {
-                  min: UserRules.pwdMinLength,
-                  message: t('user.tooltip.password')
-                },
-                {
-                  max: UserRules.pwdMaxLength,
-                  message: t('user.tooltip.password')
-                },
-                {
-                  pattern: UserRules.passwordRegex,
-                  message: t('user.tooltip.password')
-                }
-              ]
-            })(<Input.Password placeholder={t('user.tooltip.password')} />)}
+            <Input.Password placeholder={t('user.tooltip.password')} />
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={hasErrors(getFieldsError())}
-            >
+            <Button type="primary" htmlType="submit">
               {t('user.login')}
             </Button>
           </Form.Item>
@@ -169,5 +133,4 @@ function LoginForm(props: FormComponentProps & WithTranslation) {
   );
 }
 
-const loginForm = Form.create({ name: 'login' })(withTranslation()(LoginForm));
-export default loginForm;
+export default withTranslation()(LoginForm);
