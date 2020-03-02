@@ -85,6 +85,7 @@ function LoginForm(props: WithTranslation) {
       >
         <Form {...formItemLayout} onFinish={onFinish}>
           <Form.Item
+            name="email"
             label={<span>{t('user.email')} </span>}
             rules={[
               {
@@ -100,6 +101,7 @@ function LoginForm(props: WithTranslation) {
             <Input placeholder={t('user.tooltip.email')} />
           </Form.Item>
           <Form.Item
+            name="password"
             label={t('user.password')}
             rules={[
               {

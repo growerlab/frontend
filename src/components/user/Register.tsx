@@ -80,6 +80,7 @@ function RegisterForm(props: WithTranslation) {
         <Form {...formItemLayout} onFinish={onFinish}>
           <Form.Item
             label={t('user.username')}
+            name="username"
             rules={[
               {
                 required: true,
@@ -102,6 +103,7 @@ function RegisterForm(props: WithTranslation) {
             <Input placeholder={t('user.tooltip.username')} />
           </Form.Item>
           <Form.Item
+            name="email"
             label={
               <span>
                 {t('user.email')}{' '}
@@ -124,6 +126,7 @@ function RegisterForm(props: WithTranslation) {
             <Input placeholder={t('user.tooltip.email')} />
           </Form.Item>
           <Form.Item
+            name="password"
             label={t('user.password')}
             rules={[
               {
