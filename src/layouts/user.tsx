@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import GQLProvider from '../api/graphql/provider';
-
 import {
   CodeOutlined,
   DownOutlined,
@@ -9,7 +8,6 @@ import {
   UploadOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-
 import { Layout, Menu, Avatar, Dropdown } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import Link from 'umi/link';
@@ -30,6 +28,7 @@ function UserLayout(props: any) {
     return null;
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [collapsed, setCollapsed] = useState(false);
   const plusMenu = (
     <Menu>
@@ -104,12 +103,11 @@ function UserLayout(props: any) {
                 <Dropdown overlay={plusMenu}>
                   <a className="ant-dropdown-link" href="#">
                     <PlusOutlined />
-                    <DownOutlined />
                   </a>
                 </Dropdown>
               </span>
               <span>
-                <Avatar size={30} icon={<UserOutlined />} />
+                <Avatar size={'default'} icon={<UserOutlined />} />
               </span>
             </div>
           </Header>
