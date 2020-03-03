@@ -1,4 +1,10 @@
 {
+  "website": {
+    "title": "GrowerLab",
+    "register": "用户注册",
+    "login": "用户登录",
+    "activate_user": "用户激活"
+  },
   "notice": {
     "required": "必填项"
   },
@@ -51,8 +57,8 @@
       "NotFoundError": "未找到{model}",
       "AlreadyExists": "{model}{field}已存在",
       "AccessDeniedError": "禁止访问{model}, 因为{reason}",
-      "Unauthorize": "无权限，请登录后重试",
-      "PermisstionErrror": "权限错误, 因为{reason}",
+      "Unauthorized": "无权限，请登录后重试",
+      "PermissionError": "权限错误, 因为{reason}",
       "RepositoryError": "创建仓库失败, 因为{reason}"
     },
     "model": {
@@ -76,7 +82,7 @@
       "NotEqual": "不匹配",
       "AlreadyExists": "已存在",
       "NotActivated": "未激活",
-      "SvcServerNotready": "服务错误"
+      "SvcServerNotReady": "服务错误"
     }
   }
 }

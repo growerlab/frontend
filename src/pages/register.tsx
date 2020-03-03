@@ -1,17 +1,23 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 import RegisterForm from '../components/user/Register';
+import { withTranslation } from 'react-i18next';
 
-export default function Register(props: any) {
+const register = function Register(props: any) {
+  const { t } = props;
+  document.title = t('website.register');
+
   return (
     <div>
       <Row>
-        <Col span={6}></Col>
+        <Col span={6} />
         <Col span={12}>
-          <RegisterForm></RegisterForm>
+          <RegisterForm />
         </Col>
-        <Col span={6}></Col>
+        <Col span={6} />
       </Row>
     </div>
   );
-}
+};
+
+export default withTranslation()(register);

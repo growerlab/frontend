@@ -16,9 +16,12 @@ const client = new ApolloClient({
       Message.Error(i18n.t('message.error.ERROR'));
       return;
     }
+
     if (error.graphQLErrors) {
       if (error.graphQLErrors.length > 0) {
-        Message.Error(error.graphQLErrors[0].message);
+        // @ts-ignore
+        const code = error.graphQLErrors[0].extensions.code;
+        Message.Error(code);
       }
     }
   },

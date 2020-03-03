@@ -10,8 +10,6 @@ import { Message } from '../../api/common/notice';
 import { UserRules } from '../../api/rule';
 import { Login, LoginInfo } from '../../api/user/session';
 
-// TODO 没有标题
-
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -56,24 +54,24 @@ interface LoginUserPayload {
 function LoginForm(props: WithTranslation) {
   const { t } = props;
 
-  const [loginUser, { loading: mutationLoading, error: mutationError }] = useMutation<{
+  const [loginUser] = useMutation<{
     input: LoginUserPayload;
-  }>(GQL_REGISTER, {
-    onCompleted: (data: any) => {
-      if (data.loginUser) {
-        Login(data.loginUser as LoginInfo);
-      }
-      Message.Success(t('user.tooltip.login_success'));
-      router.push('/user/');
-    },
-  });
+  }>(GQL_REGISTER);
 
   const onFinish = function(values: {}) {
     loginUser({
       variables: {
         input: values,
       },
-    });
+    })
+      .then((data: any) => {
+        if (data.data.loginUser) {
+          Login(data.data.loginUser as LoginInfo);
+        }
+        Message.Success(t('user.tooltip.login_success'));
+        router.push('/user/');
+      })
+      .catch(reason => {});
   };
 
   return (

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import {
   FrownTwoTone,
@@ -6,13 +7,10 @@ import {
   LoadingOutlined,
 } from '@ant-design/icons';
 import { Result, Button } from 'antd';
-import { ApolloError, gql } from 'apollo-boost';
+import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import router from 'umi/router';
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-
-// TODO 没有标题
 
 const GQL_REGISTER = gql`
   mutation activateUser($input: ActivationCodePayload!) {
@@ -64,7 +62,7 @@ function Activate(props: WithTranslation) {
       SubTitle: t('user.activate.pending_sub'),
       Icon: <LoadingOutlined />,
     },
-    Faild: {
+    Failed: {
       Title: t('user.activate.invalid'),
       Icon: <FrownTwoTone />,
       Extra: loginBtn,
@@ -79,18 +77,9 @@ function Activate(props: WithTranslation) {
 
   const [curStatus, setStatus] = useState(status['Pending']);
 
-  const [activateUser, { loading: mutationLoading, error: mutationError }] = useMutation<{
+  const [activateUser] = useMutation<{
     input: ActivationCodePayload;
-  }>(GQL_REGISTER, {
-    onCompleted: (data: any) => {
-      if (data.activateUser.OK !== null) {
-        setStatus(status['Success']);
-      }
-    },
-    onError: (error: ApolloError) => {
-      setStatus(status['Faild']);
-    },
-  });
+  }>(GQL_REGISTER);
 
   useEffect(() => {
     activateUser({
@@ -99,7 +88,15 @@ function Activate(props: WithTranslation) {
           code: code,
         },
       },
-    });
+    })
+      .then((data: any) => {
+        if (data.data.activateUser.OK !== null) {
+          setStatus(status['Success']);
+        }
+      })
+      .catch((reason: any) => {
+        setStatus(status['Failed']);
+      });
   }, []);
 
   return (

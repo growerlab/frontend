@@ -1,20 +1,23 @@
 import React from 'react';
-
 import { Row, Col } from 'antd';
-
-import { FormComponentProps } from '@ant-design/compatible/lib/form/Form';
 import LoginForm from '../components/user/Login';
+import { withTranslation } from 'react-i18next';
 
-export default function Login(props: FormComponentProps) {
+const login = function(props: any) {
+  const { t } = props;
+  document.title = t('website.login');
+
   return (
     <div>
       <Row>
-        <Col span={6}></Col>
+        <Col span={6} />
         <Col span={12}>
-          <LoginForm></LoginForm>
+          <LoginForm />
         </Col>
-        <Col span={6}></Col>
+        <Col span={6} />
       </Row>
     </div>
   );
-}
+};
+
+export default withTranslation()(login);
