@@ -5,7 +5,8 @@ import {
   IssuesCloseOutlined,
   CloudDownloadOutlined,
 } from '@ant-design/icons';
-import {Menu, Popover} from 'antd';
+import {Menu, PageHeader, Popover, Tag} from 'antd';
+import {LockOutlined} from "@ant-design/icons/lib";
 
 export default function(props: any) {
   const [current, setCurrent] = useState('code');
@@ -21,16 +22,19 @@ export default function(props: any) {
 
   return (
     <div>
+      <PageHeader
+        title={<span><Tag color="blue"><LockOutlined /></Tag> moli / hello</span>}
+      />
       <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
         <Menu.Item key="code">
           <CodeOutlined />
           Code
         </Menu.Item>
-        <Menu.Item key="issues">
+        <Menu.Item key="issues" disabled={true}>
           <IssuesCloseOutlined />
           Issues
         </Menu.Item>
-        <Menu.Item key="settings" style={{ float: 'right' }}>
+        <Menu.Item key="settings" style={{ float: 'right' }} disabled={true}>
           <SettingOutlined />
           Settings
         </Menu.Item>
