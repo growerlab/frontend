@@ -1,4 +1,4 @@
 const config = {
-  backendUrl: 'http://git.com/api/graphql',
+  backendUrl: '/api/graphql',
 };
 export default config;
