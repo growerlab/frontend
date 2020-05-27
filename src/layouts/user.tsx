@@ -15,6 +15,7 @@ import { withTranslation } from 'react-i18next';
 import { GetUserInfo } from '../api/user/session';
 import router from 'umi/router';
 import { Message } from '../api/common/notice';
+import Router from '../router';
 
 const { Header, Sider, Content } = Layout;
 
@@ -24,7 +25,7 @@ function UserLayout(props: any) {
   // 验证用户是否登录
   if (GetUserInfo() === null) {
     Message.Warning(t('user.tooltip.not_login'));
-    router.push('/login');
+    router.push(Router.Home.Login);
     return null;
   }
 

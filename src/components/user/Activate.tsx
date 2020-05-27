@@ -11,6 +11,7 @@ import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import router from 'umi/router';
 import { useParams } from 'react-router';
+import { Router } from '../../router';
 
 const GQL_REGISTER = gql`
   mutation activateUser($input: ActivationCodePayload!) {
@@ -44,7 +45,7 @@ function Activate(props: WithTranslation) {
     <Button
       type="primary"
       onClick={() => {
-        router.push('/login');
+        router.push(Router.Home.Login);
       }}
     >
       {t('user.login')}

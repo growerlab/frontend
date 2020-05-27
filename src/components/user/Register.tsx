@@ -8,6 +8,7 @@ import router from 'umi/router';
 
 import { Message } from '../../api/common/notice';
 import { UserRules } from '../../api/rule';
+import { Router } from '../../router';
 
 const GQL_REGISTER = gql`
   mutation registerUser($input: NewUserPayload!) {
@@ -55,7 +56,7 @@ function RegisterForm(props: WithTranslation) {
   }>(GQL_REGISTER, {
     onCompleted: (data: any) => {
       Message.Success(t('user.tooltip.register_success'));
-      router.push('/login');
+      router.push(Router.Home.Login);
     },
   });
 

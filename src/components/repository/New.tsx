@@ -8,6 +8,7 @@ import router from 'umi/router';
 import { RepositoryRules } from '../../api/rule';
 import { Message } from '../../api/common/notice';
 import { GetUserInfo } from '../../api/user/session';
+import Router from '../../router';
 
 const GQL_REGISTER = gql`
   mutation createRepository($input: NewRepositoryPayload!) {
@@ -34,7 +35,7 @@ function NewRepositoryFrom(props: WithTranslation) {
   }>(GQL_REGISTER, {
     onCompleted: (data: any) => {
       Message.Success(t('repository.tooltip.success'));
-      router.push('/user/repositories');
+      router.push(Router.User.Repository.List);
     },
   });
 

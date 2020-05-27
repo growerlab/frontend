@@ -9,6 +9,7 @@ import Link from 'umi/link';
 import { Message } from '../../api/common/notice';
 import { UserRules } from '../../api/rule';
 import { Login, LoginInfo } from '../../api/user/session';
+import Router from '../../router';
 
 const formItemLayout = {
   labelCol: {
@@ -69,7 +70,7 @@ function LoginForm(props: WithTranslation) {
           Login(data.data.loginUser as LoginInfo);
         }
         Message.Success(t('user.tooltip.login_success'));
-        router.push('/user/');
+        router.push(Router.User.Index);
       })
       .catch(reason => {});
   };

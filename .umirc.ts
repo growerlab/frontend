@@ -1,23 +1,24 @@
 import { IConfig } from 'umi-types';
+import Router from './src/router';
 
 // ref: https://umijs.org/config/
 const config: IConfig = {
   treeShaking: true,
   routes: [
     {
-      path: '/',
+      path: Router.Index,
       component: '../layouts/base',
       routes: [
-        { path: '/', component: './index' },
-        { path: '/register', component: './register' },
-        { path: '/activate_user/:code', component: './activate_user' },
-        { path: '/login', component: './login' },
+        { path: Router.Home.Index, component: './index' },
+        { path: Router.Home.Register, component: './register' },
+        { path: Router.Home.ActivateUser, component: './activate_user' },
+        { path: Router.Home.Login, component: './login' },
         // user
-        { path: '/user/', component: './user/index' },
-        { path: '/user/repositories/new', component: './user/repository/new' },
-        { path: '/user/repositories', component: './user/repository/index' },
+        { path: Router.User.Index, component: './user/index' },
+        { path: Router.User.Repository.New, component: './user/repository/new' },
+        { path: Router.User.Repository.List, component: './user/repository/index' },
         // namespace => repository
-        { path: '/:namespacePath/:repoPath', component: './namespace/repository/show' },
+        { path: Router.Namespace.Repository, component: './namespace/repository/show' },
       ],
     },
   ],
