@@ -1,4 +1,4 @@
-export const Router = {
+const Router = {
   Home: {
     Index: '/',
     Register: '/register',
@@ -17,4 +17,4 @@ export const Router = {
   },
 };
 
-export default Router;
+module.exports = Router;

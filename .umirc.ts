@@ -6,7 +6,7 @@ const config: IConfig = {
   treeShaking: true,
   routes: [
     {
-      path: Router.Index,
+      path: Router.Home.Index,
       component: '../layouts/base',
       routes: [
         { path: Router.Home.Index, component: './index' },
