@@ -10,7 +10,7 @@ interface Args {
   description: string;
 }
 
-function Item(props: WithTranslation & Args) {
+function ListItem(props: WithTranslation & Args) {
   const { ownerPath } = props;
   const { path, name, description } = props;
 
@@ -26,4 +26,4 @@ function Item(props: WithTranslation & Args) {
   );
 }
 
-export default withTranslation()(Item);
+export default withTranslation()(ListItem);

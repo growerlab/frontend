@@ -3,71 +3,42 @@ import { WithTranslation, withTranslation } from 'react-i18next';
 import { List, Button, Skeleton, Avatar } from 'antd';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
-import Item from './Item';
+import Item from './ListItem';
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons/lib';
+import {
+  GQL_QUERY_REPOSITORIES,
+  Repository,
+  TypeRepositoriesArgs,
+  TypeRepositories,
+} from '../../api/repository/graphql';
 
-const GQL_LIST_REPOSITORY = gql`
-  query repositories($ownerPath: String!) {
-    repositories(ownerPath: $ownerPath) {
-      uuid
-      path
-      name
-      description
-      createdAt
-      owner {
-        name
-        username
-      }
-    }
-  }
-`;
-
-interface RepoData {
-  uuid: string;
-  name: string;
-  path: string;
-  description: string;
-  createdAt: number;
-  Public: boolean;
-  // StartCount: number;
-  // ForkCount: number;
-  // LastUpdatedAt: number;
-}
-
-interface Repositories {
-  repositories: RepoData[];
-}
-
-interface RepositoryArgs {
-  ownerPath: string;
-}
-
-function RepositoryList(props: WithTranslation & RepositoryArgs) {
+function RepositoryList(props: WithTranslation & TypeRepositoriesArgs) {
   const { t } = props;
   const { ownerPath } = props;
-  let defaultRepoData: RepoData[] = [];
-
   const [initLoading, setInitLoading] = useState(false);
-  const [list, setList] = useState(defaultRepoData);
 
-  const { data, loading, error } = useQuery<Repositories, {}>(GQL_LIST_REPOSITORY, {
+  const { data, loading, error } = useQuery<TypeRepositories, {}>(GQL_QUERY_REPOSITORIES, {
     variables: { ownerPath: ownerPath },
   });
 
-  useEffect(() => {
-    if (!loading && error === undefined) {
-      if (data !== undefined) {
-        defaultRepoData = defaultRepoData.concat(data!.repositories);
-        setList(defaultRepoData);
-      }
-    }
-  }, [loading]);
+  if (loading) {
+    return 'loading...';
+  }
 
-  const onLoadMore = function() {
-    // fetchMore()
-    // return defaultRepoData;
-  };
+  // let defaultRepoData: TypeRepositories = { repositories: [] };
+  // const [list, setList] = useState<TypeRepositories>(defaultRepoData);
+
+  // useEffect(() => {
+  //   if (data !== undefined) {
+  //     defaultRepoData.repositories = defaultRepoData.repositories.concat(data!.repositories);
+  //     setList(defaultRepoData);
+  //   }
+  // }, [loading]);
+
+  // const onLoadMore = function() {
+  //   fetchMore();
+  //   return defaultRepoData;
+  // };
 
   const loadMoreBtn =
     !initLoading && !loading ? (
@@ -90,11 +61,11 @@ function RepositoryList(props: WithTranslation & RepositoryArgs) {
         loading={initLoading}
         itemLayout="vertical"
         loadMore={loadMoreBtn}
-        dataSource={list}
-        renderItem={(item: RepoData) => (
+        dataSource={data!.repositories}
+        renderItem={(item: Repository) => (
           <List.Item
             key={item.uuid}
-            actions={[<StarOutlined />, <LikeOutlined />, <MessageOutlined />]}
+            // actions={[<StarOutlined />, <LikeOutlined />, <MessageOutlined />]}
           >
             <Item
               ownerPath={ownerPath}
