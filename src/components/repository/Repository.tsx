@@ -70,8 +70,8 @@ function Repository(props: WithTranslation & TypeRepositoryArgs) {
             title="Clone or download"
             content={
               <div>
-                <div>http</div>
-                <div>ssh</div>
+                <div>{data!.repository.gitHttpURL}</div>
+                <div>{data!.repository.gitSshURL}</div>
               </div>
             }
           >
