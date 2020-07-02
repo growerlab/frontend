@@ -7,7 +7,7 @@ export function BaseHeader(props: any) {
   const logoStyle = {
     width: '120px',
     height: '31px',
-    background: 'rgba(255, 255, 255, 0.2)',
+    background: 'rgba(0, 0, 0, 0.2)',
     margin: '16px 24px 16px 0',
     float: 'left',
   };
@@ -17,10 +17,9 @@ export function BaseHeader(props: any) {
       <Header>
         <div style={logoStyle} />
         <Menu
-          theme="dark"
           mode="horizontal"
           defaultSelectedKeys={['2']}
-          style={{ lineHeight: '64px', float: 'right' }}
+          style={{ lineHeight: '62px', float: 'right' }}
         >
           <Menu.Item key="1">
             <Link to="/">Home</Link>

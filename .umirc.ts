@@ -17,6 +17,7 @@ const config: IConfig = {
         { path: Router.User.Index, component: './user/index' },
         { path: Router.User.Repository.New, component: './user/repository/new' },
         { path: Router.User.Repository.List, component: './user/repository/index' },
+        { path: Router.User.Repository.Show, component: './user/repository/show' },
         // namespace => repository
         { path: Router.Namespace.Repository, component: './namespace/repository/show' },
       ],

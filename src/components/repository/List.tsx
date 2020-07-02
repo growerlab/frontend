@@ -68,8 +68,7 @@ function RepositoryList(props: WithTranslation & TypeRepositoriesArgs) {
             // actions={[<StarOutlined />, <LikeOutlined />, <MessageOutlined />]}
           >
             <Item
-              ownerPath={ownerPath}
-              path={item.path}
+              path={'/user/repos/' + item.path}
               name={item.name}
               description={item.description}
             />

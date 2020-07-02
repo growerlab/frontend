@@ -34,21 +34,21 @@ function UserLayout(props: any) {
   const plusMenu = (
     <Menu>
       <Menu.Item key="add-repo">
-        <Link to="/user/repositories/new">{t('repository.new')}</Link>
+        <Link to="/user/repos/new">{t('repository.new')}</Link>
       </Menu.Item>
     </Menu>
   );
 
   return (
     <GQLProvider>
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sider
-          trigger={null}
-          collapsible={true}
-          collapsed={collapsed}
-          style={{ background: '#fff' }}
-        >
-          <div
+      <Layout>
+        <Header style={{ background: '#fff', padding: 0 }}>
+          {/*<LegacyIcon*/}
+          {/*  style={{ paddingLeft: 20 }}*/}
+          {/*  type={collapsed ? 'menu-unfold' : 'menu-fold'}*/}
+          {/*  onClick={() => setCollapsed(!collapsed)}*/}
+          {/*/>*/}
+          <span
             style={{
               padding: 10,
               margin: 20,
@@ -57,8 +57,47 @@ function UserLayout(props: any) {
             }}
           >
             GrowerLab
+          </span>
+
+          <div className="header_quick" style={{ float: 'right', marginRight: '1vw' }}>
+            <span>
+              <SearchOutlined />
+            </span>
+            <span>
+              <Dropdown overlay={plusMenu}>
+                <a className="ant-dropdown-link" href="#">
+                  <PlusOutlined />
+                </a>
+              </Dropdown>
+            </span>
+            <span>
+              <Avatar size={'default'} icon={<UserOutlined />} />
+            </span>
           </div>
-          <Menu theme="light" mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}>
+        </Header>
+      </Layout>
+
+      <Layout>
+        <Sider
+          trigger={null}
+          collapsible={true}
+          collapsed={collapsed}
+          style={{
+            background: 'rgb(244, 245, 247)',
+            bottom: 0,
+            left: 0,
+            position: 'fixed',
+            top: 56,
+            zIndex: 200,
+            paddingTop: 30,
+          }}
+        >
+          <Menu
+            className="userPrimeryMenu"
+            mode="inline"
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+          >
             <SubMenu
               key="sub1"
               title={
@@ -69,7 +108,7 @@ function UserLayout(props: any) {
               }
             >
               <Menu.Item key="1">
-                <Link to="/user/repositories">仓库列表</Link>
+                <Link to="/user/repos">仓库列表</Link>
               </Menu.Item>
             </SubMenu>
             <SubMenu
@@ -90,34 +129,12 @@ function UserLayout(props: any) {
           </Menu>
         </Sider>
         <Layout>
-          <Header style={{ background: '#fff', padding: 0 }}>
-            {/*<LegacyIcon*/}
-            {/*  style={{ paddingLeft: 20 }}*/}
-            {/*  type={collapsed ? 'menu-unfold' : 'menu-fold'}*/}
-            {/*  onClick={() => setCollapsed(!collapsed)}*/}
-            {/*/>*/}
-            <div className="header_quick" style={{ float: 'right', marginRight: '1vw' }}>
-              <span>
-                <SearchOutlined />
-              </span>
-              <span>
-                <Dropdown overlay={plusMenu}>
-                  <a className="ant-dropdown-link" href="#">
-                    <PlusOutlined />
-                  </a>
-                </Dropdown>
-              </span>
-              <span>
-                <Avatar size={'default'} icon={<UserOutlined />} />
-              </span>
-            </div>
-          </Header>
           <Content
             style={{
-              margin: '24px 16px',
               padding: 24,
               background: '#fff',
               minHeight: 280,
+              marginLeft: 200,
             }}
           >
             {props.children}

@@ -8,8 +8,9 @@ const Router = {
   User: {
     Index: '/user/',
     Repository: {
-      New: '/user/repositories/new',
-      List: '/user/repositories',
+      New: '/user/repos/new',
+      List: '/user/repos',
+      Show: '/user/repos/:repoPath',
     },
   },
   Namespace: {
