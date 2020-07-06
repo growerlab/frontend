@@ -5,7 +5,7 @@ import {
   IssuesCloseOutlined,
   CloudDownloadOutlined,
 } from '@ant-design/icons';
-import { Menu, PageHeader, Popover, Tag } from 'antd';
+import { Menu, PageHeader, Popover, Tag, Tabs, Input } from 'antd';
 import { LockOutlined } from '@ant-design/icons/lib';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import {
@@ -21,6 +21,8 @@ function Repository(props: WithTranslation & TypeRepositoryArgs) {
   const { ownerPath, path } = props;
   const [current, setCurrent] = useState('code');
   const { SubMenu } = Menu;
+
+  const { TabPane } = Tabs;
 
   const { data, loading, error } = useQuery<TypeRepository, {}>(GQL_QUERY_REPOSITORY, {
     variables: { ownerPath: ownerPath, path: path },
@@ -66,16 +68,30 @@ function Repository(props: WithTranslation & TypeRepositoryArgs) {
         <Menu.Item key="clone" style={{ float: 'right' }} onBlur={() => {}}>
           <CloudDownloadOutlined />
           <Popover
-            placement="bottomRight"
+            placement="bottom"
             title="Clone or download"
             content={
-              <div>
-                <div>{data!.repository.gitHttpURL}</div>
-                <div>{data!.repository.gitSshURL}</div>
-              </div>
+              <Tabs defaultActiveKey="1" size={'small'}>
+                <TabPane tab="Http" key="1" active={true}>
+                  <Input
+                    placeholder="Basic usage"
+                    defaultValue={data!.repository.gitHttpURL}
+                    readOnly
+                  />
+                  {/* <span>{data!.repository.gitHttpURL}</span> */}
+                </TabPane>
+                <TabPane tab="SSH" key="2" animated={false}>
+                  <Input
+                    placeholder="Basic usage"
+                    defaultValue={data!.repository.gitSshURL}
+                    readOnly
+                  />
+                  {/* <span>{data!.repository.gitSshURL}</span> */}
+                </TabPane>
+              </Tabs>
             }
           >
-            Clone or download
+            <span>Clone or download</span>
           </Popover>
         </Menu.Item>
       </Menu>

@@ -69,7 +69,7 @@ function RepositoryList(props: WithTranslation & TypeRepositoriesArgs) {
           >
             <Item
               path={'/user/repos/' + item.path}
-              name={item.name}
+              name={item.pathGroup}
               description={item.description}
             />
           </List.Item>

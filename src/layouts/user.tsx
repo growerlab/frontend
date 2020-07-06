@@ -40,6 +40,12 @@ function UserLayout(props: any) {
     </Menu>
   );
 
+  var path = window.location.pathname.split('/');
+  if (path.length >= 3) {
+    path = path.slice(0, 3);
+  }
+  var menuKey = [path.join('/')];
+
   return (
     <GQLProvider>
       <Layout>
@@ -93,13 +99,12 @@ function UserLayout(props: any) {
             paddingTop: 30,
           }}
         >
-          <Menu className="userPrimeryMenu" mode="inline" defaultSelectedKeys={['menu_dashboard']}>
-            <Menu.Item key="menu_dashboard">
+          <Menu className="userPrimeryMenu" mode="inline" selectedKeys={menuKey}>
+            <Menu.Item key={Router.User.Index}>
               <HomeOutlined />
               <Link to={Router.User.Index}>Dashboard</Link>
             </Menu.Item>
             <SubMenu
-              key="sub1"
               title={
                 <span>
                   <CodeOutlined />
@@ -107,7 +112,7 @@ function UserLayout(props: any) {
                 </span>
               }
             >
-              <Menu.Item key="1">
+              <Menu.Item key={Router.User.Repository.List}>
                 <Link to={Router.User.Repository.List}>仓库列表</Link>
               </Menu.Item>
             </SubMenu>
