@@ -7,6 +7,7 @@ import {
   SearchOutlined,
   UploadOutlined,
   UserOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Avatar, Dropdown } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -92,12 +93,11 @@ function UserLayout(props: any) {
             paddingTop: 30,
           }}
         >
-          <Menu
-            className="userPrimeryMenu"
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-          >
+          <Menu className="userPrimeryMenu" mode="inline" defaultSelectedKeys={['menu_dashboard']}>
+            <Menu.Item key="menu_dashboard">
+              <HomeOutlined />
+              <Link to={Router.User.Index}>Dashboard</Link>
+            </Menu.Item>
             <SubMenu
               key="sub1"
               title={
@@ -108,7 +108,7 @@ function UserLayout(props: any) {
               }
             >
               <Menu.Item key="1">
-                <Link to="/user/repos">仓库列表</Link>
+                <Link to={Router.User.Repository.List}>仓库列表</Link>
               </Menu.Item>
             </SubMenu>
             <SubMenu
