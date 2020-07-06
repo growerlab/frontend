@@ -12,22 +12,28 @@ export function BaseHeader(props: any) {
     float: 'left',
   };
 
+  var path = window.location.pathname.split('/');
+  var menuKey = ['menu_home'];
+  if (path.length >= 2 && path[1].length > 0) {
+    menuKey[0] = 'menu_' + path[1];
+  }
+
   return (
     <div>
       <Header>
         <div style={logoStyle} />
         <Menu
           mode="horizontal"
-          defaultSelectedKeys={['2']}
           style={{ lineHeight: '62px', float: 'right' }}
+          selectedKeys={menuKey}
         >
-          <Menu.Item key="1">
+          <Menu.Item key="menu_home">
             <Link to="/">Home</Link>
           </Menu.Item>
-          <Menu.Item key="2">
+          <Menu.Item key="menu_register">
             <Link to="/register">注册</Link>
           </Menu.Item>
-          <Menu.Item key="3">
+          <Menu.Item key="menu_login">
             <Link to="/login">登录</Link>
           </Menu.Item>
         </Menu>
