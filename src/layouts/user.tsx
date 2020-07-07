@@ -75,7 +75,7 @@ function UserLayout(props: any) {
               </Dropdown>
             </span>
             <span>
-              <Avatar size={'default'} icon={<UserOutlined />} />
+              <Avatar size={'small'} icon={<UserOutlined />} />
             </span>
           </div>
         </Header>
