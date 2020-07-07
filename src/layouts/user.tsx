@@ -35,15 +35,12 @@ function UserLayout(props: any) {
   const plusMenu = (
     <Menu>
       <Menu.Item key="add-repo">
-        <Link to="/user/repos/new">{t('repository.new')}</Link>
+        <Link to={Router.User.Repository.New}>{t('repository.new')}</Link>
       </Menu.Item>
     </Menu>
   );
 
-  var path = window.location.pathname.split('/');
-  if (path.length >= 3) {
-    path = path.slice(0, 3);
-  }
+  var path = window.location.pathname.split('/').slice(0, 3);
   var menuKey = [path.join('/')];
 
   return (
@@ -99,12 +96,18 @@ function UserLayout(props: any) {
             paddingTop: 30,
           }}
         >
-          <Menu className="userPrimeryMenu" mode="inline" selectedKeys={menuKey}>
+          <Menu
+            className="userPrimeryMenu"
+            mode="inline"
+            selectedKeys={menuKey}
+            defaultOpenKeys={menuKey}
+          >
             <Menu.Item key={Router.User.Index}>
               <HomeOutlined />
               <Link to={Router.User.Index}>Dashboard</Link>
             </Menu.Item>
             <SubMenu
+              key={Router.User.Repository.List}
               title={
                 <span>
                   <CodeOutlined />
