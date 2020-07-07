@@ -1,7 +1,7 @@
-import { Form, Switch, Button, Input } from 'antd';
+import { Form, Button, Input, Checkbox } from 'antd';
 import React from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import { gql, ApolloError } from 'apollo-boost';
+import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
 import router from 'umi/router';
 
@@ -9,6 +9,7 @@ import { RepositoryRules } from '../../api/rule';
 import { Message } from '../../api/common/notice';
 import { GetUserInfo } from '../../api/user/session';
 import Router from '../../router';
+import { Store } from 'antd/lib/form/interface';
 
 const GQL_REGISTER = gql`
   mutation createRepository($input: NewRepositoryPayload!) {
@@ -26,7 +27,7 @@ interface NewRepositoryPayload {
 
 function NewRepositoryFrom(props: WithTranslation) {
   const { t } = props;
-  const { getFieldDecorator } = props.form;
+  const [form] = Form.useForm();
 
   document.title = t('repository.create_repository');
 
@@ -39,16 +40,18 @@ function NewRepositoryFrom(props: WithTranslation) {
     },
   });
 
-  const handleSubmit = function(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    props.form.validateFields((err, payload: NewRepositoryPayload) => {
-      if (!err) {
-        createRepository({
-          variables: {
-            input: payload,
-          },
-        });
-      }
+  const handleSubmit = (values: Store) => {
+    // var payload = {
+    //   namespacePath: values['namespacePath'],
+    //   name: values['name'],
+    //   public: values['public'],
+    // };
+    var payload = values as NewRepositoryPayload;
+
+    createRepository({
+      variables: {
+        input: payload,
+      },
     });
   };
 
@@ -58,39 +61,49 @@ function NewRepositoryFrom(props: WithTranslation) {
   };
 
   return (
-    <Form {...formItemLayout} onSubmit={handleSubmit}>
-      <Form.Item label={t('repository.owner')}>
-        {getFieldDecorator('namespacePath', { initialValue: GetUserInfo()!.namespacePath })(
-          <Input hidden={true}></Input>,
-        )}
+    <Form {...formItemLayout} onFinish={handleSubmit}>
+      <Form.Item
+        label={t('repository.owner')}
+        name="namespacePath"
+        initialValue={GetUserInfo()!.namespacePath}
+      >
+        <Input hidden={true}></Input>
         <span className="ant-form-text">{GetUserInfo()!.name}</span>
       </Form.Item>
-      <Form.Item label={t('repository.name')}>
-        {getFieldDecorator('name', {
-          rules: [
-            {
-              required: true,
-              message: t('notice.required'),
-            },
-            {
-              pattern: RepositoryRules.repositoryNameRegex,
-              message: t('repository.tooltip.name'),
-            },
-          ],
-        })(<Input placeholder={t('repository.name')} />)}
+
+      <Form.Item
+        label={t('repository.name')}
+        name="name"
+        rules={[
+          {
+            required: true,
+            message: t('notice.required'),
+          },
+          {
+            pattern: RepositoryRules.repositoryNameRegex,
+            message: t('repository.tooltip.name'),
+          },
+        ]}
+      >
+        <Input placeholder={t('repository.name')} />
       </Form.Item>
-      <Form.Item label={t('repository.description')}>
-        {getFieldDecorator('description', {
-          rules: [
-            {
-              required: false,
-            },
-          ],
-        })(<Input />)}
+
+      <Form.Item
+        label={t('repository.description')}
+        name="description"
+        rules={[
+          {
+            required: false,
+          },
+        ]}
+      >
+        <Input />
       </Form.Item>
-      <Form.Item label={t('repository.public')}>
-        {getFieldDecorator('public', { initialValue: true, valuePropName: 'checked' })(<Switch />)}
+
+      <Form.Item name="public" label={t('repository.public')} initialValue={true}>
+        <Checkbox checked></Checkbox>
       </Form.Item>
+
       <Form.Item wrapperCol={{ span: 6, offset: 4 }}>
         <Button type="primary" htmlType="submit">
           {t('repository.create_repository')}
