@@ -41,11 +41,6 @@ function NewRepositoryFrom(props: WithTranslation) {
   });
 
   const handleSubmit = (values: Store) => {
-    // var payload = {
-    //   namespacePath: values['namespacePath'],
-    //   name: values['name'],
-    //   public: values['public'],
-    // };
     var payload = values as NewRepositoryPayload;
 
     createRepository({
