@@ -9,11 +9,11 @@ import {
   UserOutlined,
   HomeOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Avatar, Dropdown } from 'antd';
+import { Layout, Menu, Avatar, Dropdown, Button } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import Link from 'umi/link';
 import { withTranslation } from 'react-i18next';
-import { GetUserInfo } from '../api/user/session';
+import { GetUserInfo, Logout } from '../api/user/session';
 import router from 'umi/router';
 import { Message } from '../api/common/notice';
 import Router from '../router';
@@ -34,8 +34,23 @@ function UserLayout(props: any) {
   const [collapsed, setCollapsed] = useState(false);
   const plusMenu = (
     <Menu>
-      <Menu.Item key="add-repo">
+      <Menu.Item key="repo-add">
         <Link to={Router.User.Repository.New}>{t('repository.new')}</Link>
+      </Menu.Item>
+    </Menu>
+  );
+  const userMenu = (
+    <Menu>
+      <Menu.Item key="user-logout">
+        <Link
+          to="#"
+          // type="link"
+          onClick={() => {
+            Logout();
+          }}
+        >
+          {t('user.logout')}
+        </Link>
       </Menu.Item>
     </Menu>
   );
@@ -68,14 +83,16 @@ function UserLayout(props: any) {
               <SearchOutlined />
             </span>
             <span>
-              <Dropdown overlay={plusMenu}>
-                <a className="ant-dropdown-link" href="#">
+              <Dropdown overlay={plusMenu} arrow>
+                <Link to="#">
                   <PlusOutlined />
-                </a>
+                </Link>
               </Dropdown>
             </span>
             <span>
-              <Avatar size={'small'} icon={<UserOutlined />} />
+              <Dropdown overlay={userMenu} arrow>
+                <Avatar size={'small'} icon={<UserOutlined />} />
+              </Dropdown>
             </span>
           </div>
         </Header>
