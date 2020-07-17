@@ -29,8 +29,6 @@ function NewRepositoryFrom(props: WithTranslation) {
   const { t } = props;
   const [form] = Form.useForm();
 
-  document.title = t('repository.create_repository');
-
   const [createRepository, { loading: mutationLoading, error: mutationError }] = useMutation<{
     input: NewRepositoryPayload;
   }>(GQL_REGISTER, {

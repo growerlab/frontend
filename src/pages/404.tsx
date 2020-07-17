@@ -1,9 +1,10 @@
 import React from 'react';
 import { Result, Button } from 'antd';
 import router from 'umi/router';
+import { setTitle } from '../common/document';
 
 export default function() {
-  document.title = '404 Not Found';
+  setTitle('404 Not Found');
 
   return (
     <Result

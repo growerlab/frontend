@@ -2,10 +2,11 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import RegisterForm from '../components/user/Register';
 import { withTranslation } from 'react-i18next';
+import { setTitle } from '../common/document';
 
 const register = function Register(props: any) {
   const { t } = props;
-  document.title = t('website.register');
+  setTitle(t('website.register'));
 
   return (
     <div>

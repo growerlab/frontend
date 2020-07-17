@@ -1,5 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import { setTitle } from '../common/document';
 
 const index = function(props: any) {
   const { t } = props;
@@ -8,7 +9,7 @@ const index = function(props: any) {
     textAlign: 'center',
   };
 
-  document.title = t('website.title');
+  setTitle(t('website.title'));
 
   return (
     <div>
