@@ -41,6 +41,13 @@ function UserLayout(props: any) {
   );
   const userMenu = (
     <Menu>
+      <Menu.Item key="sub_menu_user">
+        <span>
+          <UserOutlined />
+          <span>用户管理</span>
+        </span>
+      </Menu.Item>
+      <Menu.Divider></Menu.Divider>
       <Menu.Item key="user-logout">
         <Link
           to="#"
@@ -55,8 +62,8 @@ function UserLayout(props: any) {
     </Menu>
   );
 
-  var path = window.location.pathname.split('/').slice(0, 3);
-  var menuKey = [path.join('/')];
+  let path = window.location.pathname.split('/').slice(0, 3);
+  let menuKey = [path.join('/')];
 
   return (
     <GQLProvider>
@@ -136,17 +143,7 @@ function UserLayout(props: any) {
                 <Link to={Router.User.Repository.List}>仓库列表</Link>
               </Menu.Item>
             </SubMenu>
-            <SubMenu
-              key="sub_menu_user"
-              title={
-                <span>
-                  <UserOutlined />
-                  <span>用户管理</span>
-                </span>
-              }
-            >
-              <Menu.Item key="2_1">修改密码</Menu.Item>
-            </SubMenu>
+
             <Menu.Item key="3">
               <UploadOutlined />
               <span>设置</span>
