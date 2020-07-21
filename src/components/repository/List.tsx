@@ -1,10 +1,10 @@
 import React from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
-import { List, Button, Skeleton, Avatar } from 'antd';
+import { List } from 'antd';
+
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import Item from './ListItem';
-import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons/lib';
+
+import { ListItem } from './ListItem';
 import {
   GQL_QUERY_REPOSITORIES,
   Repository,
@@ -12,8 +12,7 @@ import {
   TypeRepositories,
 } from '../../api/repository/graphql';
 
-function RepositoryList(props: WithTranslation & TypeRepositoriesArgs) {
-  const { t } = props;
+export function RepositoryList(props: TypeRepositoriesArgs) {
   const { ownerPath } = props;
   const [initLoading, setInitLoading] = useState(false);
 
@@ -67,7 +66,7 @@ function RepositoryList(props: WithTranslation & TypeRepositoriesArgs) {
             key={item.uuid}
             // actions={[<StarOutlined />, <LikeOutlined />, <MessageOutlined />]}
           >
-            <Item
+            <ListItem
               path={'/user/repos/' + item.path}
               name={item.pathGroup}
               description={item.description}
@@ -78,5 +77,3 @@ function RepositoryList(props: WithTranslation & TypeRepositoriesArgs) {
     </div>
   );
 }
-
-export default withTranslation()(RepositoryList);

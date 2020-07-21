@@ -17,12 +17,12 @@ export interface LoginInfo {
 
 // 登录方法
 //  将保存token并可以设置过期时间，默认不过期
-export function Login(info: LoginInfo) {
+export function login(info: LoginInfo) {
   localStorage.setItem(AuthUserToken, JSON.stringify(info));
-  GetUserInfo();
+  getUserInfo();
 }
 
-export function Logout(callback?: () => void) {
+export function logout(callback?: () => void) {
   currentUser = null;
   localStorage.removeItem(AuthUserToken);
   if (callback === undefined) {
@@ -34,7 +34,7 @@ export function Logout(callback?: () => void) {
   callback!();
 }
 
-export function GetUserInfo(): LoginInfo | null {
+export function getUserInfo(): LoginInfo | null {
   var info = localStorage.getItem(AuthUserToken);
   if (info === null) {
     return null;

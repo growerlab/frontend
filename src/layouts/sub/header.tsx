@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import Link from 'umi/link';
+import Router from '../../router';
 
 export function BaseHeader(props: any) {
   const { Header } = Layout;
@@ -28,13 +29,13 @@ export function BaseHeader(props: any) {
           selectedKeys={menuKey}
         >
           <Menu.Item key="menu_home">
-            <Link to="/">Home</Link>
+            <Link to={Router.Home.Index}>Home</Link>
           </Menu.Item>
           <Menu.Item key="menu_register">
-            <Link to="/register">注册</Link>
+            <Link to={Router.Home.Register}>注册</Link>
           </Menu.Item>
           <Menu.Item key="menu_login">
-            <Link to="/login">登录</Link>
+            <Link to={Router.Home.Login}>登录</Link>
           </Menu.Item>
         </Menu>
       </Header>

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { Menu, PageHeader, Popover, Tag } from 'antd';
-import Repository from '../../../components/repository/Repository';
+
+import { Repository } from '../../../components/repository/Repository';
+import { setTitle } from '../../../common/document';
+import i18n from '../../../i18n';
 
 export default function(props: FormComponentProps) {
+  setTitle(i18n.t(''));
+
   const { t } = props;
   const [current, setCurrent] = useState('code');
   const { SubMenu } = Menu;
@@ -19,7 +23,7 @@ export default function(props: FormComponentProps) {
 
   return (
     <div>
-      <Repository ownerPath="moli" path="1112"></Repository>
+      <Repository ownerPath={'moli'} path={'1112'} />
     </div>
   );
 }

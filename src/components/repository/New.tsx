@@ -1,15 +1,15 @@
 import { Form, Button, Input, Checkbox } from 'antd';
 import React from 'react';
-import { WithTranslation, withTranslation } from 'react-i18next';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
+import { Store } from 'antd/lib/form/interface';
 import router from 'umi/router';
 
 import { RepositoryRules } from '../../api/rule';
 import { Message } from '../../api/common/notice';
-import { GetUserInfo } from '../../api/user/session';
+import { getUserInfo } from '../../api/user/session';
 import Router from '../../router';
-import { Store } from 'antd/lib/form/interface';
+import i18n from '../../i18n';
 
 const GQL_REGISTER = gql`
   mutation createRepository($input: NewRepositoryPayload!) {
@@ -25,7 +25,7 @@ interface NewRepositoryPayload {
   public: boolean;
 }
 
-function NewRepositoryFrom(props: WithTranslation) {
+export function NewRepositoryFrom(props: any) {
   const { t } = props;
   const [form] = Form.useForm();
 
@@ -56,33 +56,33 @@ function NewRepositoryFrom(props: WithTranslation) {
   return (
     <Form {...formItemLayout} onFinish={handleSubmit}>
       <Form.Item
-        label={t('repository.owner')}
+        label={i18n.t('repository.owner')}
         name="namespacePath"
-        initialValue={GetUserInfo()!.namespacePath}
+        initialValue={getUserInfo()!.namespacePath}
       >
-        <Input hidden={true}></Input>
-        <span className="ant-form-text">{GetUserInfo()!.name}</span>
+        <Input hidden={true} />
+        <span className="ant-form-text">{getUserInfo()!.name}</span>
       </Form.Item>
 
       <Form.Item
-        label={t('repository.name')}
+        label={i18n.t('repository.name')}
         name="name"
         rules={[
           {
             required: true,
-            message: t('notice.required'),
+            message: i18n.t('notice.required'),
           },
           {
             pattern: RepositoryRules.repositoryNameRegex,
-            message: t('repository.tooltip.name'),
+            message: i18n.t('repository.tooltip.name'),
           },
         ]}
       >
-        <Input placeholder={t('repository.name')} />
+        <Input placeholder={i18n.t('repository.name')} />
       </Form.Item>
 
       <Form.Item
-        label={t('repository.description')}
+        label={i18n.t('repository.description')}
         name="description"
         rules={[
           {
@@ -93,17 +93,15 @@ function NewRepositoryFrom(props: WithTranslation) {
         <Input />
       </Form.Item>
 
-      <Form.Item name="public" label={t('repository.public')} initialValue={true}>
-        <Checkbox checked></Checkbox>
+      <Form.Item name="public" label={i18n.t('repository.public')} initialValue={true}>
+        <Checkbox checked={true} />
       </Form.Item>
 
       <Form.Item wrapperCol={{ span: 6, offset: 4 }}>
         <Button type="primary" htmlType="submit">
-          {t('repository.create_repository')}
+          {i18n.t('repository.create_repository')}
         </Button>
       </Form.Item>
     </Form>
   );
 }
-
-export default withTranslation()(NewRepositoryFrom);

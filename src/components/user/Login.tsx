@@ -8,7 +8,7 @@ import Link from 'umi/link';
 
 import { Message } from '../../api/common/notice';
 import { UserRules } from '../../api/rule';
-import { Login, LoginInfo } from '../../api/user/session';
+import { login, LoginInfo } from '../../api/user/session';
 import Router from '../../router';
 
 const formItemLayout = {
@@ -67,7 +67,7 @@ function LoginForm(props: WithTranslation) {
     })
       .then((data: any) => {
         if (data.data.loginUser) {
-          Login(data.data.loginUser as LoginInfo);
+          login(data.data.loginUser as LoginInfo);
         }
         Message.Success(t('user.tooltip.login_success'));
         router.push(Router.User.Index);

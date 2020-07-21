@@ -1,11 +1,16 @@
 import React from 'react';
+// @ts-ignore
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
-import RepositoryList from '../../../components/repository/List';
-import { GetUserInfo } from '../../../api/user/session';
+
+import { RepositoryList } from '../../../components/repository/List';
+import { getUserInfo } from '../../../api/user/session';
+import { setTitle } from '../../../common/document';
+import i18n from '../../../i18n';
 
 export default function(props: FormComponentProps) {
+  setTitle(i18n.t('repository.list'));
   const { form } = props;
-  const ownerPath = GetUserInfo()!.namespacePath;
+  const ownerPath = getUserInfo()!.namespacePath;
 
   return (
     <div>

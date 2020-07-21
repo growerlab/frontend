@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import NewRepositoryFrom from '../../../components/repository/New';
+
+import { NewRepositoryFrom } from '../../../components/repository/New';
 import i18n from '../../../i18n';
 import { setTitle } from '../../../common/document';
 

@@ -13,7 +13,7 @@ import { Layout, Menu, Avatar, Dropdown, Button } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import Link from 'umi/link';
 import { withTranslation } from 'react-i18next';
-import { GetUserInfo, Logout } from '../api/user/session';
+import { getUserInfo, logout } from '../api/user/session';
 import router from 'umi/router';
 import { Message } from '../api/common/notice';
 import Router from '../router';
@@ -24,7 +24,7 @@ function UserLayout(props: any) {
   const { t } = props;
 
   // 验证用户是否登录
-  if (GetUserInfo() === null) {
+  if (getUserInfo() === null) {
     Message.Warning(t('user.tooltip.not_login'));
     router.push(Router.Home.Login);
     return null;
@@ -53,7 +53,7 @@ function UserLayout(props: any) {
           to="#"
           // type="link"
           onClick={() => {
-            Logout();
+            logout();
           }}
         >
           {t('user.logout')}

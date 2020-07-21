@@ -3,7 +3,7 @@ import { ErrorResponse } from 'apollo-link-error';
 import config from '../../config/config';
 import { Message } from '../common/notice';
 import i18n from '../../i18n';
-import { GetUserInfo } from '../user/session';
+import { getUserInfo } from '../user/session';
 
 const client = new ApolloClient({
   uri: config.backendUrl,
@@ -28,7 +28,7 @@ const client = new ApolloClient({
 });
 
 function currentUserToken(): string | null {
-  let info = GetUserInfo();
+  let info = getUserInfo();
   if (info !== null) {
     return info.token;
   }

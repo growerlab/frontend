@@ -5,19 +5,17 @@ import {
   IssuesCloseOutlined,
   CloudDownloadOutlined,
 } from '@ant-design/icons';
+import { useQuery } from '@apollo/react-hooks';
 import { Menu, PageHeader, Popover, Tag, Tabs, Input } from 'antd';
 import { LockOutlined } from '@ant-design/icons/lib';
-import { withTranslation, WithTranslation } from 'react-i18next';
+
 import {
   GQL_QUERY_REPOSITORY,
   TypeRepository,
   TypeRepositoryArgs,
 } from '../../api/repository/graphql';
 
-import { useQuery } from '@apollo/react-hooks';
-
-function Repository(props: WithTranslation & TypeRepositoryArgs) {
-  const { t } = props;
+export function Repository(props: TypeRepositoryArgs) {
   const { ownerPath, path } = props;
   const [current, setCurrent] = useState('code');
   const { SubMenu } = Menu;
@@ -34,7 +32,7 @@ function Repository(props: WithTranslation & TypeRepositoryArgs) {
 
   const handleClick = (e: any) => {
     console.log(e.key);
-    if (e.key == 'clone') {
+    if (e.key === 'clone') {
       return;
     }
     setCurrent(e.key);
@@ -76,7 +74,7 @@ function Repository(props: WithTranslation & TypeRepositoryArgs) {
                   <Input
                     placeholder="Basic usage"
                     defaultValue={data!.repository.gitHttpURL}
-                    readOnly
+                    readOnly={true}
                   />
                   {/* <span>{data!.repository.gitHttpURL}</span> */}
                 </TabPane>
@@ -84,7 +82,7 @@ function Repository(props: WithTranslation & TypeRepositoryArgs) {
                   <Input
                     placeholder="Basic usage"
                     defaultValue={data!.repository.gitSshURL}
-                    readOnly
+                    readOnly={true}
                   />
                   {/* <span>{data!.repository.gitSshURL}</span> */}
                 </TabPane>
@@ -98,5 +96,3 @@ function Repository(props: WithTranslation & TypeRepositoryArgs) {
     </div>
   );
 }
-
-export default withTranslation()(Repository);
