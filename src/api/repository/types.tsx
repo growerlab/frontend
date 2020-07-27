@@ -1,18 +1,24 @@
 import { gql } from 'apollo-boost';
 
+interface Owner {
+  name: string;
+  namespace: string;
+}
+
 export interface Repository {
   uuid: string;
   name: string;
   path: string;
   description: string;
   createdAt: number;
-  Public: boolean;
+  public: boolean;
   // StartCount: number;
   // ForkCount: number;
   // LastUpdatedAt: number;
   pathGroup: string;
   gitHttpURL: string;
   gitSshURL: string;
+  owner: Owner;
 }
 
 export interface TypeRepositories {
@@ -27,9 +33,9 @@ export interface TypeRepositoriesArgs {
   ownerPath: string;
 }
 
-export interface TypeRepositoryArgs {
-  ownerPath: string;
-  path: string;
+export interface RepositoryArgs {
+  ownerPath?: string;
+  repoPath?: string;
 }
 
 export const GQL_QUERY_REPOSITORIES = gql`
@@ -52,8 +58,8 @@ export const GQL_QUERY_REPOSITORIES = gql`
 `;
 
 export const GQL_QUERY_REPOSITORY = gql`
-  query repository($ownerPath: String!, $path: String!) {
-    repository(ownerPath: $ownerPath, path: $path) {
+  query repository($ownerPath: String!, $repoPath: String!) {
+    repository(ownerPath: $ownerPath, path: $repoPath) {
       uuid
       path
       name

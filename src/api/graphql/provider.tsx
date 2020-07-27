@@ -1,6 +1,7 @@
 import React from 'react';
-import client from './client';
 import { ApolloProvider } from '@apollo/react-hooks';
+
+import client from './client';
 
 export default function GQLProvider(props: React.PropsWithChildren<any>) {
   return (

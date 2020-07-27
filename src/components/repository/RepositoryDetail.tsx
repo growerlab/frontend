@@ -5,30 +5,27 @@ import {
   IssuesCloseOutlined,
   CloudDownloadOutlined,
 } from '@ant-design/icons';
-import { useQuery } from '@apollo/react-hooks';
-import { Menu, PageHeader, Popover, Tag, Tabs, Input } from 'antd';
+import { Menu, PageHeader, Popover, Tag, Tabs, Input, Empty } from 'antd';
 import { LockOutlined } from '@ant-design/icons/lib';
 
-import {
-  GQL_QUERY_REPOSITORY,
-  TypeRepository,
-  TypeRepositoryArgs,
-} from '../../api/repository/graphql';
+import { RepositoryArgs } from '../../api/repository/types';
+import { Repository } from '../../api/repository/repository';
 
-export function Repository(props: TypeRepositoryArgs) {
-  const { ownerPath, path } = props;
+export function RepositoryDetail(props: RepositoryArgs) {
+  const { repoPath } = props;
   const [current, setCurrent] = useState('code');
-  const { SubMenu } = Menu;
-
   const { TabPane } = Tabs;
 
-  const { data, loading, error } = useQuery<TypeRepository, {}>(GQL_QUERY_REPOSITORY, {
-    variables: { ownerPath: ownerPath, path: path },
-  });
-
-  if (loading) {
-    return 'loading...';
+  const repo = new Repository({ repoPath: repoPath });
+  const repoData = repo.get();
+  if (repoData === null) {
+    return (
+      <div>
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      </div>
+    );
   }
+  const repository = repoData.repository;
 
   const handleClick = (e: any) => {
     console.log(e.key);
@@ -46,7 +43,7 @@ export function Repository(props: TypeRepositoryArgs) {
             <Tag color="blue">
               <LockOutlined />
             </Tag>
-            {data!.repository.pathGroup}
+            {repository.pathGroup}
           </span>
         }
       />
@@ -73,18 +70,18 @@ export function Repository(props: TypeRepositoryArgs) {
                 <TabPane tab="Http" key="1" active={true}>
                   <Input
                     placeholder="Basic usage"
-                    defaultValue={data!.repository.gitHttpURL}
+                    defaultValue={repository.gitHttpURL}
                     readOnly={true}
                   />
-                  {/* <span>{data!.repository.gitHttpURL}</span> */}
+                  {/* <span>{repository.gitHttpURL}</span> */}
                 </TabPane>
                 <TabPane tab="SSH" key="2" animated={false}>
                   <Input
                     placeholder="Basic usage"
-                    defaultValue={data!.repository.gitSshURL}
+                    defaultValue={repository.gitSshURL}
                     readOnly={true}
                   />
-                  {/* <span>{data!.repository.gitSshURL}</span> */}
+                  {/* <span>{repository.gitSshURL}</span> */}
                 </TabPane>
               </Tabs>
             }

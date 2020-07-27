@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { Menu, PageHeader, Popover, Tag } from 'antd';
 
-import { Repository } from '../../../components/repository/Repository';
+import { RepositoryDetail } from '../../../components/repository/RepositoryDetail';
 
 export default function(props: FormComponentProps) {
   const { t } = props;
@@ -19,7 +19,7 @@ export default function(props: FormComponentProps) {
 
   return (
     <div>
-      <Repository ownerPath="moli" path="1112" />
+      <RepositoryDetail ownerPath="moli" path="1112" />
     </div>
   );
 }

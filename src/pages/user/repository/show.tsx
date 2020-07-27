@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from 'react';
+// @ts-ignore
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
-import { Menu, PageHeader, Popover, Tag } from 'antd';
+import { Empty, Menu, PageHeader, Popover, Tag } from 'antd';
 
-import { Repository } from '../../../components/repository/Repository';
+import { RepositoryDetail } from '../../../components/repository/RepositoryDetail';
 import { setTitle } from '../../../common/document';
+import { Repository } from '../../../api/repository/repository';
+import { Message } from '../../../api/common/notice';
 import i18n from '../../../i18n';
+
+interface RepoPath {
+  repoPath: string;
+}
 
 export default function(props: FormComponentProps) {
   setTitle(i18n.t(''));
 
-  const { t } = props;
-  const [current, setCurrent] = useState('code');
-  const { SubMenu } = Menu;
-
-  const handleClick = (e: any) => {
-    console.log(e.key);
-    if (e.key == 'clone') {
-      return;
-    }
-    setCurrent(e.key);
-  };
+  const { repoPath } = props.match.params as RepoPath;
 
   return (
     <div>
-      <Repository ownerPath={'moli'} path={'1112'} />
+      <RepositoryDetail repoPath={repoPath} />
     </div>
   );
 }

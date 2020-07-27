@@ -35,7 +35,7 @@ export function logout(callback?: () => void) {
 }
 
 export function getUserInfo(): LoginInfo | null {
-  var info = localStorage.getItem(AuthUserToken);
+  const info = localStorage.getItem(AuthUserToken);
   if (info === null) {
     return null;
   }
