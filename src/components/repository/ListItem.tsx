@@ -1,21 +1,28 @@
 import React from 'react';
 import { List, Skeleton } from 'antd';
 import Link from 'umi/link';
+import { showRepoIcon } from './common';
 
 interface Args {
   path: string;
   name: string;
   description: string;
+  pub: boolean;
 }
 
 export function ListItem(props: Args) {
-  const { path, name, description } = props;
+  const { pub, path, name, description } = props;
 
   return (
     <div>
-      <Skeleton avatar={false} title={false} loading={false} active={true}>
-        <List.Item.Meta title={<Link to={path}>{name}</Link>} description={description} />
-      </Skeleton>
+      <List.Item.Meta
+        title={
+          <Link to={path}>
+            {showRepoIcon(pub)} {name}
+          </Link>
+        }
+        description={description}
+      />
     </div>
   );
 }

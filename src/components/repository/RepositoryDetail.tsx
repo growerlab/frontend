@@ -6,10 +6,11 @@ import {
   CloudDownloadOutlined,
 } from '@ant-design/icons';
 import { Menu, PageHeader, Popover, Tag, Tabs, Input, Empty } from 'antd';
-import { LockOutlined } from '@ant-design/icons/lib';
+import { LockOutlined, UnlockOutlined } from '@ant-design/icons/lib';
 
 import { RepositoryArgs } from '../../api/repository/types';
 import { Repository } from '../../api/repository/repository';
+import { showRepoIcon } from './common';
 
 export function RepositoryDetail(props: RepositoryArgs) {
   const { repoPath } = props;
@@ -40,9 +41,7 @@ export function RepositoryDetail(props: RepositoryArgs) {
       <PageHeader
         title={
           <span>
-            <Tag color="blue">
-              <LockOutlined />
-            </Tag>
+            {showRepoIcon(repoData.repository.public)}
             {repository.pathGroup}
           </span>
         }

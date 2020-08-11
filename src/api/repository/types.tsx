@@ -53,6 +53,7 @@ export const GQL_QUERY_REPOSITORIES = gql`
       pathGroup
       gitHttpURL
       gitSshURL
+      public
     }
   }
 `;
@@ -72,6 +73,7 @@ export const GQL_QUERY_REPOSITORY = gql`
       pathGroup
       gitHttpURL
       gitSshURL
+      public
     }
   }
 `;

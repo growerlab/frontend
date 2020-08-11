@@ -48,6 +48,7 @@ export function RepositoryList(props: TypeRepositoriesArgs) {
             // actions={[<StarOutlined />, <LikeOutlined />, <MessageOutlined />]}
           >
             <ListItem
+              pub={item.public}
               path={'/user/repos/' + item.path}
               name={item.pathGroup}
               description={item.description}
