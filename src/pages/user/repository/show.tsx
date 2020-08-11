@@ -14,9 +14,9 @@ interface RepoPath {
 }
 
 export default function(props: FormComponentProps) {
-  setTitle(i18n.t(''));
-
   const { repoPath } = props.match.params as RepoPath;
+
+  setTitle(i18n.t(repoPath));
 
   return (
     <div>
