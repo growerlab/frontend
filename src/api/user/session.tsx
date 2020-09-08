@@ -48,6 +48,7 @@ export function getUserInfo(): LoginInfo | null {
     currentUser = JSON.parse(info) as LoginInfo;
     return currentUser;
   } catch (error) {
+    console.warn("Can't parse json for login info.");
     return null;
   }
 }
