@@ -3,6 +3,7 @@ import Router from './src/router';
 
 // ref: https://umijs.org/config/
 const config: IConfig = {
+  history: 'hash',
   treeShaking: true,
   routes: [
     {
