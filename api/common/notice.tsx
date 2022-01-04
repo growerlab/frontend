@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { ArgsProps, MessageType } from 'antd/lib/message';
-import i18n from '../../i18n';
+import i18n from '../../i18n/i18n';
 
 const regex = /<[^>]+>/s;
 

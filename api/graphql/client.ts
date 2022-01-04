@@ -3,7 +3,7 @@ import { ErrorResponse } from 'apollo-link-error';
 
 import config from '../../config/config';
 import { Message } from '../common/notice';
-import i18n from '../../i18n';
+import i18n from '../../i18n/i18n';
 import { getUserInfo } from '../user/session';
 
 const client = new ApolloClient({
@@ -20,7 +20,6 @@ const client = new ApolloClient({
 
     if (error.graphQLErrors) {
       if (error.graphQLErrors.length > 0) {
-        // @ts-ignore
         const code = error.graphQLErrors[0].extensions.code;
         Message.Error(code);
       }

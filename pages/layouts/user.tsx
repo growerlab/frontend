@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import GQLProvider from '../api/graphql/provider';
+import GQLProvider from '../../api/graphql/provider';
 import {
   CodeOutlined,
   DownOutlined,
@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, Avatar, Dropdown, Button } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import Link from 'umi/link';
+import Link from 'next/link';
 import { withTranslation } from 'react-i18next';
 import { getUserInfo, logout } from '../api/user/session';
 import router from 'umi/router';
@@ -35,7 +35,7 @@ function UserLayout(props: any) {
   const plusMenu = (
     <Menu>
       <Menu.Item key="repo-add">
-        <Link to={Router.User.Repository.New}>{t('repository.new')}</Link>
+        <Link href={Router.User.Repository.New}>{t('repository.new')}</Link>
       </Menu.Item>
     </Menu>
   );

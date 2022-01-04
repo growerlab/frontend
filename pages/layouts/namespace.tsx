@@ -1,6 +1,6 @@
 import React from 'react';
 import { Breadcrumb, Layout, Menu } from 'antd';
-import GQLProvider from '../api/graphql/provider';
+import GQLProvider from '../../api/graphql/provider';
 import { BaseHeader } from './sub/header';
 import { BaseFooter } from './sub/footer';
 
