@@ -1,5 +1,3 @@
-import { message } from 'antd';
-import { ArgsProps, MessageType } from 'antd/lib/message';
 import i18n from '../../i18n/i18n';
 
 const regex = /<[^>]+>/s;
@@ -43,20 +41,20 @@ function parseTemplate(context: string): string {
     }
   }
 
-  let seps = context.split(Sep);
+  const seps = context.split(Sep);
   if (seps.length == 0) {
     return context;
   }
 
-  let keystone: string = seps[0];
+  const keystone: string = seps[0];
 
-  let msgTemplate: string = i18n.t('message.error.' + keystone);
+  const msgTemplate: string = i18n.t('message.error.' + keystone);
 
   if (msgTemplate === null) {
     return context;
   }
 
-  let err: Error = {
+  const err: Error = {
     Error: msgTemplate,
     Model: '',
     Field: '',
@@ -66,9 +64,9 @@ function parseTemplate(context: string): string {
   for (let i = 1; i < seps.length; i++) {
     if (seps[i].length == 0) continue;
 
-    let modelPath = 'message.model.' + seps[i];
-    let fieldPath = 'message.field.' + seps[i];
-    let reasonPath = 'message.reason.' + seps[i];
+    const modelPath = 'message.model.' + seps[i];
+    const fieldPath = 'message.field.' + seps[i];
+    const reasonPath = 'message.reason.' + seps[i];
 
     if (i18n.exists(modelPath)) {
       err.Model = i18n.t(modelPath);

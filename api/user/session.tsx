@@ -1,7 +1,6 @@
-import router from 'umi/router';
-import Router from '../../router';
-import { message } from 'antd';
-import i18n from '../../i18n';
+import Router from '../../config/router';
+import i18n from '../../i18n/i18n';
+import {useRouter, NextRouter} from 'next/router'
 
 const AuthUserToken = 'auth-user-token';
 
@@ -22,16 +21,16 @@ export function login(info: LoginInfo) {
   getUserInfo();
 }
 
-export function logout(callback?: () => void) {
+export function logout(router: NextRouter, callback?: () => void) {
   currentUser = null;
   localStorage.removeItem(AuthUserToken);
   if (callback === undefined) {
     callback = () => {
-      message.success(i18n.t('user.tooltip.logout_success'));
+      // message.success(i18n.t('user.tooltip.logout_success'));
       router.push(Router.Home.Login);
     };
   }
-  callback!();
+  callback?.();
 }
 
 export function getUserInfo(): LoginInfo | null {

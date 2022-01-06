@@ -2,14 +2,11 @@ import { Form, Button, Input, Checkbox } from 'antd';
 import React from 'react';
 import { gql } from 'apollo-boost';
 import { useMutation } from '@apollo/react-hooks';
-import { Store } from 'antd/lib/form/interface';
-import router from 'umi/router';
-
 import { RepositoryRules } from '../../api/rule';
 import { Message } from '../../api/common/notice';
 import { getUserInfo } from '../../api/user/session';
-import Router from '../../router';
-import i18n from '../../i18n';
+import { Router } from '../../config/router';
+import i18n from '../../i18n/i18n';
 
 const GQL_REGISTER = gql`
   mutation createRepository($input: NewRepositoryPayload!) {
