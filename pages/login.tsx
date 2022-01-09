@@ -1,15 +1,18 @@
 import React from 'react';
 import LoginForm from '../components/user/Login';
-import { withTranslation } from 'react-i18next';
-import { setTitle } from '../common/document';
+import {withTranslation} from 'react-i18next';
+import {getTitle} from '../common/document';
+import Head from 'next/head'
 
-const login = function(props: any) {
-  const { t } = props;
-  setTitle(t('website.login'));
+const login = function (props: any) {
+  const {t} = props;
 
   return (
     <div>
-      <LoginForm />
+      <Head>
+        <title>{getTitle(t('website.login'))}</title>
+      </Head>
+      <LoginForm/>
     </div>
   );
 };

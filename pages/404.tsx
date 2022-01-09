@@ -1,9 +1,9 @@
 import React from 'react';
-import { setTitle } from '../common/document';
+import {getTitle} from '../common/document';
 import Link from "next/link";
 
-export default function() {
-  setTitle('404 Not Found');
+export default function () {
+  getTitle('404 Not Found');
 
   return (
     <div>

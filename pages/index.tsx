@@ -1,21 +1,17 @@
 import React from 'react';
-import { withTranslation } from 'react-i18next';
-import { setTitle } from '../common/document';
+import {withTranslation} from 'react-i18next';
+import {getTitle} from '../common/document';
 import Head from 'next/head'
 import Link from 'next/link'
 import {Button} from "evergreen-ui";
 import {Router} from "../config/router";
 
 
-const index = function(props: any) {
-  const { t } = props;
-
-  setTitle(t('website.title'));
-
+const index = function (props: any) {
   return (
     <div>
       <Head>
-        <title>Rethinking git</title>
+        <title>{getTitle()}</title>
       </Head>
 
       <h2 className="text-6xl font-bold text-center mt-7">Rethinking Git</h2>

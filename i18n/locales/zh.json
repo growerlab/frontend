@@ -15,6 +15,10 @@
     "register": "注册",
     "login": "登录",
     "logout": "退出",
+    "login_tooltip": {
+      "email_invalid": "电子邮箱不合法",
+      "password_invalid": "请输入密码"
+    },
     "tooltip": {
       "email_tip": "将发送激活邮件到您的邮箱",
       "email": "请输入电子邮箱",
