@@ -98,7 +98,7 @@ function LoginForm(props: WithTranslation) {
           </h2>
         </div>
         <form className="mt-8 space-y-6" action="#" method="POST">
-          <div className="-space-y-px">
+          <div className="-space-y-px shadow-2xl p-8">
             <div>
               <TextInputField
                 type="email"
@@ -122,12 +122,11 @@ function LoginForm(props: WithTranslation) {
                 onBlur={onBlur}
               />
             </div>
-          </div>
-
-          <div>
-            <Button appearance="primary" marginY={8} marginRight={12} className="w-full">
-              {t('user.login')}
-            </Button>
+            <div>
+              <Button appearance="primary" marginY={8} marginRight={12} className='w-full' size="medium">
+                {t('user.login')}
+              </Button>
+            </div>
           </div>
         </form>
       </div>
