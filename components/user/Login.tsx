@@ -1,16 +1,16 @@
-import React, {FocusEventHandler, useEffect, useState} from 'react';
-import {withTranslation, WithTranslation} from 'react-i18next';
-import {ApolloError, gql} from 'apollo-boost';
-import {useMutation} from '@apollo/react-hooks';
-import {useRouter} from 'next/router'
+import React, { FocusEvent, useEffect, useState } from 'react';
+import { withTranslation, WithTranslation } from 'react-i18next';
+import { ApolloError, gql } from 'apollo-boost';
+import { useMutation } from '@apollo/react-hooks';
+import { useRouter } from 'next/router'
 import Link from 'next/link';
-import {TextInputField, Button, SearchIcon} from 'evergreen-ui'
+import { TextInputField, Button, SearchIcon } from 'evergreen-ui'
 import validator from 'validator';
 
-import {Message} from '../../api/common/notice';
-import {UserRules} from '../../api/rule';
-import {login, LoginInfo} from '../../api/user/session';
-import {Router} from '../../config/router';
+import { Message } from '../../api/common/notice';
+import { UserRules } from '../../api/rule';
+import { login, LoginInfo } from '../../api/user/session';
+import { Router } from '../../config/router';
 
 // const GQL_REGISTER = gql`
 //   mutation loginUser($input: LoginUserPayload!) {
@@ -31,7 +31,7 @@ interface LoginUserPayload {
 
 function LoginForm(props: WithTranslation) {
   const router = useRouter();
-  const {t} = props;
+  const { t } = props;
   const [emailValidateMsg, setEmailValidateMsg] = useState(null);
   const [pwdValidateMsg, setPwdValidateMsg] = useState(null);
 
@@ -58,7 +58,7 @@ function LoginForm(props: WithTranslation) {
   // };
 
   const validate = {
-    "email": (obj: Element) => {
+    "email": (obj: HTMLInputElement) => {
       const val = obj.value;
       if (!validator.isEmail(val)) {
         setEmailValidateMsg(t('user.login_tooltip.email_invalid'));
@@ -66,7 +66,7 @@ function LoginForm(props: WithTranslation) {
         setEmailValidateMsg(null);
       }
     },
-    "password": (obj: Element) => {
+    "password": (obj: HTMLInputElement) => {
       const val = obj.value;
       if (validator.isEmpty(val)) {
         setPwdValidateMsg(t('user.login_tooltip.password_invalid'));
@@ -76,9 +76,15 @@ function LoginForm(props: WithTranslation) {
     }
   }
 
-  const onBlur = (event: FocusEventHandler) => {
+  const onBlur = (event: FocusEvent<HTMLInputElement>) => {
     const obj = event.target;
-    validate[obj.type](obj)
+    const type = obj.type;
+    switch (type) {
+      case "email":
+        validate.email(obj);
+      case "password":
+        validate.password(obj);
+    }
     return
   }
 
