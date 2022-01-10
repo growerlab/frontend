@@ -1,6 +1,6 @@
 import Router from '../../config/router';
 import i18n from '../../i18n/i18n';
-import {useRouter, NextRouter} from 'next/router'
+import { useRouter, NextRouter } from 'next/router'
 
 const AuthUserToken = 'auth-user-token';
 
