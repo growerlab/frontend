@@ -1,7 +1,5 @@
-import React, { FocusEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { ApolloError, gql } from 'apollo-boost';
-import { useMutation } from '@apollo/react-hooks';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import { TextInputField, Button, SearchIcon } from 'evergreen-ui'
@@ -9,20 +7,9 @@ import validator from 'validator';
 
 import { Message } from '../../api/common/notice';
 import { UserRules } from '../../api/rule';
-import { login, LoginInfo } from '../../api/user/session';
 import { Router } from '../../config/router';
+import { LoginService } from '../../services/auth/login';
 
-// const GQL_REGISTER = gql`
-//   mutation loginUser($input: LoginUserPayload!) {
-//     loginUser(input: $input) {
-//       token
-//       namespacePath
-//       email
-//       name
-//       publicEmail
-//     }
-//   }
-// `;
 
 interface LoginUserPayload {
   email: string;
@@ -34,6 +21,9 @@ function LoginForm(props: WithTranslation) {
   const { t } = props;
   const [emailValidateMsg, setEmailValidateMsg] = useState(null);
   const [pwdValidateMsg, setPwdValidateMsg] = useState(null);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
 
   // const [loginUser] = useMutation<{
@@ -57,6 +47,13 @@ function LoginForm(props: WithTranslation) {
   //     });
   // };
 
+
+  const onSubmit = (e: React.MouseEvent) => {
+    LoginService.login(email, password)
+
+    return
+  }
+
   const validate = {
     "email": (obj: HTMLInputElement) => {
       const val = obj.value;
@@ -76,7 +73,7 @@ function LoginForm(props: WithTranslation) {
     }
   }
 
-  const onBlur = (event: FocusEvent<HTMLInputElement>) => {
+  const onBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const obj = event.target;
     const type = obj.type;
     switch (type) {
@@ -97,7 +94,7 @@ function LoginForm(props: WithTranslation) {
             Sign in to your account
           </h2>
         </div>
-        <form className="mt-8 space-y-6" action="#" method="POST">
+        <div>
           <div className="-space-y-px shadow-2xl p-8">
             <div>
               <TextInputField
@@ -109,6 +106,7 @@ function LoginForm(props: WithTranslation) {
                 label="Email"
                 validationMessage={emailValidateMsg}
                 onBlur={onBlur}
+                onChange={(event: ChangeEvent<HTMLInputElement>): void => setEmail(event.target.value)}
               />
             </div>
             <div>
@@ -123,12 +121,13 @@ function LoginForm(props: WithTranslation) {
               />
             </div>
             <div>
-              <Button appearance="primary" marginY={8} marginRight={12} className='w-full' size="medium">
+              <Button appearance="primary" marginY={8} marginRight={12} className='w-full' size="medium"
+                onClick={onSubmit}>
                 {t('user.login')}
               </Button>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

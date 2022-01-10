@@ -16,7 +16,7 @@ import Link from 'next/link';
 import {withTranslation} from 'react-i18next';
 import {useRouter} from 'next/router'
 
-import {getUserInfo, logout} from '../../api/user/session';
+import {getUserInfo, logout} from '../../api/auth/session';
 import {Message} from '../../api/common/notice';
 import {Router} from '../../config/router';
 

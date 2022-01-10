@@ -1,24 +1,25 @@
+import { toaster } from 'evergreen-ui';
+
 import i18n from '../../i18n/i18n';
 
 const regex = /<[^>]+>/s;
-
 const Sep = '.';
 const ModelKey = '{model}';
 const FieldKey = '{field}';
 const ReasonKey = '{reason}';
 
 export const Message = {
-  Success: function(text: string): MessageType {
+  Success: function (text: string): void {
     text = parseTemplate(text);
-    return message.success(text);
+    return toaster.success(text);
   },
-  Error: function(text: string): MessageType {
+  Error: function (text: string): void {
     text = parseTemplate(text);
-    return message.error(text);
+    return toaster.danger(text);
   },
-  Warning: function(text: string): MessageType {
+  Warning: function (text: string): void {
     text = parseTemplate(text);
-    return message.warning(text);
+    return toaster.warning(text);
   },
 };
 

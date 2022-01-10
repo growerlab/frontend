@@ -3,7 +3,7 @@ import React from 'react';
 import {FormComponentProps} from '@ant-design/compatible/lib/form';
 
 import {RepositoryList} from '../../../components/repository/List';
-import {getUserInfo} from '../../../api/user/session';
+import {getUserInfo} from '../../../api/auth/session';
 import {getTitle} from '../../../common/document';
 import i18n from '../../../i18n';
 

@@ -5,7 +5,7 @@ import {
   TypeRepositories,
   TypeRepository,
 } from './types';
-import { getUserInfo } from '../user/session';
+import { getUserInfo } from '../auth/session';
 import { useQuery } from '@apollo/react-hooks';
 
 export class Repository {

@@ -1,10 +1,8 @@
-import Router from '../../config/router';
+import { Router } from '../../config/router';
 import i18n from '../../i18n/i18n';
-import { useRouter, NextRouter } from 'next/router'
+import { NextRouter } from 'next/router'
 
 const AuthUserToken = 'auth-user-token';
-
-export let currentUser: LoginInfo | null = null;
 
 export interface LoginInfo {
   token: string;
@@ -14,40 +12,58 @@ export interface LoginInfo {
   publicEmail: string;
 }
 
-// 登录方法
-//  将保存token并可以设置过期时间，默认不过期
-export function login(info: LoginInfo) {
-  localStorage.setItem(AuthUserToken, JSON.stringify(info));
-  getUserInfo();
+export class SessionService {
+  constructor() {
+    return
+  }
+
+  /**
+   * 用户是否登录
+   * @returns {boolean}
+   */
+  isLogin(): boolean {
+    return !!this.getUserInfo()
+  }
+
+  /**
+   * 登录，将保存token并可以设置过期时间，默认不过期
+   * @param info
+   */
+  storeLogin(info: LoginInfo): LoginInfo | null {
+    localStorage.setItem(AuthUserToken, JSON.stringify(info));
+    return this.getUserInfo();
+  }
+
+  /**
+   * 退出登录
+   * @param router
+   * @param callback
+   */
+  logout(router: NextRouter, callback?: () => void) {
+    localStorage.removeItem(AuthUserToken);
+    if (callback === undefined) {
+      callback = () => {
+        router.push(Router.Home.Login);
+      };
+    }
+    callback?.();
+  }
+
+  /**
+   * 获取用户信息
+   */
+  getUserInfo(): LoginInfo | null {
+    const info = localStorage.getItem(AuthUserToken);
+    if (info === null) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(info) as LoginInfo;
+    } catch (error) {
+      console.warn("Can't parse json for login info.");
+      return null;
+    }
+  }
 }
 
-export function logout(router: NextRouter, callback?: () => void) {
-  currentUser = null;
-  localStorage.removeItem(AuthUserToken);
-  if (callback === undefined) {
-    callback = () => {
-      // message.success(i18n.t('user.tooltip.logout_success'));
-      router.push(Router.Home.Login);
-    };
-  }
-  callback?.();
-}
-
-export function getUserInfo(): LoginInfo | null {
-  const info = localStorage.getItem(AuthUserToken);
-  if (info === null) {
-    return null;
-  }
-
-  if (currentUser !== null) {
-    return currentUser;
-  }
-
-  try {
-    currentUser = JSON.parse(info) as LoginInfo;
-    return currentUser;
-  } catch (error) {
-    console.warn("Can't parse json for login info.");
-    return null;
-  }
-}
