@@ -95,7 +95,7 @@ function LoginForm(props: WithTranslation) {
           </h2>
         </div>
         <div>
-          <div className="-space-y-px shadow-2xl p-8">
+          <div className="-space-y-px shadow-2xl p-8 rounded-xl">
             <div>
               <TextInputField
                 type="email"
