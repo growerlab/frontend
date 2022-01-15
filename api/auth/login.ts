@@ -11,14 +11,11 @@ export class Login {
   }
 
   async Do(): Promise<LoginInfo> {
-    // 接口失败
-    // 接口错误
     return request().post(API.Login, {
       email: this.email,
       password: this.password
-    })
-    // .then(res => {
-    //   return JSON.parse(res.data) as LoginInfo
-    // });
+    }).then(res => {
+      return JSON.parse(res.data) as LoginInfo
+    });
   }
 }
