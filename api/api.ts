@@ -1,6 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { toaster } from "evergreen-ui";
 import { Message } from "./common/notice";
+import i18n from '../i18n/i18n';
+import { responsePathAsArray } from "graphql";
+import { cycleErrorMessage } from "graphql/validation/rules/NoFragmentCycles";
 
 const baseUrl = 'http://localhost:8081/api/v1/';
 
@@ -16,11 +19,13 @@ export const request = function (): AxiosInstance {
   let instance = axios.create({
     baseURL: baseUrl,
     timeout: 2000,
+    timeoutErrorMessage: i18n.t("api.timeout"),
+    // responseType: "json",
     headers: {
       'Content-Type': 'application/json',
     },
     validateStatus: function (status: number): boolean {
-      return status >= 200 && status < 300;
+      return status >= 200 && status <= 500;
     },
   });
 
@@ -33,7 +38,12 @@ export const request = function (): AxiosInstance {
     }
 
   }, (error: any) => {
-    Message.Error(error.message);
+    if (error.response && error.response.data) {
+      const msg = error.response.data.message;
+      Message.Error(msg);
+    } else {
+      Message.Error(error.message);
+    }
     return Promise.reject(error)
   })
 

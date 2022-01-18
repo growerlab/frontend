@@ -118,6 +118,7 @@ function LoginForm(props: WithTranslation) {
                 label="Password"
                 validationMessage={pwdValidateMsg}
                 onBlur={onBlur}
+                onChange={(event: ChangeEvent<HTMLInputElement>): void => setPassword(event.target.value)}
               />
             </div>
             <div>

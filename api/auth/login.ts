@@ -15,7 +15,9 @@ export class Login {
       email: this.email,
       password: this.password
     }).then(res => {
-      return JSON.parse(res.data) as LoginInfo
+      console.info(res.status);
+      console.info(res.data);
+      return res.data as LoginInfo;
     });
   }
 }

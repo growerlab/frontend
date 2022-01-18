@@ -55,6 +55,9 @@
       "name": "请填写2-50位字符的仓库名(字母，数字，下划线)"
     }
   },
+  "api": {
+    "timeout": "接口请求超时"
+  },
   "message": {
     "error": {
       "ERROR": "服务器接口错误,请于管理员联系",
@@ -83,13 +86,14 @@
     "reason": {
       "Invalid": "无效",
       "NotFoundField": "未找到字段",
-      "InvalidLength": "错误的长度",
+      "InvalidLength": "不合法的长度",
       "Expired": "已过期",
       "Used": "已被使用",
       "NotEqual": "不匹配",
       "AlreadyExists": "已存在",
       "NotActivated": "未激活",
-      "SvcServerNotReady": "服务错误"
+      "SvcServerNotReady": "服务错误",
+      "Empty": "不能为空"
     }
   }
 }
