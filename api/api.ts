@@ -21,9 +21,9 @@ export const request = function (): AxiosInstance {
     timeout: 2000,
     timeoutErrorMessage: i18n.t("api.timeout"),
     // responseType: "json",
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    // headers: {
+    //   'Content-Type': 'application/json',
+    // },
     validateStatus: function (status: number): boolean {
       return status >= 200 && status <= 500;
     },
@@ -36,6 +36,7 @@ export const request = function (): AxiosInstance {
       Message.Error(response.data.message);
       return Promise.reject(response);
     }
+    return response;
 
   }, (error: any) => {
     if (error.response && error.response.data) {

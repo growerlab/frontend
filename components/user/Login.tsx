@@ -26,32 +26,15 @@ function LoginForm(props: WithTranslation) {
   const [password, setPassword] = useState('');
 
 
-  // const [loginUser] = useMutation<{
-  //   input: LoginUserPayload;
-  // }>(GQL_REGISTER);
-
-  // const onFinish = function (values: {}) {
-  //   loginUser({
-  //     variables: {
-  //       input: values,
-  //     },
-  //   })
-  //     .then((data: any) => {
-  //       if (data.data.loginUser) {
-  //         login(data.data.loginUser as LoginInfo);
-  //       }
-  //       Message.Success(t('user.tooltip.login_success'));
-  //       router.push(Router.User.Index);
-  //     })
-  //     .catch(reason => {
-  //     });
-  // };
-
-
   const onSubmit = (e: React.MouseEvent) => {
-    LoginService.login(email, password)
-
-    return
+    LoginService.login(email, password).then(res => {
+      if (res === undefined) {
+        Message.Error(t('user.tooltip.login_fail'));
+        return;
+      }
+      Message.Success(t('user.tooltip.login_success'));
+      router.push(Router.User.Index);
+    });
   }
 
   const validate = {
