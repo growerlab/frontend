@@ -11,12 +11,12 @@ export class Login {
     this.password = password;
   }
 
-  async Do(): Promise<LoginInfo> {
+  async Do(): Promise<AxiosResponse<LoginInfo>> {
     return request().post<Login, AxiosResponse<LoginInfo>>(API.Login, {
       email: this.email,
       password: this.password
     }).then(res => {
-      return res.data as LoginInfo;
+      return res;
     }).catch(err => {
       console.error(err);
       throw err;

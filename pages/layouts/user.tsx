@@ -1,37 +1,25 @@
-import React, {useState} from 'react';
-// import GQLProvider from '../../api/graphql/provider';
-// import {
-//   CodeOutlined,
-//   DownOutlined,
-//   PlusOutlined,
-//   SearchOutlined,
-//   UploadOutlined,
-//   UserOutlined,
-//   HomeOutlined,
-// } from '@ant-design/icons';
-
-// import {Layout, Menu, Avatar, Dropdown, Button} from 'antd';
-// import SubMenu from 'antd/lib/menu/SubMenu';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import {withTranslation} from 'react-i18next';
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
+import { withTranslation } from 'react-i18next';
 
-import {getUserInfo, logout} from '../../api/auth/session';
-import {Message} from '../../api/common/notice';
-import {Router} from '../../config/router';
+import { SessionService } from '../../services/auth/session';
+import { Message } from '../../api/common/notice';
+import { Router } from '../../config/router';
 
 // const {Header, Sider, Content} = Layout;
 
 function UserLayout(props: any) {
-  const {t} = props;
+  const { t } = props;
   const router = useRouter()
 
-  // 验证用户是否登录
-  if (getUserInfo() === null) {
-    Message.Warning(t('user.tooltip.not_login'));
-    router.push(Router.Home.Login);
-    return null;
-  }
+  useEffect((): void => {
+    // 验证用户是否登录
+    if (SessionService.isLogin()) {
+      Message.Warning(t('user.tooltip.not_login'));
+      router.push(Router.Home.Login);
+    }
+  }, [])
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [collapsed, setCollapsed] = useState(false);
@@ -42,22 +30,22 @@ function UserLayout(props: any) {
   const userMenu = (
     <div>
       <span>用户管理</span>
-      <Link href="#" onClick={() => {
-        return logout(router);
+      <Link href="#" onClick={(event: React.MouseEvent<HTMLElement>) => {
+        return SessionService.logout(router);
       }}
       >
         {t('user.logout')}
       </Link>
-    </div>
+    </div >
 
   );
 
-  const path = window.location.pathname.split('/').slice(0, 3);
-  const menuKey = [path.join('/')];
+  // const path = window.location.pathname.split('/').slice(0, 3);
+  // const menuKey = [path.join('/')];
 
   return (
     <div>
-      <div style={{background: '#fff', padding: 0}}>
+      <div style={{ background: '#fff', padding: 0 }}>
         {/*<LegacyIcon*/}
         {/*  style={{ paddingLeft: 20 }}*/}
         {/*  type={collapsed ? 'menu-unfold' : 'menu-fold'}*/}
@@ -71,8 +59,8 @@ function UserLayout(props: any) {
             color: '#ffffff',
           }}
         >
-            GrowerLab
-          </span>
+          GrowerLab
+        </span>
 
       </div>
 

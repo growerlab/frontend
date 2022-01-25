@@ -21,17 +21,17 @@ export class SessionService {
    * 用户是否登录
    * @returns {boolean}
    */
-  isLogin(): boolean {
-    return !!this.getUserInfo()
+  static isLogin(): boolean {
+    return !!SessionService.getUserInfo()
   }
 
   /**
    * 登录，将保存token并可以设置过期时间，默认不过期
    * @param info
    */
-  storeLogin(info: LoginInfo): LoginInfo | null {
+  static storeLogin(info: LoginInfo): LoginInfo | null {
     localStorage.setItem(AuthUserToken, JSON.stringify(info));
-    return this.getUserInfo();
+    return SessionService.getUserInfo();
   }
 
   /**
@@ -39,7 +39,7 @@ export class SessionService {
    * @param router
    * @param callback
    */
-  logout(router: NextRouter, callback?: () => void) {
+  static logout(router: NextRouter, callback?: () => void) {
     localStorage.removeItem(AuthUserToken);
     if (callback === undefined) {
       callback = () => {
@@ -52,7 +52,7 @@ export class SessionService {
   /**
    * 获取用户信息
    */
-  getUserInfo(): LoginInfo | null {
+  static getUserInfo(): LoginInfo | null {
     const info = localStorage.getItem(AuthUserToken);
     if (info === null) {
       return null;

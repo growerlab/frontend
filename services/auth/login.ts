@@ -7,15 +7,16 @@ export class LoginService {
     return
   }
 
-  static login(email: string, password: string): Promise<void | LoginInfo> {
+  static async login(email: string, password: string): Promise<void | LoginInfo> {
     const login = new Login(email, password);
-    return login.Do().then(res => {
-      const session = new SessionService();
-      session.storeLogin(res);
-      return res;
-    }).catch(err => {
-      console.error(err)
-      Message.Error(err)
-    })
+    return login.Do()
+      .then(res => {
+        const info = res.data;
+        SessionService.storeLogin(info);
+        return info;
+      })
+      .catch(err => {
+        Message.Error(err.message);
+      });
   }
 }
