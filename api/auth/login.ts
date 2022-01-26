@@ -11,7 +11,7 @@ export class Login {
     this.password = password;
   }
 
-  async Do(): Promise<AxiosResponse<LoginInfo>> {
+  do(): Promise<AxiosResponse<LoginInfo>> {
     return request().post<Login, AxiosResponse<LoginInfo>>(API.Login, {
       email: this.email,
       password: this.password

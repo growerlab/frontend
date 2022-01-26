@@ -27,14 +27,18 @@ function LoginForm(props: WithTranslation) {
 
 
   const onSubmit = (e: React.MouseEvent) => {
-    LoginService.login(email, password).then(res => {
-      if (res === undefined) {
-        Message.Error(t('user.tooltip.login_fail'));
-        return;
-      }
-      Message.Success(t('user.tooltip.login_success'));
-      router.push(Router.User.Index);
-    });
+    LoginService.login(email, password)
+      .then(res => {
+        if (res === undefined) {
+          Message.Error(t('user.tooltip.login_fail'));
+          return;
+        }
+        Message.Success(t('user.tooltip.login_success'));
+        router.push(Router.User.Index);
+      })
+      .catch(err => {
+        Message.Error(err);
+      });
   }
 
   const validate = {
