@@ -15,7 +15,7 @@ function UserLayout(props: any) {
 
   useEffect((): void => {
     // 验证用户是否登录
-    if (SessionService.isLogin()) {
+    if (!SessionService.isLogin()) {
       Message.Warning(t('user.tooltip.not_login'));
       router.push(Router.Home.Login);
     }
@@ -43,38 +43,83 @@ function UserLayout(props: any) {
   // const path = window.location.pathname.split('/').slice(0, 3);
   // const menuKey = [path.join('/')];
 
+  let a = [];
+  for (let i = 0; i < 3000; i++) {
+    a.push("hello<br>");
+  }
+
   return (
     <div>
-      <div style={{ background: '#fff', padding: 0 }}>
-        {/*<LegacyIcon*/}
-        {/*  style={{ paddingLeft: 20 }}*/}
-        {/*  type={collapsed ? 'menu-unfold' : 'menu-fold'}*/}
-        {/*  onClick={() => setCollapsed(!collapsed)}*/}
-        {/*/>*/}
-        <span
-          style={{
-            padding: 10,
-            margin: 20,
-            background: '#333333',
-            color: '#ffffff',
-          }}
-        >
-          GrowerLab
-        </span>
+      <div className="flex flex-row fixed bottom-0 w-full top-0">
+        <div className="bg-blue-800 ">
+          <nav className="flex flex-col h-full">
+            <div className='flex-none'>
+              <div>
+                <a href="#" className="bg-blue-900 text-white block px-3 py-5  text-base font-medium text-center" aria-current="page">
+                  GrowerLab
+                </a>
+              </div>
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                {[
+                  ['Home', Router.User.Index],
+                  [t('repository.list'), Router.User.Repository.List],
+                  ['Projects', '/'],
+                ].map(([title, url]) => (
+                  <a href={url} className=" text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-blue-900">{title}</a>
+                ))}
+              </div>
+            </div>
+            <div className='flex-auto'>
+              {/* 填充 */}
+            </div>
+            <div className='flex-none'>
+              <div className=" bottom-0 pt-4 pb-3 border-t border-gray-700">
+                <div className="flex items-center px-5">
+                  <div className="flex-shrink-0">
+                    <img className="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                  </div>
+                  <div className="ml-3">
+                    <div className="text-base font-medium leading-none text-white">Tom Cook</div>
+                    <div className="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
+                  </div>
+                </div>
+                <div className="mt-3 px-2 space-y-1 hidden">
+                  {[
+                    ['Your Profile', '/'],
+                    ['Settings', '/'],
+                    ['Sign out', '/'],
+                  ].map(([title, url]) => (
+                    <a href={url} className=" block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">{title}</a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
 
-      </div>
+        <div className="grow">
+          <div className="flex flex-col h-full">
+            <header className="bg-white shadow">
+              <div className="max-w-full  mx-auto py-3 px-4 sm:px-2 lg:px-6">
+                <h1 className="text-1xl text-gray-800">
+                  {props.title}
+                </h1>
+              </div>
+            </header>
+            <main>
+              <div className="max-w-full mx-auto py-4 sm:px-4 lg:px-8">
+                <div className="px-4 py-6 sm:px-0">
+                  <div className="border-4 border-dashed border-gray-200 rounded-lg max-h-full">
+                    {props.children}
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
 
-      <Link href={Router.User.Index}>Dashboard</Link>
-
-      <span>仓库</span>
-      <Link href={Router.User.Repository.List}>仓库列表</Link>
-
-      <span>设置</span>
-
-      <div>
-        {props.children}
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
 

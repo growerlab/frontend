@@ -3,7 +3,7 @@ import UserLayout from '../layouts/user';
 
 export default function () {
   return <div>
-    <UserLayout>
+    <UserLayout title='Dashboard'>
       <h1>Hello world!</h1>
     </UserLayout>
   </div>;
