@@ -1,15 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { TextInputField, Button, SearchIcon } from 'evergreen-ui'
+import { TextInputField, Button, SearchIcon } from 'evergreen-ui';
 import validator from 'validator';
 
 import { Message } from '../../api/common/notice';
 import { UserRules } from '../../api/rule';
 import { Router } from '../../config/router';
 import { LoginService } from '../../services/auth/login';
-
 
 interface LoginUserPayload {
   email: string;
@@ -25,24 +24,19 @@ function LoginForm(props: WithTranslation) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-
   const onSubmit = (e: React.MouseEvent) => {
-    LoginService.login(email, password)
-      .then(res => {
-        if (res === undefined) {
-          Message.Error(t('user.tooltip.login_fail'));
-          return;
-        }
-        Message.Success(t('user.tooltip.login_success'));
-        router.push(Router.User.Index);
-      })
-      .catch(err => {
-        Message.Error(err);
-      });
-  }
+    LoginService.login(email, password).then((res) => {
+      if (res === undefined) {
+        Message.Error(t('user.tooltip.login_fail'));
+        return;
+      }
+      Message.Success(t('user.tooltip.login_success'));
+      router.push(Router.User.Index);
+    });
+  };
 
   const validate = {
-    "email": (obj: HTMLInputElement) => {
+    email: (obj: HTMLInputElement) => {
       const val = obj.value;
       if (!validator.isEmail(val)) {
         setEmailValidateMsg(t('user.login_tooltip.email_invalid'));
@@ -50,27 +44,29 @@ function LoginForm(props: WithTranslation) {
         setEmailValidateMsg(null);
       }
     },
-    "password": (obj: HTMLInputElement) => {
+    password: (obj: HTMLInputElement) => {
       const val = obj.value;
       if (validator.isEmpty(val)) {
         setPwdValidateMsg(t('user.login_tooltip.password_invalid'));
       } else {
-        setPwdValidateMsg(null)
+        setPwdValidateMsg(null);
       }
-    }
-  }
+    },
+  };
 
   const onBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     const obj = event.target;
     const type = obj.type;
     switch (type) {
-      case "email":
+      case 'email':
         validate.email(obj);
-      case "password":
+        break;
+      case 'password':
         validate.password(obj);
+        break;
     }
-    return
-  }
+    return;
+  };
 
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -93,7 +89,9 @@ function LoginForm(props: WithTranslation) {
                 label="Email"
                 validationMessage={emailValidateMsg}
                 onBlur={onBlur}
-                onChange={(event: ChangeEvent<HTMLInputElement>): void => setEmail(event.target.value)}
+                onChange={(event: ChangeEvent<HTMLInputElement>): void =>
+                  setEmail(event.target.value)
+                }
               />
             </div>
             <div>
@@ -105,12 +103,20 @@ function LoginForm(props: WithTranslation) {
                 label="Password"
                 validationMessage={pwdValidateMsg}
                 onBlur={onBlur}
-                onChange={(event: ChangeEvent<HTMLInputElement>): void => setPassword(event.target.value)}
+                onChange={(event: ChangeEvent<HTMLInputElement>): void =>
+                  setPassword(event.target.value)
+                }
               />
             </div>
             <div>
-              <Button appearance="primary" marginY={8} marginRight={12} className='w-full' size="medium"
-                onClick={onSubmit}>
+              <Button
+                appearance="primary"
+                marginY={8}
+                marginRight={12}
+                className="w-full"
+                size="medium"
+                onClick={onSubmit}
+              >
                 {t('user.login')}
               </Button>
             </div>

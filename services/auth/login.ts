@@ -1,23 +1,18 @@
-import { Login } from "../../api/auth/login"
-import { Message } from "../../api/common/notice";
-import { LoginInfo, SessionService } from "./session";
+import { Login } from '../../api/auth/login';
+import { LoginInfo, SessionService } from './session';
+import { Message } from '../../api/common/notice';
 
 export class LoginService {
   constructor() {
-    return
+    return;
   }
 
-  static login(email: string, password: string): Promise<void | LoginInfo> {
+  static login(email: string, password: string): Promise<LoginInfo> {
     const login = new Login(email, password);
-    return login.do()
-      .then(res => {
-        const info = res.data;
-        SessionService.storeLogin(info);
-        return info;
-      })
-      .catch(err => {
-        console.error(err)
-        throw err;
-      });
+    return login.do().then((res) => {
+      const info = res.data;
+      SessionService.storeLogin(info);
+      return info;
+    });
   }
 }

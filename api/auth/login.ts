@@ -1,6 +1,6 @@
-import { AxiosResponse } from "axios";
-import { LoginInfo } from "../../services/auth/session";
-import { API, request } from "../api";
+import { AxiosResponse } from 'axios';
+import { LoginInfo } from '../../services/auth/session';
+import { API, request } from '../api';
 
 export class Login {
   private email: string;
@@ -12,14 +12,13 @@ export class Login {
   }
 
   do(): Promise<AxiosResponse<LoginInfo>> {
-    return request().post<Login, AxiosResponse<LoginInfo>>(API.Login, {
-      email: this.email,
-      password: this.password
-    }).then(res => {
-      return res;
-    }).catch(err => {
-      console.error(err);
-      throw err;
-    });
+    return request()
+      .post<Login, AxiosResponse<LoginInfo>>(API.Login, {
+        email: this.email,
+        password: this.password,
+      })
+      .then((res) => {
+        return res;
+      });
   }
 }

@@ -25,16 +25,20 @@ function UserLayout(props: any) {
   const [collapsed, setCollapsed] = useState(false);
   const plusMenu = <Link href={Router.User.Repository.New}>{t('repository.new')}</Link>;
 
+  const logoutClick = (): void => {
+    SessionService.logout(router);
+  };
+
   const userMenu = (
     <div>
       <span>用户管理</span>
-      <Link
-        href="#"
-        onClick={(event: React.MouseEvent<HTMLElement>) => {
-          return SessionService.logout(router);
-        }}
-      >
-        {t('user.logout')}
+      <Link passHref href={''}>
+        <a
+          onClick={() => logoutClick()}
+          className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+        >
+          {t('user.logout')}
+        </a>
       </Link>
     </div>
   );
@@ -90,7 +94,7 @@ function UserLayout(props: any) {
                     </div>
                   </div>
                 </div>
-                <div className="mt-3 px-2 space-y-1 hidden">
+                <div className="mt-3 px-2 space-y-1 ">
                   {[
                     ['Your Profile', '/'],
                     ['Settings', '/'],
@@ -98,11 +102,12 @@ function UserLayout(props: any) {
                   ].map(([title, url]) => (
                     <a
                       href={url}
-                      className=" block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                      className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
                     >
                       {title}
                     </a>
                   ))}
+                  {userMenu}
                 </div>
               </div>
             </div>
