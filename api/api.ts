@@ -47,7 +47,7 @@ export const request = function (): AxiosInstance {
         Message.Error(error.message);
       }
       // 吃掉http网络错误（例如后端无法链接）
-      return new Promise(() => {});
+      return new Promise(() => void {});
     },
   );
 
