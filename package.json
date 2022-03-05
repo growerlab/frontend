@@ -31,6 +31,7 @@
     "cookie": "^0.4.1",
     "evergreen-ui": "^6.6.5",
     "graphql": "^14.5.8",
+    "next": "latest",
     "i18next": "^19.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
