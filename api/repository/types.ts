@@ -1,11 +1,9 @@
-import { gql } from 'apollo-boost';
-
 interface Owner {
   name: string;
   namespace: string;
 }
 
-export interface Repository {
+export interface RepositoryEntity {
   uuid: string;
   name: string;
   path: string;
@@ -22,11 +20,11 @@ export interface Repository {
 }
 
 export interface TypeRepositories {
-  repositories: Repository[];
+  repositories: RepositoryEntity[];
 }
 
 export interface TypeRepository {
-  repository: Repository;
+  repository: RepositoryEntity;
 }
 
 export interface TypeRepositoriesArgs {
@@ -35,45 +33,44 @@ export interface TypeRepositoriesArgs {
 
 export interface RepositoryArgs {
   ownerPath?: string;
-  repoPath?: string;
 }
 
-export const GQL_QUERY_REPOSITORIES = gql`
-  query repositories($ownerPath: String!) {
-    repositories(ownerPath: $ownerPath) {
-      uuid
-      path
-      name
-      description
-      createdAt
-      owner {
-        name
-        username
-      }
-      pathGroup
-      gitHttpURL
-      gitSshURL
-      public
-    }
-  }
-`;
-
-export const GQL_QUERY_REPOSITORY = gql`
-  query repository($ownerPath: String!, $repoPath: String!) {
-    repository(ownerPath: $ownerPath, path: $repoPath) {
-      uuid
-      path
-      name
-      description
-      createdAt
-      owner {
-        name
-        username
-      }
-      pathGroup
-      gitHttpURL
-      gitSshURL
-      public
-    }
-  }
-`;
+// export const GQL_QUERY_REPOSITORIES = gql`
+//   query repositories($ownerPath: String!) {
+//     repositories(ownerPath: $ownerPath) {
+//       uuid
+//       path
+//       name
+//       description
+//       createdAt
+//       owner {
+//         name
+//         username
+//       }
+//       pathGroup
+//       gitHttpURL
+//       gitSshURL
+//       public
+//     }
+//   }
+// `;
+//
+// export const GQL_QUERY_REPOSITORY = gql`
+//   query repository($ownerPath: String!, $repoPath: String!) {
+//     repository(ownerPath: $ownerPath, path: $repoPath) {
+//       uuid
+//       path
+//       name
+//       description
+//       createdAt
+//       owner {
+//         name
+//         username
+//       }
+//       pathGroup
+//       gitHttpURL
+//       gitSshURL
+//       public
+//     }
+//   }
+// `;

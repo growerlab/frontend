@@ -1,15 +1,14 @@
-import React from 'react';
-import {getTitle} from '../common/document';
+import React from "react";
+import { getTitle } from "../common/document";
 import Link from "next/link";
 
 export default function () {
-  getTitle('404 Not Found');
+  getTitle("404 Not Found");
 
   return (
     <div>
-      <Link href="/">
-        Back Home
-      </Link>
+      <h1 className="text-4xl">404 Not found</h1>
+      <Link href="/">Back Home</Link>
     </div>
   );
 }

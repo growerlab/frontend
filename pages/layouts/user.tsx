@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { withTranslation } from 'react-i18next';
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { withTranslation } from "react-i18next";
 
-import { SessionService } from '../../services/auth/session';
-import { Message } from '../../api/common/notice';
-import { Router } from '../../config/router';
+import { Session } from "../../services/auth/session";
+import { Message } from "../../api/common/notice";
+import { Router } from "../../config/router";
 
 // const {Header, Sider, Content} = Layout;
 
@@ -15,29 +15,31 @@ function UserLayout(props: any) {
 
   useEffect((): void => {
     // 验证用户是否登录
-    if (!SessionService.isLogin()) {
-      Message.Warning(t('user.tooltip.not_login'));
+    Session.isLogin().catch(() => {
+      Message.Warning(t("user.tooltip.not_login"));
       router.push(Router.Home.Login);
-    }
-  }, []);
+    });
+  });
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [collapsed, setCollapsed] = useState(false);
-  const plusMenu = <Link href={Router.User.Repository.New}>{t('repository.new')}</Link>;
+  const plusMenu = (
+    <Link href={Router.User.Repository.New}>{t("repository.new")}</Link>
+  );
 
   const logoutClick = (): void => {
-    SessionService.logout(router);
+    Session.logout(router);
   };
 
   const userMenu = (
     <div>
       <span>用户管理</span>
-      <Link passHref href={''}>
+      <Link passHref href={""}>
         <a
           onClick={() => logoutClick()}
           className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
         >
-          {t('user.logout')}
+          {t("user.logout")}
         </a>
       </Link>
     </div>
@@ -63,9 +65,9 @@ function UserLayout(props: any) {
               </div>
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 {[
-                  ['Home', Router.User.Index],
-                  [t('repository.list'), Router.User.Repository.List],
-                  ['Projects', '/'],
+                  ["Home", Router.User.Index],
+                  [t("repository.list"), Router.User.Repository.List],
+                  ["Projects", "/"],
                 ].map(([title, url]) => (
                   <a
                     href={url}
@@ -88,7 +90,9 @@ function UserLayout(props: any) {
                     />
                   </div>
                   <div className="ml-3">
-                    <div className="text-base font-medium leading-none text-white">Tom Cook</div>
+                    <div className="text-base font-medium leading-none text-white">
+                      Tom Cook
+                    </div>
                     <div className="text-sm font-medium leading-none text-gray-400">
                       tom@example.com
                     </div>
@@ -96,9 +100,9 @@ function UserLayout(props: any) {
                 </div>
                 <div className="mt-3 px-2 space-y-1 ">
                   {[
-                    ['Your Profile', '/'],
-                    ['Settings', '/'],
-                    ['Sign out', '/'],
+                    ["Your Profile", "/"],
+                    ["Settings", "/"],
+                    ["Sign out", "/"],
                   ].map(([title, url]) => (
                     <a
                       href={url}
@@ -124,7 +128,7 @@ function UserLayout(props: any) {
             <main>
               <div className="max-w-full mx-auto py-4 sm:px-4 lg:px-8">
                 <div className="px-4 py-6 sm:px-0">
-                  <div className="border-4 border-dashed border-gray-200 rounded-lg max-h-full">
+                  <div className="border-0 border-dashed border-gray-200 rounded-lg max-h-full">
                     {props.children}
                   </div>
                 </div>

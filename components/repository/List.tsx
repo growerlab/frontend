@@ -1,10 +1,13 @@
-import React from 'react';
-import { useState } from 'react';
-import { Empty, List } from 'antd';
+import React from "react";
+import { useState } from "react";
+import { FolderOpenIcon } from "evergreen-ui";
 
-import { ListItem } from './ListItem';
-import { TypeRepositoriesArgs, TypeRepository } from '../../api/repository/types';
-import { Repository } from '../../api/repository/repository';
+import { ListItem } from "./ListItem";
+import {
+  TypeRepositoriesArgs,
+  TypeRepository,
+} from "../../api/repository/types";
+import { Repository } from "../../api/repository/repository";
 
 export function RepositoryList(props: TypeRepositoriesArgs) {
   const { ownerPath } = props;
@@ -12,10 +15,14 @@ export function RepositoryList(props: TypeRepositoriesArgs) {
 
   const repo = new Repository({ ownerPath: ownerPath });
   const repoData = repo.list();
+
   if (repoData === null) {
     return (
       <div>
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        <div className="text-center text-1xl ">
+          <FolderOpenIcon size={60} className="text-sky-400 inline" />
+          <div>暂无仓库</div>
+        </div>
       </div>
     );
   }
@@ -24,10 +31,10 @@ export function RepositoryList(props: TypeRepositoriesArgs) {
   const loadMoreBtn = !initLoading ? (
     <div
       style={{
-        textAlign: 'center',
+        textAlign: "center",
         marginTop: 12,
         height: 32,
-        lineHeight: '32px',
+        lineHeight: "32px",
       }}
     >
       {/* <Button onClick={onLoadMore}>更多</Button> */}
@@ -36,26 +43,26 @@ export function RepositoryList(props: TypeRepositoriesArgs) {
 
   return (
     <div>
-      <List
-        className="demo-loadmore-list"
-        loading={initLoading}
-        itemLayout="vertical"
-        loadMore={loadMoreBtn}
-        dataSource={repositories}
-        renderItem={item => (
-          <List.Item
-            key={item.uuid}
-            // actions={[<StarOutlined />, <LikeOutlined />, <MessageOutlined />]}
-          >
-            <ListItem
-              pub={item.public}
-              path={'/user/repos/' + item.path}
-              name={item.pathGroup}
-              description={item.description}
-            />
-          </List.Item>
-        )}
-      />
+      {/*<List*/}
+      {/*  className="demo-loadmore-list"*/}
+      {/*  loading={initLoading}*/}
+      {/*  itemLayout="vertical"*/}
+      {/*  loadMore={loadMoreBtn}*/}
+      {/*  dataSource={repositories}*/}
+      {/*  renderItem={(item) => (*/}
+      {/*    <List.Item*/}
+      {/*      key={item.uuid}*/}
+      {/*      // actions={[<StarOutlined />, <LikeOutlined />, <MessageOutlined />]}*/}
+      {/*    >*/}
+      {/*      <ListItem*/}
+      {/*        pub={item.public}*/}
+      {/*        path={"/user/repos/" + item.path}*/}
+      {/*        name={item.pathGroup}*/}
+      {/*        description={item.description}*/}
+      {/*      />*/}
+      {/*    </List.Item>*/}
+      {/*  )}*/}
+      {/*/>*/}
     </div>
   );
 }

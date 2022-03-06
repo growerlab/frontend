@@ -1,19 +1,11 @@
-import { Tag } from 'antd';
-import { LockOutlined, UnlockOutlined } from '@ant-design/icons/lib';
-import React from 'react';
+// import { LockOutlined, UnlockOutlined } from '@ant-design/icons/lib';
+// import React from "react";
+import { LockIcon, UnlockIcon } from "evergreen-ui";
 
-const repoPrivateIcon = (
-  <Tag color="blue">
-    <LockOutlined />
-  </Tag>
-);
+const repoPrivateIcon = <LockIcon />;
 
-const repoPublicIcon = (
-  <Tag color="green">
-    <UnlockOutlined />
-  </Tag>
-);
+const repoPublicIcon = <UnlockIcon />;
 
-export function showRepoIcon(pub: boolean) {
+export function repoIcon(pub: boolean) {
   return pub ? repoPublicIcon : repoPrivateIcon;
 }

@@ -1,7 +1,6 @@
-import React from 'react';
-import { List, Skeleton } from 'antd';
-import Link from 'umi/link';
-import { showRepoIcon } from './common';
+import React from "react";
+import Link from "next/link";
+import { repoIcon } from "./common";
 
 interface Args {
   path: string;
@@ -15,14 +14,10 @@ export function ListItem(props: Args) {
 
   return (
     <div>
-      <List.Item.Meta
-        title={
-          <Link to={path}>
-            {showRepoIcon(pub)} {name}
-          </Link>
-        }
-        description={description}
-      />
+      <Link href={path}>
+        {repoIcon(pub)} {name}{" "}
+      </Link>
+      <h4>{description}</h4>
     </div>
   );
 }

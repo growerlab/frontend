@@ -1,14 +1,14 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { toaster } from 'evergreen-ui';
-import { Message } from './common/notice';
-import i18n from '../i18n/i18n';
-import { responsePathAsArray } from 'graphql';
-import { cycleErrorMessage } from 'graphql/validation/rules/NoFragmentCycles';
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { toaster } from "evergreen-ui";
+import { Message } from "./common/notice";
+import i18n from "../i18n/i18n";
+import { responsePathAsArray } from "graphql";
+import { cycleErrorMessage } from "graphql/validation/rules/NoFragmentCycles";
 
-const baseUrl = 'http://localhost:8081/api/v1/';
+const baseUrl = "http://localhost:8081/api/v1/";
 
 export const API = {
-  Login: '/auth/login',
+  Login: "/auth/login",
 };
 
 /**
@@ -19,7 +19,7 @@ export const request = function (): AxiosInstance {
   const instance = axios.create({
     baseURL: baseUrl,
     timeout: 2000,
-    timeoutErrorMessage: i18n.t('api.timeout'),
+    timeoutErrorMessage: i18n.t("api.timeout"),
     // responseType: "json",
     // headers: {
     //   'Content-Type': 'application/json',
@@ -47,8 +47,8 @@ export const request = function (): AxiosInstance {
         Message.Error(error.message);
       }
       // 吃掉http网络错误（例如后端无法链接）
-      return new Promise(() => void {});
-    },
+      return Promise.resolve({});
+    }
   );
 
   return instance;

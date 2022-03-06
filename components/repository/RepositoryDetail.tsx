@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   SettingOutlined,
   CodeOutlined,
   IssuesCloseOutlined,
   CloudDownloadOutlined,
-} from '@ant-design/icons';
-import { Menu, PageHeader, Popover, Tag, Tabs, Input, Empty } from 'antd';
-import { LockOutlined, UnlockOutlined } from '@ant-design/icons/lib';
+} from "@ant-design/icons";
+import { Menu, PageHeader, Popover, Tag, Tabs, Input, Empty } from "antd";
+import { LockOutlined, UnlockOutlined } from "@ant-design/icons/lib";
 
-import { RepositoryArgs } from '../../api/repository/types';
-import { Repository } from '../../api/repository/repository';
-import { showRepoIcon } from './common';
+import { RepositoryArgs } from "../../api/repository/types";
+import { Repository } from "../../api/repository/repository";
+import { repoIcon } from "./common";
 
 export function RepositoryDetail(props: RepositoryArgs) {
   const { repoPath } = props;
-  const [current, setCurrent] = useState('code');
+  const [current, setCurrent] = useState("code");
   const { TabPane } = Tabs;
 
   const repo = new Repository({ repoPath: repoPath });
@@ -30,7 +30,7 @@ export function RepositoryDetail(props: RepositoryArgs) {
 
   const handleClick = (e: any) => {
     console.log(e.key);
-    if (e.key === 'clone') {
+    if (e.key === "clone") {
       return;
     }
     setCurrent(e.key);
@@ -41,7 +41,7 @@ export function RepositoryDetail(props: RepositoryArgs) {
       <PageHeader
         title={
           <span>
-            {showRepoIcon(repoData.repository.public)}
+            {repoIcon(repoData.repository.public)}
             {repository.pathGroup}
           </span>
         }
@@ -55,17 +55,17 @@ export function RepositoryDetail(props: RepositoryArgs) {
           <IssuesCloseOutlined />
           Issues
         </Menu.Item>
-        <Menu.Item key="settings" style={{ float: 'right' }} disabled={true}>
+        <Menu.Item key="settings" style={{ float: "right" }} disabled={true}>
           <SettingOutlined />
           Settings
         </Menu.Item>
-        <Menu.Item key="clone" style={{ float: 'right' }} onBlur={() => {}}>
+        <Menu.Item key="clone" style={{ float: "right" }} onBlur={() => {}}>
           <CloudDownloadOutlined />
           <Popover
             placement="bottom"
             title="Clone or download"
             content={
-              <Tabs defaultActiveKey="1" size={'small'}>
+              <Tabs defaultActiveKey="1" size={"small"}>
                 <TabPane tab="Http" key="1" active={true}>
                   <Input
                     placeholder="Basic usage"

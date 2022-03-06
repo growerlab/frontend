@@ -1,8 +1,10 @@
-import { Router } from '../../config/router';
-import i18n from '../../i18n/i18n';
-import { NextRouter } from 'next/router'
+import { Router } from "../../config/router";
+import i18n from "../../i18n/i18n";
+import { NextRouter } from "next/router";
+import { Message } from "../../api/common/notice";
+import { reject } from "q";
 
-const AuthUserToken = 'auth-user-token';
+const AuthUserToken = "auth-user-token";
 
 export interface LoginInfo {
   token: string;
@@ -12,26 +14,30 @@ export interface LoginInfo {
   publicEmail: string;
 }
 
-export class SessionService {
+export class Session {
   constructor() {
-    return
+    return;
   }
 
   /**
    * 用户是否登录
    * @returns {boolean}
    */
-  static isLogin(): boolean {
-    return !!SessionService.getUserInfo()
+  static async isLogin(): Promise<boolean> {
+    const result = await Session.getUserInfo();
+    if (result === null) {
+      return Promise.reject(false);
+    }
+    return Promise.resolve(true);
   }
 
   /**
    * 登录，将保存token并可以设置过期时间，默认不过期
    * @param info
    */
-  static storeLogin(info: LoginInfo): LoginInfo | null {
+  static storeLogin(info: LoginInfo): Promise<LoginInfo> {
     localStorage.setItem(AuthUserToken, JSON.stringify(info));
-    return SessionService.getUserInfo();
+    return Session.getUserInfo();
   }
 
   /**
@@ -52,18 +58,19 @@ export class SessionService {
   /**
    * 获取用户信息
    */
-  static getUserInfo(): LoginInfo | null {
+  static getUserInfo(): Promise<LoginInfo> {
     const info = localStorage.getItem(AuthUserToken);
-    if (info === null) {
-      return null;
-    }
 
-    try {
-      return JSON.parse(info) as LoginInfo;
-    } catch (error) {
-      console.warn("Can't parse json for login info.");
-      return null;
-    }
+    return new Promise((resolve, reject) => {
+      if (info === null) {
+        return reject(new Error("not found user token"));
+      }
+      try {
+        resolve(JSON.parse(info) as LoginInfo);
+      } catch (error) {
+        console.warn("Can't parse json for login info.");
+        reject(error);
+      }
+    });
   }
 }
-
