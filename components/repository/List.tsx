@@ -19,7 +19,7 @@ export function RepositoryList(props: TypeRepositoriesArgs) {
   if (repoData === null) {
     return (
       <div>
-        <div className="text-center text-1xl ">
+        <div className="text-center text-1xl">
           <FolderOpenIcon size={60} className="text-sky-400 inline" />
           <div>暂无仓库</div>
         </div>
