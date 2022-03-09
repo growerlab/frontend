@@ -131,7 +131,7 @@ function UserLayout(props: any) {
               <div className="max-w-full  mx-auto py-3 px-4 sm:px-2 lg:px-6">
                 <div className="flex columns-2">
                   <div className="flex-none">
-                    <SearchInput placeholder="Filter traits..." />
+                    <SearchInput placeholder="Search..." />
                   </div>
                   <div className="grow"></div>
                   <div className="flex-none">
