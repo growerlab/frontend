@@ -1,4 +1,4 @@
-interface Owner {
+export interface Owner {
   name: string;
   namespace: string;
 }

@@ -1,23 +1,26 @@
 import React from "react";
 import Link from "next/link";
-import { repoIcon } from "./common";
+
+import { repoIcon, repoPath } from "./common";
+import { RepositoryEntity } from "../../api/repository/types";
+import { Router } from "../../config/router";
 
 interface Args {
-  path: string;
-  name: string;
-  description: string;
-  pub: boolean;
+  repo: RepositoryEntity
 }
 
 export function ListItem(props: Args) {
-  const { pub, path, name, description } = props;
+  const { repo } = props;
 
   return (
     <div>
-      <Link href={path}>
-        {repoIcon(pub)} {name}{" "}
+      <Link href={repoPath(repo.owner, repo.path)}>
+        <a>
+          {repoIcon(repo.public)}
+          {repo.name}
+        </a>
       </Link>
-      <h4>{description}</h4>
+      <div>{repo.description}</div>
     </div>
   );
 }
